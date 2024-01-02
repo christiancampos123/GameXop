@@ -3,6 +3,7 @@ class ModalCheckout extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.step = 1
   }
 
   connectedCallback () {
@@ -71,7 +72,7 @@ class ModalCheckout extends HTMLElement {
 
       .modal {
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 1rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, .3);
         display: flex;
         flex-direction: column;
@@ -84,7 +85,7 @@ class ModalCheckout extends HTMLElement {
         z-index: 1001;
       }
 
-      .header {
+      .modal-header {
         align-items: center;
         border-bottom: 1px solid #ccc;
         display: flex;
@@ -92,20 +93,41 @@ class ModalCheckout extends HTMLElement {
         padding: 1rem;
       }
 
-      .header .close-button {
+      .modal-header .close-button {
         background-color: transparent;
         border: 0;
         cursor: pointer;
         padding: 0;
       }
 
-      .header .close-button svg {
+      .modal-header .close-button svg {
         fill: hsl(0, 0%, 0%);
         height: 1.5rem;
         width: 1.5rem;
       }
 
-      .body {
+      .modal-header .back-step {
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+        display: none;
+        padding: 0;
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+      }
+
+      .modal-header .back-step.active {
+        display: block;
+      }
+
+      .modal-header .back-step svg {
+        fill: hsl(0, 0%, 0%);
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+
+      .modal-body {
         height: 100%;
         max-width: 100%;
         width: 100%;
@@ -117,42 +139,108 @@ class ModalCheckout extends HTMLElement {
         max-width: 100%;
         width: 100%;
         overflow-x: scroll;
+        scroll-behavior: smooth;
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+      }
+
+      .steps::-webkit-scrollbar {
+        display: none;  
       }
 
       .step {
         min-width: 100%;
+        position: relative;
         width: 100%;
       }
 
-      .step.red
-      {
-        background-color: red;
+      .customer{
+        display: flex;
+        height: 100%;
+        width: 100%;
       }
 
-      .step.blue
-      {
-        background-color: blue;
+      .customer-option{
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .customer-option.red{
+        background-color: hsl(0, 100%, 50%);
+      }
+
+      .customer-option.blue{
+        background-color: hsl(240, 100%, 50%);
+      }
+
+      .customer-login {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-element {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .form-element label {
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      form button {
+        background-color: hsl(0, 0%, 0%);
+        border: none;
+        border-radius: 0.5rem;
+        color: hsl(0, 0%, 100%);
+        cursor: pointer;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
       }
     </style>
 
     <div class="overlay">
       <div class="modal">
-        <div class="header">
+        <div class="modal-header">
+          <button class="back-step">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+            </svg>
+          </button>
           <button class="close-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
           </button>
         </div>
-        <div class="body">
+        <div class="modal-body">
           <div class="steps">
-            <div class="step active red">
-              <div class="login">
-                <button class="login-button next-step">Iniciar sesión</button>
+            <div class="step customer">
+              <div class="customer-option red">
+                <form class="customer-login">
+                  <div class="form-element">
+                    <label for="email">Inicia sesión con tu correo electrónico</label>
+                    <input type="email" name="email" />
+                  </div>
+                  <div class="form-element">
+                    <label for="password">Contraseña</label>
+                    <input type="password" name="password" />
+                  </div>
+                  <button class="login-button next-step">Iniciar sesión</button>
+                </form>
               </div>
-              <div class="register">
+              <div class="customer-option blue">
                 <button class="register-button next-step">Nuevo usuario</button>
               </div>
             </div>
-            <div class="step blue">
+            <div class="step">
               
             </div>
           </div>
@@ -162,12 +250,39 @@ class ModalCheckout extends HTMLElement {
     `
 
     this.shadow.querySelector('.overlay').addEventListener('click', event => {
+
+      event.preventDefault()
+
       if (event.target.closest('.close-button')) {
         this.shadow.querySelector('.overlay').classList.remove('active')
       }
 
       if (event.target.closest('.next-step')) {
-        //Traslada 100% a la izquierda
+        const steps = this.shadow.querySelector('.steps');
+        steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
+
+        this.step++
+        this.shadow.querySelector('.back-step').classList.add('active')
+      }
+
+      if (event.target.closest('.back-step')) {
+        const steps = this.shadow.querySelector('.steps');
+        steps.scrollBy({ left: -steps.offsetWidth, behavior: 'smooth' })
+
+        this.step--
+        if (this.step === 1) {
+          this.shadow.querySelector('.back-step').classList.remove('active')
+        }
+      }
+
+      if (event.target.closest('.login-button')) {
+        this.shadow.querySelector('.login').classList.add('active')
+        this.shadow.querySelector('.register').classList.remove('active')
+      }
+
+      if (event.target.closest('.register-button')) {
+        this.shadow.querySelector('.login').classList.remove('active')
+        this.shadow.querySelector('.register').classList.add('active')
       }
     })
   }
