@@ -232,7 +232,7 @@ class Cart extends HTMLElement {
       }
 
       .checkout-button{
-        background-color: hsl(0, 0%, 0%);
+        background-color: hsl(272 40% 35%);
         border: none;
         border-radius: 0.5rem;
         color: hsl(0, 0%, 100%);
@@ -242,6 +242,10 @@ class Cart extends HTMLElement {
         font-weight: 700;
         margin-top: 1rem;
         padding: 0.5rem 1rem;
+      }
+
+      .checkout-button:hover {
+        filter: brightness(1.2);
       }
 
       .cart-waiting{

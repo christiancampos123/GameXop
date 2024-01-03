@@ -78,10 +78,11 @@ class ModalCheckout extends HTMLElement {
         flex-direction: column;
         height: 80%;
         left: 50%;
+        overflow: hidden;
         position: relative;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 80%;
+        width: 40%;
         z-index: 1001;
       }
 
@@ -154,38 +155,56 @@ class ModalCheckout extends HTMLElement {
         width: 100%;
       }
 
+      .step-title {
+        background-color: hsl(236 55% 25%);
+        padding: 0.2rem 0.5rem;
+        width: 100%;
+      }
+
+      .step-title h4 {
+        color: hsl(0, 0%, 100%);
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
       .customer{
         display: flex;
+        flex-direction: column;
         height: 100%;
         width: 100%;
       }
 
       .customer-option{
-        align-items: center;
+        align-items: flex-start;
         display: flex;
         flex-direction: column;
+        gap: 1.5rem;
         justify-content: center;
+        padding: 1rem 5%;
+        width: 90%;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
         width: 100%;
       }
 
-      .customer-option.red{
-        background-color: hsl(0, 100%, 50%);
-      }
-
-      .customer-option.blue{
-        background-color: hsl(240, 100%, 50%);
-      }
-
-      .customer-login {
+      form .row {
         display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
+        width: 100%;
       }
 
       .form-element {
         display: flex;
+        flex: 1;
         flex-direction: column;
-        gap: 0.2rem;
+        gap: 0.4rem;
+        width: 100%;
       }
 
       .form-element label {
@@ -194,8 +213,18 @@ class ModalCheckout extends HTMLElement {
         font-weight: 700;
       }
 
-      form button {
-        background-color: hsl(0, 0%, 0%);
+      .form-element input, .form-element select {
+        border: 1px solid hsl(0, 0%, 80%);
+        border-radius: 0.5rem;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 0.5rem;
+      }
+
+      .customer-option button {
+        align-self: flex-end;
+        background-color: hsl(272 40% 35%);
         border: none;
         border-radius: 0.5rem;
         color: hsl(0, 0%, 100%);
@@ -205,6 +234,11 @@ class ModalCheckout extends HTMLElement {
         font-weight: 700;
         margin-top: 1rem;
         padding: 0.5rem 1rem;
+        width: 200px;
+      }
+
+      .customer-option button:hover {
+        filter: brightness(1.2);
       }
     </style>
 
@@ -223,22 +257,95 @@ class ModalCheckout extends HTMLElement {
         <div class="modal-body">
           <div class="steps">
             <div class="step customer">
-              <div class="customer-option red">
+              <div class="customer-option">
+                <div class="step-title">
+                  <h4>¿Ya tienes una cuenta?</h4>
+                </div>
                 <form class="customer-login">
-                  <div class="form-element">
-                    <label for="email">Inicia sesión con tu correo electrónico</label>
-                    <input type="email" name="email" />
+                  <div class="row">
+                    <div class="form-element">
+                      <label for="email">Correo electrónico</label>
+                      <input type="email" name="email" />
+                    </div>
+                    <div class="form-element">
+                      <label for="password">Contraseña</label>
+                      <input type="password" name="password" />
+                    </div>
                   </div>
-                  <div class="form-element">
-                    <label for="password">Contraseña</label>
-                    <input type="password" name="password" />
-                  </div>
-                  <button class="login-button next-step">Iniciar sesión</button>
                 </form>
+                <button class="login-button next-step">Iniciar sesión</button>
               </div>
-              <div class="customer-option blue">
-                <button class="register-button next-step">Nuevo usuario</button>
+
+              <div class="customer-option">
+                <div class="step-title">
+                  <h4>¿No tienes una cuenta?</h4>
+                </div>
+                <form class="customer-register">
+                  <div class="row">
+                    <div class="form-element">
+                      <label for="name">Nombre</label>
+                      <input type="text" name="name" />
+                    </div>
+                    <div class="form-element">
+                      <label for="surname">Apellidos</label>
+                      <input type="text" name="surname" />
+                    </div>
+                    <div class="form-element">
+                      <label for="email">Correo electrónico</label>
+                      <input type="email" name="email" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-element">
+                      <label for="countryId">País</label>
+                      <select name="countryId">
+                        <option value=""></option>
+                        <option value="es">España</option>
+                      </select>
+                    </div>
+                    <div class="form-element">
+                      <label for="cityId">Ciudad</label>
+                      <select name="cityId">
+                        <option value=""></option>
+                        <option value="madrid">Madrid</option>
+                      </select>
+                    </div>
+                    <div class="form-element">
+                      <label for="postalCode">Código Postal</label>
+                      <input type="text" name="postalCode" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-element">
+                      <label for="address">Dirección</label>
+                      <input type="text" name="address" />
+                    </div>
+                    <div class="form-element">
+                      <label for="dialCodeId">Prefijo telefónico</label>
+                      <select name="dialCodeId">
+                        <option value=""></option>
+                        <option value="es">+34</option>
+                      </select>
+                    </div>
+                    <div class="form-element">
+                      <label for="telephone">Teléfono</label>
+                      <input type="text" name="telephone" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-element">
+                      <label for="password">Contraseña</label>
+                      <input type="password" name="password" />
+                    </div>
+                    <div class="form-element">
+                      <label for="password">Confirmación de la contraseña</label>
+                      <input type="password" name="password-confirmation" />
+                    </div>
+                  </div>
+                </form>
+                <button class="register-button next-step">Registrarse</button>
               </div>
+
             </div>
             <div class="step">
               
