@@ -3,7 +3,13 @@ class Logo extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+  }
 
+  connectedCallback () {
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData () {
     this.data = {
       title: "GameXop",
       image: {
@@ -11,10 +17,6 @@ class Logo extends HTMLElement {
         alt: "Logo de GameXop"
       }
     }
-  }
-
-  connectedCallback () {
-    this.render()
   }
 
   render () {
@@ -42,10 +44,12 @@ class Logo extends HTMLElement {
       }
     </style>
 
-    <div class="logo">
-      <img src="${this.data.image.url}" alt="${this.data.image.alt}" />
-      <h1>${this.data.title}</h1>
-    </div>
+    <a href="/">
+      <div class="logo">
+        <img src="${this.data.image.url}" alt="${this.data.image.alt}" />
+        <h1>${this.data.title}</h1>
+      </div>
+    </a>
     `
   }
 }

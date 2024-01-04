@@ -11,7 +11,7 @@ class Cart extends HTMLElement {
 
   async loadData () {
 
-    this.data = [
+    this.products = [
       {
         id: 1,
         title: 'Producto 1',
@@ -367,17 +367,17 @@ class Cart extends HTMLElement {
           </button>
         </div>
         <div class="cart-products"></div>
-        <div class="cart-no-products  ${this.data.length == 0 ? 'active' : ''}">
+        <div class="cart-no-products  ${this.products.length == 0 ? 'active' : ''}">
           <p>No hay productos en el carrito</p>
         </div>
-        <div class="cart-footer ${this.data.length > 0 ? 'active' : ''}">
+        <div class="cart-footer ${this.products.length > 0 ? 'active' : ''}">
           <div class="cart-footer-group">
             <p>Juegos adquiridos</p>
-            <span>${this.data.length}</span>
+            <span>${this.products.length}</span>
           </div>
           <div class="cart-footer-group">
             <p>Total (IVA incluido)</p>
-            <span class="total">${this.data.reduce((total, product) => total + product.price, 0)}€</span>
+            <span class="total">${this.products.reduce((total, product) => total + product.price, 0)}€</span>
           </div>
 
           <button class="checkout-button">
@@ -393,11 +393,11 @@ class Cart extends HTMLElement {
     </div>
     `
 
-    if(this.data.length > 0){
+    if(this.products.length > 0){
       this.shadow.querySelector('.cart-button').classList.add('active')
     }
 
-    this.data.forEach(product => {
+    this.products.forEach(product => {
       const productElement = document.createElement('div')
       productElement.classList.add('cart-product')
 
@@ -453,7 +453,7 @@ class Cart extends HTMLElement {
         this.shadow.querySelector(`.waiting`).classList.add('active')
 
         setTimeout(() => {
-          this.data = this.data.filter(product => product.id !== id)
+          this.products = this.products.filter(product => product.id !== id)
           this.shadow.querySelector(`.waiting`).classList.remove('active')
           this.render("active")
         }, 1000)
@@ -464,7 +464,7 @@ class Cart extends HTMLElement {
         this.shadow.querySelector('.cart').classList.toggle('active')
         document.dispatchEvent(new CustomEvent('openCheckout', {
           detail: {
-            products: this.data
+            products: this.products
           }
         }))
       }

@@ -3,7 +3,15 @@ class CategoryFilter extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.data = [
+  }
+
+  connectedCallback () {
+    this.loadData().then(() => this.render())
+    this.updateArrowVisibility();
+  }
+
+  async loadData () {
+    this.categories = [
       {
         id: 1,
         title: "Acción",
@@ -61,8 +69,8 @@ class CategoryFilter extends HTMLElement {
       },
       {
         id: 12,
-        title: "Lucha",
-        backgroundColor: "#4246cb",
+        title: "Shooter",
+        backgroundColor: "#ff5c6b",
       },
       {
         id: 13,
@@ -75,11 +83,6 @@ class CategoryFilter extends HTMLElement {
         backgroundColor: "#b36215",
       }
     ];
-  }
-
-  connectedCallback () {
-    this.render()
-    this.updateArrowVisibility();
   }
 
   updateArrowVisibility() {
@@ -199,7 +202,7 @@ class CategoryFilter extends HTMLElement {
     categoryElement.innerHTML = `<h2>Todos</h2>`;
     slider.appendChild(categoryElement);
 
-    this.data.forEach(category => {
+    this.categories.forEach(category => {
       const categoryElement = document.createElement('div');
       categoryElement.classList.add('category');
       categoryElement.style.backgroundColor = category.backgroundColor;

@@ -6,7 +6,11 @@ class FeaturedGallery extends HTMLElement {
   }
 
   connectedCallback () {
-    this.render()
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData () {
+  
   }
 
   render () {
@@ -27,7 +31,7 @@ class FeaturedGallery extends HTMLElement {
 
       .featured-element{
         cursor: pointer;
-        height: 100%;
+        height: 40vh;
         overflow: hidden;
       }
 

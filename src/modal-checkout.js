@@ -6,6 +6,7 @@ class ModalCheckout extends HTMLElement {
   }
 
   connectedCallback () {
+    
     this.loadData()
 
     if(!document.openCheckoutEvent){
@@ -387,12 +388,13 @@ class ModalCheckout extends HTMLElement {
       .checkout-payment{
         display: flex;
         flex-direction: column;
-        gap: 1rem;
       }
 
       .checkout-payment-item{
         align-items: center;
         display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
         padding: 0.5rem 1%;
       }
 
@@ -403,10 +405,6 @@ class ModalCheckout extends HTMLElement {
 
       .checkout-payment-item input[type="checkbox"]{
         margin-right: 0.5rem;
-      }
-
-      .checkout-payment-item .pay-button{
-        margin-left: auto;
       }
 
       .checkout-payment-item .pay-button.disabled{

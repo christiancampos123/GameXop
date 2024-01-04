@@ -3,7 +3,14 @@ class Faqs extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.data = [
+  }
+
+  async connectedCallback () {
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData () {
+    this.faqs = [
       {
         title: "¿Qué es GameXop?",
         description: `
@@ -29,10 +36,6 @@ class Faqs extends HTMLElement {
         `
       }
     ];
-  }
-
-  connectedCallback () {
-    this.render()
   }
 
   render () {
@@ -71,7 +74,7 @@ class Faqs extends HTMLElement {
 
     const faqsContainer = this.shadow.querySelector('.faqs-container')
 
-    this.data.forEach(faq => {
+    this.faqs.forEach(faq => {
       const faqElement = document.createElement('details')
       const faqElementSummary = document.createElement('summary')
       faqElement.name = "faq"

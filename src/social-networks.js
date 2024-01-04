@@ -3,7 +3,14 @@ class socialNetworks extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.data = [
+  }
+
+  connectedCallback () {
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData () {
+    this.socialNetworks = [
       {
         socialNetwork: 'Facebook',
         url: 'https://www.facebook.com/game_xop',
@@ -39,10 +46,6 @@ class socialNetworks extends HTMLElement {
     ]
   }
 
-  connectedCallback () {
-    this.render()
-  }
-
   render () {
     this.shadow.innerHTML =
     /*html*/`
@@ -69,7 +72,7 @@ class socialNetworks extends HTMLElement {
 
     const socialNetworksContainer = this.shadow.querySelector('.social-networks-container')
 
-    this.data.forEach(socialNetwork => {
+    this.socialNetworks.forEach(socialNetwork => {
       const socialNetworkContainer = document.createElement('div')
       socialNetworkContainer.classList.add('social-network')
 
