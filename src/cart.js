@@ -239,7 +239,6 @@ class Cart extends HTMLElement {
         cursor: pointer;
         font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
-        font-weight: 700;
         margin-top: 1rem;
         padding: 0.5rem 1rem;
       }
@@ -248,7 +247,7 @@ class Cart extends HTMLElement {
         filter: brightness(1.2);
       }
 
-      .cart-waiting{
+      .waiting{
         align-items: center;
         background-color: hsl(0, 0%, 100%, 0.5);
         bottom: 0;
@@ -264,7 +263,7 @@ class Cart extends HTMLElement {
         z-index: -1;
       }
 
-      .cart-waiting.active{
+      .waiting.active{
         opacity: 1;
         visibility: visible;
         z-index: 1001;
@@ -340,7 +339,7 @@ class Cart extends HTMLElement {
               Finalizar compra
             </button>
           </div>
-          <div class="cart-waiting">
+          <div class="waiting">
             <div class="loading-outer">
               <div class="loading-inner"></div>
             </div>
@@ -393,11 +392,11 @@ class Cart extends HTMLElement {
       if(event.target.closest('.remove-button')){
         
         const id = parseInt(event.target.closest('.remove-button').dataset.id)
-        this.shadow.querySelector(`.cart-waiting`).classList.add('active')
+        this.shadow.querySelector(`.waiting`).classList.add('active')
 
         setTimeout(() => {
           this.data = this.data.filter(product => product.id !== id)
-          this.shadow.querySelector(`.cart-waiting`).classList.remove('active')
+          this.shadow.querySelector(`.waiting`).classList.remove('active')
           this.render("active")
         }, 1000)
       }

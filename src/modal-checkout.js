@@ -3,7 +3,6 @@ class ModalCheckout extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.step = 1
   }
 
   connectedCallback () {
@@ -88,7 +87,6 @@ class ModalCheckout extends HTMLElement {
 
       .modal-header {
         align-items: center;
-        border-bottom: 1px solid #ccc;
         display: flex;
         justify-content: flex-end;
         padding: 1rem;
@@ -151,36 +149,32 @@ class ModalCheckout extends HTMLElement {
 
       .step {
         min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         position: relative;
         width: 100%;
       }
 
       .step-title {
         background-color: hsl(236 55% 25%);
-        padding: 0.2rem 0.5rem;
-        width: 100%;
+        padding: 0.5rem 1%;
+        width: 98%;
       }
 
       .step-title h4 {
         color: hsl(0, 0%, 100%);
         font-family: 'Ubuntu', sans-serif;
         font-size: 1.2rem;
-        font-weight: 700;
+        font-weight: 400;
         margin: 0;
       }
 
-      .customer{
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-      }
-
-      .customer-option{
+      .step-group {
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
         justify-content: center;
         padding: 1rem 5%;
         width: 90%;
@@ -210,7 +204,6 @@ class ModalCheckout extends HTMLElement {
       .form-element label {
         font-family: 'Ubuntu', sans-serif;
         font-size: 0.8rem;
-        font-weight: 700;
       }
 
       .form-element input, .form-element select {
@@ -218,11 +211,10 @@ class ModalCheckout extends HTMLElement {
         border-radius: 0.5rem;
         font-family: 'Ubuntu', sans-serif;
         font-size: 0.8rem;
-        font-weight: 700;
         padding: 0.5rem;
       }
 
-      .customer-option button {
+      .step button {
         align-self: flex-end;
         background-color: hsl(272 40% 35%);
         border: none;
@@ -231,33 +223,104 @@ class ModalCheckout extends HTMLElement {
         cursor: pointer;
         font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
-        font-weight: 700;
         margin-top: 1rem;
         padding: 0.5rem 1rem;
-        width: 200px;
+        width: max-content;
       }
 
-      .customer-option button:hover {
+      .step button:hover {
         filter: brightness(1.2);
+      }
+
+      .info-message{
+        background-color: hsl(146.77deg 22.43% 43.86%);
+        color: hsl(0, 0%, 100%);
+        padding: 0.5rem 1%;
+        width: 98%;
+      }
+
+      .info-message p {
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      .waiting{
+        align-items: center;
+        background-color: hsl(0, 0%, 100%, 0.5);
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: opacity 0.2s ease-in-out;
+        visibility: hidden;
+        z-index: -1;
+      }
+
+      .waiting.active{
+        opacity: 1;
+        visibility: visible;
+        z-index: 1001;
+      }
+
+      .loading-outer {
+        align-items: center;
+        animation: rotate-outer 1.5s linear infinite forwards;
+        border: 5px solid hsl(284deg 100% 50%);
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-radius: 50%;
+        display: flex;
+        height: 70px;
+        justify-content: center;
+        position: relative;
+        width: 70px;
+      }
+
+      .loading-outer .loading-inner {
+        animation: rotate-inner 1.5s linear infinite forwards;
+        border: 5px solid hsl(284deg 100% 50%);
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-radius: inherit;
+        height: 0px;
+        position: absolute;
+        width: 40px;
+      }
+
+      @keyframes rotate-outer {
+        50%{
+          transform: rotate(200deg);
+        }
+      }
+
+      @keyframes rotate-inner {
+        50%{
+          transform: rotate(-400deg);
+        }
       }
     </style>
 
     <div class="overlay">
       <div class="modal">
         <div class="modal-header">
-          <button class="back-step">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
-            </svg>
-          </button>
           <button class="close-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
           </button>
         </div>
         <div class="modal-body">
+          <div class="waiting">
+            <div class="loading-outer">
+              <div class="loading-inner"></div>
+            </div>
+          </div>
           <div class="steps">
             <div class="step customer">
-              <div class="customer-option">
+              <div class="step-group">
                 <div class="step-title">
                   <h4>¿Ya tienes una cuenta?</h4>
                 </div>
@@ -273,10 +336,9 @@ class ModalCheckout extends HTMLElement {
                     </div>
                   </div>
                 </form>
-                <button class="login-button next-step">Iniciar sesión</button>
+                <button class="login-button">Iniciar sesión</button>
               </div>
-
-              <div class="customer-option">
+              <div class="step-group">
                 <div class="step-title">
                   <h4>¿No tienes una cuenta?</h4>
                 </div>
@@ -343,12 +405,21 @@ class ModalCheckout extends HTMLElement {
                     </div>
                   </div>
                 </form>
-                <button class="register-button next-step">Registrarse</button>
+                <button class="register-button">Registrarse</button>
               </div>
 
             </div>
             <div class="step">
-              
+              <div class="step-group">
+                <div class="info-message">
+                  <p>¡Bienvenido <span class="costumer-name"></span>! Ahora vamos a finalizar tu compra.</p>
+                </div>
+              </div>
+              <div class="step-group">
+                <div class="step-title">
+                  <h4>Resumen de la compra</h4>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -364,32 +435,27 @@ class ModalCheckout extends HTMLElement {
         this.shadow.querySelector('.overlay').classList.remove('active')
       }
 
-      if (event.target.closest('.next-step')) {
-        const steps = this.shadow.querySelector('.steps');
-        steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
-
-        this.step++
-        this.shadow.querySelector('.back-step').classList.add('active')
-      }
-
-      if (event.target.closest('.back-step')) {
-        const steps = this.shadow.querySelector('.steps');
-        steps.scrollBy({ left: -steps.offsetWidth, behavior: 'smooth' })
-
-        this.step--
-        if (this.step === 1) {
-          this.shadow.querySelector('.back-step').classList.remove('active')
-        }
-      }
-
       if (event.target.closest('.login-button')) {
-        this.shadow.querySelector('.login').classList.add('active')
-        this.shadow.querySelector('.register').classList.remove('active')
+
+        this.shadow.querySelector(`.waiting`).classList.add('active')
+
+        setTimeout(() => {
+          const steps = this.shadow.querySelector('.steps');
+          steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
+          this.shadow.querySelector(`.waiting`).classList.remove('active')
+        }, 1000)
       }
 
       if (event.target.closest('.register-button')) {
-        this.shadow.querySelector('.login').classList.remove('active')
-        this.shadow.querySelector('.register').classList.add('active')
+
+        this.shadow.querySelector(`.waiting`).classList.add('active')
+
+        setTimeout(() => {
+          const steps = this.shadow.querySelector('.steps');
+          steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
+          this.shadow.querySelector(`.waiting`).classList.remove('active')
+          this.shadow.querySelector('.costumer-name').textContent = this.shadow.querySelector('[name="name"]').value
+        }, 1000)
       }
     })
   }
