@@ -7,7 +7,11 @@ class ModalCheckout extends HTMLElement {
 
   connectedCallback () {
     this.loadData()
-    document.addEventListener('openCheckout', this.handleOpenCheckout.bind(this))
+
+    if(!document.openCheckoutEvent){
+      document.addEventListener('openCheckout', this.handleOpenCheckout.bind(this))
+      document.openCheckoutEvent = true
+    }
   }
 
   async handleOpenCheckout (event) {

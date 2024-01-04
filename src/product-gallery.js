@@ -6,6 +6,7 @@ class ProductGallery extends HTMLElement {
     this.data = [
       {
         id: 1,
+        path: "/juego/call-of-duty",
         image: {
           url: "http://localhost:5173/public/call-of-duty.jpg",
           alt: "Call of Duty"
@@ -13,6 +14,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 2,
+        path: "/juego/payday-3",
         image: {
           url: "http://localhost:5173/public/payday-3.jpg",
           alt: "Payday 3"
@@ -20,6 +22,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 3,
+        path: "/juego/persona-5",
         image: {
           url: "http://localhost:5173/public/persona-5.jpg",
           alt: "Persona 5"
@@ -27,6 +30,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 4,
+        path: "/juego/red-dead-redemption-2",
         image: {
           url: "http://localhost:5173/public/red-dead.jpg",
           alt: "Red Dead Redemption 2"
@@ -34,6 +38,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 5,
+        path: "/juego/starfield",
         image: {
           url: "http://localhost:5173/public/starfield.jpg",
           alt: "Starfield"
@@ -41,6 +46,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 6,
+        path: "/juego/street-fighter-6",
         image: {
           url: "http://localhost:5173/public/street-fighter.jpg",
           alt: "Street Fighter 6"
@@ -48,6 +54,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 1,
+        path: "/juego/call-of-duty",
         image: {
           url: "http://localhost:5173/public/call-of-duty.jpg",
           alt: "Call of Duty"
@@ -55,6 +62,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 2,
+        path: "/juego/payday-3",
         image: {
           url: "http://localhost:5173/public/payday-3.jpg",
           alt: "Payday 3"
@@ -62,6 +70,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 3,
+        path: "/juego/persona-5",
         image: {
           url: "http://localhost:5173/public/persona-5.jpg",
           alt: "Persona 5"
@@ -69,6 +78,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 4,
+        path: "/juego/red-dead-redemption-2",
         image: {
           url: "http://localhost:5173/public/red-dead.jpg",
           alt: "Red Dead Redemption 2"
@@ -76,6 +86,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 5,
+        path: "/juego/starfield",
         image: {
           url: "http://localhost:5173/public/starfield.jpg",
           alt: "Starfield"
@@ -83,6 +94,7 @@ class ProductGallery extends HTMLElement {
       },
       {
         id: 6,
+        path: "/juego/street-fighter-6",
         image: {
           url: "http://localhost:5173/public/street-fighter.jpg",
           alt: "Street Fighter 6"
@@ -92,6 +104,7 @@ class ProductGallery extends HTMLElement {
   }
 
   connectedCallback () {
+    this.viewTransitionNavigation()
     this.render()
   }
 
@@ -133,7 +146,12 @@ class ProductGallery extends HTMLElement {
     `
 
     this.data.forEach(product => {
+      const productElementLink = document.createElement('a');
+      productElementLink.href = product.path;
+
       const productElement = document.createElement('div');
+      productElementLink.appendChild(productElement);
+     
       productElement.classList.add('product');
       productElement.dataset.endpoint = product.id;
 
@@ -142,8 +160,44 @@ class ProductGallery extends HTMLElement {
       productImageElement.alt = product.image.alt;
 
       productElement.appendChild(productImageElement);
-      this.shadow.querySelector('.product-gallery').appendChild(productElement);
+      this.shadow.querySelector('.product-gallery').appendChild(productElementLink);
     });
+  }
+
+  viewTransitionNavigation () {
+    
+    if (document.startViewTransition && !window.navigationEventAdded) {
+
+      window.navigation.addEventListener('navigate', (event) => {
+
+        const main = document.querySelector('main');
+        const product = document.createElement('faqs-component').outerHTML
+        
+        const toUrl = new URL(event.destination.url)
+
+        if (location.origin !== toUrl.origin) return
+
+        event.intercept({
+
+          async handler () {
+
+            console.log( main)
+
+            // const response = await fetch(toUrl.pathname)
+            // const text = await response.text()
+
+            // const [, data] = text.match(/<body>([\s\S]*)<\/body>/i)
+
+            document.startViewTransition(() => {
+              main.innerHTML = faqs
+              document.documentElement.scrollTop = 0
+            })
+          }
+        })
+      })
+
+      window.navigationEventAdded = true
+    }
   }
 }
 
