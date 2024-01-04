@@ -15,7 +15,8 @@ class Cart extends HTMLElement {
       {
         id: 1,
         title: 'Producto 1',
-        price: 40,
+        price: 30,
+        priceBeforeDiscount: 40,
         image: {
           url: 'https://picsum.photos/50/50',
           alt: 'Producto 1'
@@ -27,7 +28,7 @@ class Cart extends HTMLElement {
         price: 30,
         image: {
           url: 'https://picsum.photos/50/50',
-          alt: 'Producto 1'
+          alt: 'Producto 2'
         }
       },
       {
@@ -36,7 +37,35 @@ class Cart extends HTMLElement {
         price: 30,
         image: {
           url: 'https://picsum.photos/50/50',
-          alt: 'Producto 1'
+          alt: 'Producto 3'
+        }
+      },
+      {
+        id: 4,
+        title: 'Producto 4',
+        price: 30,
+        priceBeforeDiscount: 40,
+        image: {
+          url: 'https://picsum.photos/50/50',
+          alt: 'Producto 4'
+        }
+      },
+      {
+        id: 5,
+        title: 'Producto 5',
+        price: 30,
+        image: {
+          url: 'https://picsum.photos/50/50',
+          alt: 'Producto 5'
+        }
+      },
+      {
+        id: 6,
+        title: 'Producto 6',
+        price: 30,
+        image: {
+          url: 'https://picsum.photos/50/50',
+          alt: 'Producto 6'
         }
       }
     ]
@@ -67,8 +96,9 @@ class Cart extends HTMLElement {
       }
 
       .overlay{
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.4);
         bottom: 0;
+        cursor: pointer;
         left: 0;
         position: fixed;
         right: 0;
@@ -86,30 +116,33 @@ class Cart extends HTMLElement {
         background-color: hsl(0, 0%, 100%);
         min-height: 100vh;
         max-height: 100vh;
-        overflow-y: scroll;
         opacity: 0;
-        padding: 2rem 1rem;
-        position: absolute;
+        position: fixed;
         right: -300px;
         transition: right 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        top: 0;
         width: 300px;
+        z-index: 1001;
       }
 
-      .overlay.active .cart{
+      .cart.active{
         right: 0;
         opacity: 1;
       }
 
       .cart-header{
         align-items: center;
+        background-color: hsl(236 55% 25%);
         display: flex;
         justify-content: space-between;
+        padding: 0.5rem;
       }
 
       .cart-header h4{
+        color: hsl(0, 0%, 100%);
         font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
-        font-weight: 700;
+        font-weight: 400;
         margin: 0;
       }
 
@@ -121,9 +154,12 @@ class Cart extends HTMLElement {
       }
 
       .close-button svg{
-        fill: hsl(0, 0%, 0%);
         height: 1.5rem;
         width: 1.5rem;
+      }
+
+      .close-button svg path{
+        fill: hsl(0, 0%, 100%);
       }
 
       .cart-no-products{
@@ -145,6 +181,8 @@ class Cart extends HTMLElement {
       .cart-products{
         display: flex;
         flex-direction: column;
+        max-height: 75vh;
+        overflow-y: auto;
         padding: 1rem 0.5rem;
       }
 
@@ -176,6 +214,12 @@ class Cart extends HTMLElement {
         font-family: 'Ubuntu', sans-serif;
         font-size: 0.8rem;
         margin: 0;
+        margin-right: 0.5rem;
+      }
+
+      .cart-product span.product-price-before-discount{
+        color: hsl(0, 0%, 40%);
+        text-decoration: line-through;
       }
 
       .cart-product .remove-button{
@@ -199,7 +243,7 @@ class Cart extends HTMLElement {
         flex-direction: column;
         gap: 0.5rem;
         margin-top: 1rem;
-        padding: 0.5rem 0;
+        padding: 0.5rem 1rem;
         visibility: hidden;
       }
 
@@ -305,7 +349,6 @@ class Cart extends HTMLElement {
           transform: rotate(-400deg);
         }
       }
-
     </style>
 
     <div class="cart-container">
@@ -314,35 +357,36 @@ class Cart extends HTMLElement {
       </button>
 
       <div class="overlay ${open}">
-        <div class="cart">
-          <div class="cart-header">
-            <h4>Carrito</h4>
-            <button class="close-button">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
-            </button>
-          </div>
-          <div class="cart-products"></div>
-          <div class="cart-no-products  ${this.data.length == 0 ? 'active' : ''}">
-            <p>No hay productos en el carrito</p>
-          </div>
-          <div class="cart-footer ${this.data.length > 0 ? 'active' : ''}">
-            <div class="cart-footer-group">
-              <p>Juegos adquiridos</p>
-              <span>${this.data.length}</span>
-            </div>
-            <div class="cart-footer-group">
-              <p>Total (IVA incluido)</p>
-              <span class="total">${this.data.reduce((total, product) => total + product.price, 0)}€</span>
-            </div>
+      </div>
 
-            <button class="checkout-button">
-              Finalizar compra
-            </button>
+      <div class="cart ${open}">
+        <div class="cart-header">
+          <h4>Carrito</h4>
+          <button class="close-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+          </button>
+        </div>
+        <div class="cart-products"></div>
+        <div class="cart-no-products  ${this.data.length == 0 ? 'active' : ''}">
+          <p>No hay productos en el carrito</p>
+        </div>
+        <div class="cart-footer ${this.data.length > 0 ? 'active' : ''}">
+          <div class="cart-footer-group">
+            <p>Juegos adquiridos</p>
+            <span>${this.data.length}</span>
           </div>
-          <div class="waiting">
-            <div class="loading-outer">
-              <div class="loading-inner"></div>
-            </div>
+          <div class="cart-footer-group">
+            <p>Total (IVA incluido)</p>
+            <span class="total">${this.data.reduce((total, product) => total + product.price, 0)}€</span>
+          </div>
+
+          <button class="checkout-button">
+            Finalizar compra
+          </button>
+        </div>
+        <div class="waiting">
+          <div class="loading-outer">
+            <div class="loading-inner"></div>
           </div>
         </div>
       </div>
@@ -367,7 +411,15 @@ class Cart extends HTMLElement {
       productTitle.textContent = product.title
 
       const productPrice = document.createElement('span')
+      productPrice.classList.add('product-price')
+      const productPriceBeforeDiscount = document.createElement('span')
+      productPriceBeforeDiscount.classList.add('product-price-before-discount')
+
       productPrice.textContent = `${product.price}€`
+
+      if(product.priceBeforeDiscount){
+        productPriceBeforeDiscount.textContent = `${product.priceBeforeDiscount}€`
+      }
 
       const productButton = document.createElement('button')
       productButton.classList.add('remove-button')
@@ -376,6 +428,11 @@ class Cart extends HTMLElement {
 
       productElement.appendChild(productImage)
       productInfo.appendChild(productTitle)
+
+      if(product.priceBeforeDiscount){
+        productInfo.appendChild(productPriceBeforeDiscount)
+      }
+      
       productInfo.appendChild(productPrice)
       productElement.appendChild(productInfo)
       productElement.appendChild(productButton)
@@ -385,8 +442,9 @@ class Cart extends HTMLElement {
 
     this.shadow.querySelector('.cart-container').addEventListener('click', event => {
 
-      if(event.target.closest('.cart-button') || event.target.closest('.close-button')){
+      if(event.target.closest('.cart-button') || event.target.closest('.close-button') || event.target.closest('.overlay')){
         this.shadow.querySelector('.overlay').classList.toggle('active')
+        this.shadow.querySelector('.cart').classList.toggle('active')
       }
 
       if(event.target.closest('.remove-button')){
@@ -403,7 +461,12 @@ class Cart extends HTMLElement {
 
       if(event.target.closest('.checkout-button')){
         this.shadow.querySelector('.overlay').classList.toggle('active')
-        document.dispatchEvent(new CustomEvent('openCheckout'))
+        this.shadow.querySelector('.cart').classList.toggle('active')
+        document.dispatchEvent(new CustomEvent('openCheckout', {
+          detail: {
+            products: this.data
+          }
+        }))
       }
     })
   }

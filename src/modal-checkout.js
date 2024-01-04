@@ -6,42 +6,28 @@ class ModalCheckout extends HTMLElement {
   }
 
   connectedCallback () {
+    this.loadData()
     document.addEventListener('openCheckout', this.handleOpenCheckout.bind(this))
   }
 
   async handleOpenCheckout (event) {
-    await this.loadData()
+    this.products = event.detail.products
     await this.render()
     this.shadow.querySelector('.overlay').classList.add('active')
   }
 
-  async loadData () {
-    this.data = [
+  loadData () {
+    this.paymentMethods = [
       {
-        id: 1,
-        title: 'Producto 1',
-        price: 40,
-        image: {
-          url: 'https://picsum.photos/50/50',
-          alt: 'Producto 1'
+        name: 'stripe',
+        configuration: {
+          publicKey: 'pk_test_5'
         }
       },
       {
-        id: 2,
-        title: 'Producto 2',
-        price: 30,
-        image: {
-          url: 'https://picsum.photos/50/50',
-          alt: 'Producto 1'
-        }
-      },
-      {
-        id: 3,
-        title: 'Producto 3',
-        price: 30,
-        image: {
-          url: 'https://picsum.photos/50/50',
-          alt: 'Producto 1'
+        name: 'tarjeta',
+        configuration: {
+          publicKey: 'pk_test_5'
         }
       }
     ]
@@ -87,9 +73,18 @@ class ModalCheckout extends HTMLElement {
 
       .modal-header {
         align-items: center;
+        background-color: hsl(236 55% 25%);
         display: flex;
-        justify-content: flex-end;
-        padding: 1rem;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+      }
+
+      .modal-header h4 {
+        color: hsl(0, 0%, 100%);
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin: 0;
       }
 
       .modal-header .close-button {
@@ -100,9 +95,12 @@ class ModalCheckout extends HTMLElement {
       }
 
       .modal-header .close-button svg {
-        fill: hsl(0, 0%, 0%);
         height: 1.5rem;
         width: 1.5rem;
+      }
+
+      .modal-header .close-button svg path {
+        fill: hsl(0, 0%, 100%);
       }
 
       .modal-header .back-step {
@@ -151,9 +149,27 @@ class ModalCheckout extends HTMLElement {
         min-width: 100%;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        gap: 2rem;
+        padding: 2rem 0;
         position: relative;
         width: 100%;
+      }
+
+      .step-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0 5%;
+        width: 90%;
+      }
+
+      .step-row {
+        border-top: 1px dotted #ccc;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        padding: 1rem 5%;
+        width: 90%;
       }
 
       .step-title {
@@ -168,16 +184,6 @@ class ModalCheckout extends HTMLElement {
         font-size: 1.2rem;
         font-weight: 400;
         margin: 0;
-      }
-
-      .step-group {
-        align-items: flex-start;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        justify-content: center;
-        padding: 1rem 5%;
-        width: 90%;
       }
 
       form {
@@ -223,7 +229,6 @@ class ModalCheckout extends HTMLElement {
         cursor: pointer;
         font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
-        margin-top: 1rem;
         padding: 0.5rem 1rem;
         width: max-content;
       }
@@ -292,6 +297,125 @@ class ModalCheckout extends HTMLElement {
         width: 40px;
       }
 
+      .products{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        height: 35vh;
+        max-height: 35vh;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        padding: 0 2%;
+        width: 96%;
+      }
+
+      .products::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+      .products::-webkit-scrollbar-track {
+        background: #1e1e24;
+      }
+
+      .products::-webkit-scrollbar-thumb {
+        background: #6649b8;
+      }
+
+      .product{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .product h5{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .product span{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .product-info-container, .product-price-container{
+        align-items: center;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .product-price-before-discount{
+        color: hsl(0, 0%, 50%);
+        text-decoration: line-through;
+      }
+
+      .checkout-resume-item{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 1%;
+      }
+
+      .checkout-resume-item span{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .checkout-resume-item input{
+        border: 1px solid hsl(0, 0%, 80%);
+        border-radius: 0.5rem;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+      }
+
+      .checkout-resume-item .apply-coupon.disabled{
+        background-color: hsl(0, 0%, 50%);
+        cursor: not-allowed;
+      }
+
+      .checkout-payment{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .checkout-payment-item{
+        align-items: center;
+        display: flex;
+        padding: 0.5rem 1%;
+      }
+
+      .checkout-payment-item label{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 0.8rem;
+      }
+
+      .checkout-payment-item input[type="checkbox"]{
+        margin-right: 0.5rem;
+      }
+
+      .checkout-payment-item .pay-button{
+        margin-left: auto;
+      }
+
+      .checkout-payment-item .pay-button.disabled{
+        background-color: hsl(0, 0%, 50%);
+        cursor: not-allowed;
+      }
+
+      .finish-info p{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1rem;
+        margin: 0;
+      }
+
       @keyframes rotate-outer {
         50%{
           transform: rotate(200deg);
@@ -305,9 +429,11 @@ class ModalCheckout extends HTMLElement {
       }
     </style>
 
-    <div class="overlay">
+    <div class="modal-checkout overlay">
       <div class="modal">
         <div class="modal-header">
+          <h4>Finalizar compra</h4>
+
           <button class="close-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
           </button>
@@ -407,9 +533,8 @@ class ModalCheckout extends HTMLElement {
                 </form>
                 <button class="register-button">Registrarse</button>
               </div>
-
             </div>
-            <div class="step">
+            <div class="step payment">
               <div class="step-group">
                 <div class="info-message">
                   <p>¡Bienvenido <span class="costumer-name"></span>! Ahora vamos a finalizar tu compra.</p>
@@ -419,17 +544,85 @@ class ModalCheckout extends HTMLElement {
                 <div class="step-title">
                   <h4>Resumen de la compra</h4>
                 </div>
+                <div class="products"></div>
+              </div>
+              <div class="step-row">
+                <div class="checkout-resume">
+                  <div class="checkout-resume-item">
+                    <span>Total</span>
+                    <span class="total-price">${this.products.reduce((total, product) => total + product.price, 0)}€</span>
+                  </div>   
+                  <div class="checkout-resume-item">
+                    <input type="text" name="code" placeholder="Cupón de descuento" />
+                    <button class="apply-coupon" data-endpoint="">Aplicar</button>
+                  </div>  
+                </div>
+                <div class="checkout-payment">
+                  <div class="checkout-payment-item">
+                    <input type="checkbox" name="terms" />
+                    <label for="terms">Acepto los <a href="#">términos y condiciones</a></label>
+                  </div>
+                  <div class="checkout-payment-item payment-methods"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     `
 
-    this.shadow.querySelector('.overlay').addEventListener('click', event => {
+    this.products.forEach(product => {
 
-      event.preventDefault()
+      const productElement = document.createElement('div')
+      productElement.classList.add('product')
+
+      const productInfoContainer = document.createElement('div')
+      productInfoContainer.classList.add('product-info-container')
+      
+      const productPriceContainer = document.createElement('div')
+      productPriceContainer.classList.add('product-price-container')
+
+      const productImage = document.createElement('img')
+      productImage.setAttribute('src', product.image.url)
+      productImage.setAttribute('alt', product.image.alt)
+
+      const productTitle = document.createElement('h5')
+      productTitle.textContent = product.title
+
+      productInfoContainer.appendChild(productImage)
+      productInfoContainer.appendChild(productTitle)
+
+      const productPrice = document.createElement('span')
+      productPrice.classList.add('product-price')
+      const productPriceBeforeDiscount = document.createElement('span')
+      productPriceBeforeDiscount.classList.add('product-price-before-discount')
+      productPrice.textContent = `${product.price}€`
+
+      if(product.priceBeforeDiscount){
+        productPriceBeforeDiscount.textContent = `${product.priceBeforeDiscount}€`
+        productPriceContainer.appendChild(productPriceBeforeDiscount)
+      }
+
+      productPriceContainer.appendChild(productPrice)
+      
+      productElement.appendChild(productInfoContainer)
+      productElement.appendChild(productPriceContainer)
+
+      this.shadow.querySelector('.products').appendChild(productElement)
+    });
+
+    this.paymentMethods.forEach(paymentMethod => {
+
+      const paymentMethodElement = document.createElement('button')
+
+      paymentMethodElement.classList.add('pay-button', 'disabled');
+      paymentMethodElement.dataset.paymentMethod = paymentMethod.name
+      paymentMethodElement.textContent = `Pagar con ${paymentMethod.name.charAt(0).toUpperCase() + paymentMethod.name.slice(1)}`
+
+      this.shadow.querySelector('.payment-methods').appendChild(paymentMethodElement)
+    })
+
+    this.shadow.querySelector('.modal-checkout').addEventListener('click', event => {
 
       if (event.target.closest('.close-button')) {
         this.shadow.querySelector('.overlay').classList.remove('active')
@@ -440,9 +633,10 @@ class ModalCheckout extends HTMLElement {
         this.shadow.querySelector(`.waiting`).classList.add('active')
 
         setTimeout(() => {
-          const steps = this.shadow.querySelector('.steps');
-          steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
+          this.customerId = 1
           this.shadow.querySelector(`.waiting`).classList.remove('active')
+          // this.shadow.querySelector('.costumer-name').textContent = this.shadow.querySelector('[name="name"]').value
+          this.showNextStep()
         }, 1000)
       }
 
@@ -451,13 +645,71 @@ class ModalCheckout extends HTMLElement {
         this.shadow.querySelector(`.waiting`).classList.add('active')
 
         setTimeout(() => {
-          const steps = this.shadow.querySelector('.steps');
-          steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
+          this.customerId = 1
           this.shadow.querySelector(`.waiting`).classList.remove('active')
           this.shadow.querySelector('.costumer-name').textContent = this.shadow.querySelector('[name="name"]').value
+          this.showNextStep()
         }, 1000)
       }
+
+      if (event.target.closest('.apply-coupon')) {
+
+        const applyCoupon = event.target.closest('.apply-coupon')
+        const endpoint = applyCoupon.dataset.endpoint
+        const code = this.shadow.querySelector('[name="code"]').value 
+
+        const json = {
+          "code": code
+        }
+
+        this.shadow.querySelector(`.waiting`).classList.add('active')
+
+        setTimeout(() => {
+          this.couponId = 1
+          const multiplier = 1.15
+          const totalPrice = this.shadow.querySelector('.total-price')
+          totalPrice.textContent = `${(parseInt(totalPrice.textContent) / multiplier).toFixed(2)}€`
+          this.shadow.querySelector(`.waiting`).classList.remove('active')
+          applyCoupon.classList.add('disabled')
+          this.shadow.querySelector('[name="code"]').disabled = true
+        }, 1000)
+      }
+
+      if (event.target.closest('input[name="terms"]')) {
+        this.shadow.querySelectorAll('.pay-button').forEach(payButton => {
+          payButton.classList.toggle('disabled', !event.target.checked);
+        });
+      }
+
+      if (event.target.closest('.pay-button')) {
+
+        const payButton = event.target.closest('.pay-button')
+
+        if (!payButton.classList.contains('disabled')) {
+
+          this.shadow.querySelector(`.waiting`).classList.add('active')
+
+          setTimeout(() => {
+            this.shadow.querySelector(`.waiting`).classList.remove('active')
+            this.shadow.querySelector('.payment').innerHTML = `
+              <div class="step-group">
+                <div class="info-message">
+                  <p>¡Gracias por tu compra!</p>
+                </div>
+                <div class="finish-info">
+                  <p>Recibirás un correo electrónico con los detalles de tu compra.</p>
+                </div>
+              </div>
+            `
+          }, 1000)
+        }
+      }
     })
+  }
+
+  showNextStep () {    
+    const steps = this.shadow.querySelector('.steps');
+    steps.scrollBy({ left: steps.offsetWidth, behavior: 'smooth' })
   }
 }
 
