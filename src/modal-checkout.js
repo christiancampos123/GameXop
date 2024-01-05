@@ -693,6 +693,7 @@ class ModalCheckout extends HTMLElement {
           this.shadow.querySelector(`.waiting`).classList.add('active')
 
           setTimeout(() => {
+            localStorage.setItem('cart', JSON.stringify([]))
             this.shadow.querySelector(`.waiting`).classList.remove('active')
             this.shadow.querySelector('.payment').innerHTML = `
               <div class="step-group">

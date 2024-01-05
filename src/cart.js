@@ -3,11 +3,9 @@ class Cart extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    sessionStorage.setItem('cart', JSON.stringify([]))
   }
 
   async connectedCallback () {
-
     if(!document.addToCart){
       document.addEventListener('addToCart', this.handleAddToCart.bind(this))
       document.addToCart = true
@@ -37,9 +35,13 @@ class Cart extends HTMLElement {
         }
       }
 
-      const cart = JSON.parse(sessionStorage.getItem('cart'))
+      if(!localStorage.getItem('cart')){
+        localStorage.setItem('cart', JSON.stringify([]))
+      }
+
+      const cart = JSON.parse(localStorage.getItem('cart'))
       cart.push(response.productId)
-      sessionStorage.setItem('cart', JSON.stringify(cart))
+      localStorage.setItem('cart', JSON.stringify(cart))
 
       this.products.push(response)
       this.shadow.querySelector(`.waiting`).classList.remove('active')

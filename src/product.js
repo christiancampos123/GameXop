@@ -292,7 +292,7 @@ class Product extends HTMLElement {
     </div>
     `
 
-    const cart = JSON.parse(sessionStorage.getItem('cart'))
+    const cart = JSON.parse(localStorage.getItem('cart'))
 
     if(cart && cart.includes(this.product.id)){
       this.shadow.querySelector('.add-to-cart').classList.add('disabled')
