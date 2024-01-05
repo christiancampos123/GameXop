@@ -5,6 +5,10 @@ body{
   min-height: 100vh;
 }
 
+body.block-scroll{
+  overflow: hidden;
+}
+
 header{
   align-items: center;
   background-color: hsla(0, 0%, 0%);

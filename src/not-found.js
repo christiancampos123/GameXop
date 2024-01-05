@@ -74,6 +74,12 @@ class NotFound extends HTMLElement {
       <a href="/">Volver al inicio</a>
     </div>
     `
+
+    this.shadow.querySelector('a').addEventListener('click', (event) => {
+      event.preventDefault()
+      window.history.pushState({}, '', '/')
+      window.dispatchEvent(new PopStateEvent('popstate'))
+    })
   }
 }
 

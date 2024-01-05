@@ -51,6 +51,12 @@ class Logo extends HTMLElement {
       </div>
     </a>
     `
+
+    this.shadow.querySelector('a').addEventListener('click', (event) => {
+      event.preventDefault()
+      window.history.pushState({}, '', '/')
+      window.dispatchEvent(new PopStateEvent('popstate'))
+    })
   }
 }
 

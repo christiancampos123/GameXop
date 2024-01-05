@@ -5,9 +5,10 @@ class CategoryFilter extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback () {
-    this.loadData().then(() => this.render())
-    this.updateArrowVisibility();
+  async connectedCallback () {
+    await this.loadData()
+    await this.render()
+    await this.updateArrowVisibility();
   }
 
   async loadData () {

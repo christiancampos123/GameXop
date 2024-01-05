@@ -628,6 +628,7 @@ class ModalCheckout extends HTMLElement {
 
       if (event.target.closest('.close-button')) {
         this.shadow.querySelector('.overlay').classList.remove('active')
+        document.body.classList.remove('block-scroll');
       }
 
       if (event.target.closest('.login-button')) {

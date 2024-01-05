@@ -3,10 +3,48 @@ class Cart extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    sessionStorage.setItem('cart', JSON.stringify([]))
   }
 
   async connectedCallback () {
+
+    if(!document.addToCart){
+      document.addEventListener('addToCart', this.handleAddToCart.bind(this))
+      document.addToCart = true
+    }
+
     this.loadData().then(() => this.render())
+  }
+
+  async handleAddToCart (event) {
+
+    this.shadow.querySelector('.overlay').classList.toggle('active')
+    this.shadow.querySelector('.cart').classList.toggle('active')
+    document.body.classList.toggle('block-scroll');
+    this.shadow.querySelector(`.waiting`).classList.add('active')
+
+    setTimeout(() => {
+      const response = {
+        id: 7,
+        productId: 1,
+        path: "/juegos/call-of-duty",
+        title: 'Producto 7',
+        price: 100,
+        priceBeforeDiscount: 120,
+        image: {
+          url: 'https://picsum.photos/50/50',
+          alt: 'Producto 1'
+        }
+      }
+
+      const cart = JSON.parse(sessionStorage.getItem('cart'))
+      cart.push(response.productId)
+      sessionStorage.setItem('cart', JSON.stringify(cart))
+
+      this.products.push(response)
+      this.shadow.querySelector(`.waiting`).classList.remove('active')
+      this.render("active")
+    }, 1000)
   }
 
   async loadData () {
@@ -14,6 +52,7 @@ class Cart extends HTMLElement {
     this.products = [
       {
         id: 1,
+        path: "/juegos/call-of-duty",
         title: 'Producto 1',
         price: 30,
         priceBeforeDiscount: 40,
@@ -24,6 +63,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 2,
+        path: "/juegos/call-of-duty",
         title: 'Producto 2',
         price: 30,
         image: {
@@ -33,6 +73,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 3,
+        path: "/juegos/call-of-duty",
         title: 'Producto 3',
         price: 30,
         image: {
@@ -42,6 +83,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 4,
+        path: "/juegos/call-of-duty",
         title: 'Producto 4',
         price: 30,
         priceBeforeDiscount: 40,
@@ -52,6 +94,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 5,
+        path: "/juegos/call-of-duty",
         title: 'Producto 5',
         price: 30,
         image: {
@@ -61,6 +104,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 6,
+        path: "/juegos/call-of-duty",
         title: 'Producto 6',
         price: 30,
         image: {
@@ -203,6 +247,15 @@ class Cart extends HTMLElement {
 
       .cart-product:last-child{
         border-bottom: none;
+      }
+
+      .cart-product a{
+        color: hsl(0, 0%, 0%);
+        text-decoration: none;
+      }
+
+      .cart-product a:hover{
+        color: hsl(314 88% 55%)
       }
 
       .cart-product h5{
@@ -406,9 +459,15 @@ class Cart extends HTMLElement {
       productImage.setAttribute('alt', product.image.alt)
 
       const productInfo = document.createElement('div')
+      productInfo.classList.add('product-info')
 
+      const productLink = document.createElement('a')
+      productLink.setAttribute('href', product.path)
+      productLink.target = '_blank'
+     
       const productTitle = document.createElement('h5')
       productTitle.textContent = product.title
+      productLink.appendChild(productTitle)
 
       const productPrice = document.createElement('span')
       productPrice.classList.add('product-price')
@@ -427,7 +486,7 @@ class Cart extends HTMLElement {
       productButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>'
 
       productElement.appendChild(productImage)
-      productInfo.appendChild(productTitle)
+      productInfo.appendChild(productLink)
 
       if(product.priceBeforeDiscount){
         productInfo.appendChild(productPriceBeforeDiscount)
@@ -445,6 +504,7 @@ class Cart extends HTMLElement {
       if(event.target.closest('.cart-button') || event.target.closest('.close-button') || event.target.closest('.overlay')){
         this.shadow.querySelector('.overlay').classList.toggle('active')
         this.shadow.querySelector('.cart').classList.toggle('active')
+        document.body.classList.toggle('block-scroll');
       }
 
       if(event.target.closest('.remove-button')){

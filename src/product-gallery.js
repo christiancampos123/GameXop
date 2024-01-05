@@ -158,12 +158,18 @@ class ProductGallery extends HTMLElement {
       productElement.classList.add('product')
       productElement.dataset.endpoint = product.id
 
-      const productImageElement = document.createElement('img');
+      const productImageElement = document.createElement('img')
       productImageElement.src = product.image.url
       productImageElement.alt = product.image.alt
 
       productElement.appendChild(productImageElement)
-      this.shadow.querySelector('.product-gallery').appendChild(productElementLink);
+      this.shadow.querySelector('.product-gallery').appendChild(productElementLink)
+
+      productElementLink.addEventListener('click', event => {
+        event.preventDefault()
+        window.history.pushState({}, '', product.path)
+        window.dispatchEvent(new Event('popstate'))
+      })
     })
   }
 }
