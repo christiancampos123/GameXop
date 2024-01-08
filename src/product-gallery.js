@@ -6,7 +6,19 @@ class ProductGallery extends HTMLElement {
   }
 
   async connectedCallback () {
+
+    if(!document.filterByCategory){
+      document.addEventListener('filterByCategory', this.handleFilterByCategory.bind(this))
+      document.filterByCategory = true
+    }
+
     this.loadData().then(() => this.render())
+  }
+
+  handleFilterByCategory (event) {
+    const categoryId = event.detail.categoryId;
+    const products = categoryId === "null" ? this.products : this.products.filter(product => product.categoryId === Number(categoryId));
+    this.render(products);
   }
 
   async loadData () {
@@ -15,6 +27,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 1,
         path: "/juegos/call-of-duty",
+        categoryId: 1,
         image: {
           url: "http://localhost:5173/public/call-of-duty.jpg",
           alt: "Call of Duty"
@@ -23,6 +36,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 2,
         path: "/juegos/payday-3",
+        categoryId: 1,
         image: {
           url: "http://localhost:5173/public/payday-3.jpg",
           alt: "Payday 3"
@@ -31,6 +45,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 3,
         path: "/juegos/persona-5",
+        categoryId: 2,
         image: {
           url: "http://localhost:5173/public/persona-5.jpg",
           alt: "Persona 5"
@@ -39,6 +54,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 4,
         path: "/juegos/red-dead-redemption-2",
+        categoryId: 2,
         image: {
           url: "http://localhost:5173/public/red-dead.jpg",
           alt: "Red Dead Redemption 2"
@@ -47,6 +63,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 5,
         path: "/juegos/starfield",
+        categoryId: 3,
         image: {
           url: "http://localhost:5173/public/starfield.jpg",
           alt: "Starfield"
@@ -55,6 +72,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 6,
         path: "/juegos/street-fighter-6",
+        categoryId: 3,
         image: {
           url: "http://localhost:5173/public/street-fighter.jpg",
           alt: "Street Fighter 6"
@@ -63,6 +81,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 1,
         path: "/juegos/call-of-duty",
+        categoryId: 3,
         image: {
           url: "http://localhost:5173/public/call-of-duty.jpg",
           alt: "Call of Duty"
@@ -71,6 +90,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 2,
         path: "/juegos/payday-3",
+        categoryId: 1,
         image: {
           url: "http://localhost:5173/public/payday-3.jpg",
           alt: "Payday 3"
@@ -79,6 +99,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 3,
         path: "/juegos/persona-5",
+        categoryId: 4,
         image: {
           url: "http://localhost:5173/public/persona-5.jpg",
           alt: "Persona 5"
@@ -87,6 +108,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 4,
         path: "/juegos/red-dead-redemption-2",
+        categoryId: 1,
         image: {
           url: "http://localhost:5173/public/red-dead.jpg",
           alt: "Red Dead Redemption 2"
@@ -95,6 +117,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 5,
         path: "/juegos/starfield",
+        categoryId: 1,
         image: {
           url: "http://localhost:5173/public/starfield.jpg",
           alt: "Starfield"
@@ -103,6 +126,7 @@ class ProductGallery extends HTMLElement {
       {
         id: 6,
         path: "/juegos/street-fighter-6",
+        categoryId: 2,
         image: {
           url: "http://localhost:5173/public/street-fighter.jpg",
           alt: "Street Fighter 6"
@@ -111,7 +135,7 @@ class ProductGallery extends HTMLElement {
     ];
   }
 
-  render () {
+  render (products = this.products) {
     this.shadow.innerHTML =
     /*html*/`
     <style>
@@ -148,7 +172,7 @@ class ProductGallery extends HTMLElement {
     <div class="product-gallery"></div>
     `
 
-    this.products.forEach(product => {
+    products.forEach(product => {
       const productElementLink = document.createElement('a')
       productElementLink.href = product.path
 
@@ -157,6 +181,7 @@ class ProductGallery extends HTMLElement {
      
       productElement.classList.add('product')
       productElement.dataset.endpoint = product.id
+      productElement.dataset.categoryId = product.categoryId
 
       const productImageElement = document.createElement('img')
       productImageElement.src = product.image.url

@@ -129,6 +129,7 @@ class CategoryFilter extends HTMLElement {
 
       .category {
         align-items: center;
+        background-color: hsl(272 40% 35%);
         border-radius: 1rem;
         box-shadow: inset 0 0 1rem hsl(0deg 0% 0%);
         cursor: pointer;
@@ -198,20 +199,24 @@ class CategoryFilter extends HTMLElement {
 
     const categoryElement = document.createElement('div');
     categoryElement.classList.add('category');
-    categoryElement.style.backgroundColor = "#504e4e";
-    categoryElement.dataset.endpoint = 0;
-    categoryElement.innerHTML = `<h2>Todos</h2>`;
+    categoryElement.dataset.categoryId = null;
+
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.textContent = "Todos";
+    categoryElement.appendChild(categoryTitle);
     slider.appendChild(categoryElement);
 
     this.categories.forEach(category => {
       const categoryElement = document.createElement('div');
       categoryElement.classList.add('category');
       categoryElement.style.backgroundColor = category.backgroundColor;
-      categoryElement.dataset.endpoint = category.id;
-      categoryElement.innerHTML = `<h2>${category.title}</h2>`;
+      categoryElement.dataset.categoryId = category.id;
+
+      const categoryTitle = document.createElement('h2');
+      categoryTitle.textContent = category.title;
+      categoryElement.appendChild(categoryTitle);
       slider.appendChild(categoryElement);
     });
-
 
     sliderContainer.addEventListener('click', event => {
 
@@ -224,8 +229,10 @@ class CategoryFilter extends HTMLElement {
       }
 
       if(event.target.closest('.category')) {
-        document.dispatchEvent(new CustomEvent('category-selected', {
-          detail: event.target.closest('.category').dataset.endpoint
+        document.dispatchEvent(new CustomEvent('filterByCategory', {
+          detail: {
+            categoryId: event.target.closest('.category').dataset.categoryId
+          }
         }));
       }
     });
