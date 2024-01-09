@@ -704,7 +704,7 @@ class ModalCheckout extends HTMLElement {
                   <p>Recibirás un correo electrónico con los detalles de tu compra.</p>
                 </div>
               </div>
-            `
+            `           
           }, 1000)
         }
       }

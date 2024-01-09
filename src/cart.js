@@ -522,8 +522,10 @@ class Cart extends HTMLElement {
       }
 
       if(event.target.closest('.checkout-button')){
+
         this.shadow.querySelector('.overlay').classList.toggle('active')
         this.shadow.querySelector('.cart').classList.toggle('active')
+
         document.dispatchEvent(new CustomEvent('openCheckout', {
           detail: {
             products: this.products

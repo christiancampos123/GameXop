@@ -10,7 +10,20 @@ class FeaturedGallery extends HTMLElement {
   }
 
   async loadData () {
-  
+    this.featured = [
+      {
+        id: 1,
+        image: 'http://localhost:5173/public/minecraft.webp'
+      },
+      {
+        id: 2,
+        image: 'http://localhost:5173/public/lol.jpg'
+      },
+      {
+        id: 3,
+        image: 'http://localhost:5173/public/clash-royale.webp'
+      }
+    ]
   }
 
   render () {
@@ -61,18 +74,21 @@ class FeaturedGallery extends HTMLElement {
       }
     </style>
 
-    <div class="featured-gallery">
-      <div class="featured-element">
-        <img src="http://localhost:5173/public/minecraft.webp" />
-      </div>
-      <div class="featured-element">
-        <img src="http://localhost:5173/public/lol.jpg" />
-      </div>
-      <div class="featured-element">
-        <img src="http://localhost:5173/public/clash-royale.webp" />
-      </div>
-    </div>
+    <div class="featured-gallery"></div>
     `
+
+    const featuredGallery = this.shadow.querySelector('.featured-gallery')
+
+    this.featured.forEach(featured => {
+      const featuredElement = document.createElement('div')
+      featuredElement.className = 'featured-element'
+
+      const featuredImage = document.createElement('img')
+      featuredImage.src = featured.image
+
+      featuredElement.appendChild(featuredImage)
+      featuredGallery.appendChild(featuredElement)
+    })
   }
 }
 

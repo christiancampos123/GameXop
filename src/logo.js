@@ -23,6 +23,10 @@ class Logo extends HTMLElement {
     this.shadow.innerHTML =
     /*html*/`
     <style>
+      a{
+        text-decoration: none;
+      }
+      
       .logo{
         align-items: center;
         display: flex;
