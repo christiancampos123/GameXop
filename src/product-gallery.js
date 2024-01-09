@@ -166,7 +166,7 @@ class ProductGallery extends HTMLElement {
 
       .product {
         align-items: center;
-        border-radius: 1rem 1rem 0 0;
+        border-radius: 0.5rem;
         cursor: pointer;
         display: flex;
         flex-direction: column;
@@ -200,6 +200,7 @@ class ProductGallery extends HTMLElement {
       }
 
       .product-discount-container{
+        align-items: flex-end;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
@@ -207,6 +208,23 @@ class ProductGallery extends HTMLElement {
 
       .product-discount-info span{
         font-size: 0.9rem;
+      }
+
+      .product-discount-price{
+        align-items: center;
+        background-color: hsl(272 40% 35%);
+        display: flex;
+        gap: 0.5rem;
+        padding: 0 0.5rem;
+        width: max-content;
+      }
+
+      .product-discount-price span.product-discount-percentage{
+        font-size: 1.5rem;
+      }
+
+      .product-discount-price span:nth-child(2){
+        text-decoration: line-through;
       }
     </style>
 
@@ -247,15 +265,24 @@ class ProductGallery extends HTMLElement {
         productDiscountInfoContainer.appendChild(productDiscountEnd)
         productDiscountContainer.appendChild(productDiscountInfoContainer)
 
-        const productDiscountPercentage = document.createElement('span')
-        productDiscountPercentage.innerText = `${product.percentage}%`
+        const productDiscountPriceContainer = document.createElement('div')
+        productDiscountPriceContainer.classList.add('product-discount-price')
 
-        const productPrice = document.createElement('span')
-        productPrice.innerText = `${product.price} €`
-        productPriceElement.appendChild(productPrice)
+        const productDiscountPercentage = document.createElement('span')
+        productDiscountPercentage.classList.add('product-discount-percentage')
+        productDiscountPercentage.innerText = `- ${product.percentage}%`
+
+        productDiscountPriceContainer.appendChild(productDiscountPercentage)
 
         const productPriceBeforeDiscount = document.createElement('span')
         productPriceBeforeDiscount.innerText = `${product.priceBeforeDiscount} €`
+        productDiscountPriceContainer.appendChild(productPriceBeforeDiscount)
+
+        const productPrice = document.createElement('span')
+        productPrice.innerText = `${product.price} €`
+        productDiscountPriceContainer.appendChild(productPrice)
+
+        productDiscountContainer.appendChild(productDiscountPriceContainer)
 
       }else{
         
