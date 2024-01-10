@@ -143,7 +143,7 @@ class CategoryFilter extends HTMLElement {
         filter: brightness(1.2);
       }
 
-      .category h2 {
+      .category h3 {
         color: hsl(0, 0%, 100%);
         font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
@@ -201,7 +201,7 @@ class CategoryFilter extends HTMLElement {
     categoryElement.classList.add('category');
     categoryElement.dataset.categoryId = null;
 
-    const categoryTitle = document.createElement('h2');
+    const categoryTitle = document.createElement('h3');
     categoryTitle.textContent = "Todos";
     categoryElement.appendChild(categoryTitle);
     slider.appendChild(categoryElement);
@@ -212,7 +212,7 @@ class CategoryFilter extends HTMLElement {
       categoryElement.style.backgroundColor = category.backgroundColor;
       categoryElement.dataset.categoryId = category.id;
 
-      const categoryTitle = document.createElement('h2');
+      const categoryTitle = document.createElement('h3');
       categoryTitle.textContent = category.title;
       categoryElement.appendChild(categoryTitle);
       slider.appendChild(categoryElement);

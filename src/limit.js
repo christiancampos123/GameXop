@@ -23,8 +23,16 @@ class Limit extends HTMLElement {
       .limit{
         display: flex;
         flex-direction: ${this.flexDirection};
-       
+        height: 10px;
         width: 100%;
+        background-image: linear-gradient(
+          to right, 
+          hsl(46, 94%, 51%) 0%, 
+          hsl(271, 100%, 45%) 25%, 
+          hsl(194, 100%, 47%) 50%, 
+          hsl(358, 84%, 45%) 75%,
+          hsl(358, 84%, 45%) 100%
+        );
       }
 
       .limit-element{
@@ -33,12 +41,7 @@ class Limit extends HTMLElement {
       }
     </style>
 
-    <div class="limit">
-      <div class="limit-element" style="background-color:hsl(46, 94%, 51%)"></div>
-      <div class="limit-element" style="background-color:hsl(271, 100%, 45%)"></div>
-      <div class="limit-element" style="background-color:hsl(194, 100%, 47%)"></div>
-      <div class="limit-element" style="background-color:hsl(358, 84%, 45%)"></div>
-    </div>
+    <div class="limit"></div>
     `
   }
 }

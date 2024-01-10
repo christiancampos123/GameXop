@@ -22,12 +22,14 @@ class ProductGallery extends HTMLElement {
       {
         id: 1,
         path: "/juegos/call-of-duty",
-        title: "Call of Duty Modern Warfare 3",
         categoryId: 1,
         price: 100,
         priceBeforeDiscount: 120,
         percentage: 20,
         endOfDiscount: "31 de diciembre",
+        locale: {
+          title: "Call of Duty Modern Warfare 3",
+        },
         image: {
           url: "http://localhost:5173/public/call-of-duty.jpg",
           alt: "Call of Duty"
@@ -36,9 +38,11 @@ class ProductGallery extends HTMLElement {
       {
         id: 2,
         path: "/juegos/payday-3",
-        title: "Payday 3",
         categoryId: 1,
         price: 100,
+        locale: {
+          title: "Payday 3",
+        },
         image: {
           url: "http://localhost:5173/public/payday-3.jpg",
           alt: "Payday 3"
@@ -47,9 +51,11 @@ class ProductGallery extends HTMLElement {
       {
         id: 3,
         path: "/juegos/persona-5",
-        title: "Persona 5",
         categoryId: 2,
         price: 100,
+        locale: {
+          title: "Persona 5",
+        },
         image: {
           url: "http://localhost:5173/public/persona-5.jpg",
           alt: "Persona 5"
@@ -58,9 +64,11 @@ class ProductGallery extends HTMLElement {
       {
         id: 4,
         path: "/juegos/red-dead-redemption-2",
-        title: "Red Dead Redemption 2",
         categoryId: 2,
         price: 100,
+        locale: {
+          title: "Red Dead Redemption 2",
+        },
         image: {
           url: "http://localhost:5173/public/red-dead.jpg",
           alt: "Red Dead Redemption 2"
@@ -69,9 +77,11 @@ class ProductGallery extends HTMLElement {
       {
         id: 5,
         path: "/juegos/starfield",
-        title: "Starfield",
         categoryId: 3,
         price: 100,
+        locale: {
+          title: "Starfield",
+        },
         image: {
           url: "http://localhost:5173/public/starfield.jpg",
           alt: "Starfield"
@@ -80,9 +90,11 @@ class ProductGallery extends HTMLElement {
       {
         id: 6,
         path: "/juegos/street-fighter-6",
-        title: "Street Fighter 6",
         categoryId: 3,
         price: 100,
+        locale: {
+          title: "Street Fighter 6",
+        },
         image: {
           url: "http://localhost:5173/public/street-fighter.jpg",
           alt: "Street Fighter 6"
@@ -112,6 +124,7 @@ class ProductGallery extends HTMLElement {
 
       .product {
         align-items: center;
+        border: 0.2rem solid hsl(0, 0%, 100%);
         border-radius: 0.5rem;
         cursor: pointer;
         display: flex;
@@ -121,9 +134,10 @@ class ProductGallery extends HTMLElement {
       }
 
       .product:hover {
+        border: 0.2rem solid hsl(272 40% 35%);
         filter: brightness(1.2);
       }
-
+      
       .product-title {
         align-items: center;
         background-color: hsl(0, 0%, 0%);
@@ -227,19 +241,15 @@ class ProductGallery extends HTMLElement {
 
       const productTitleContainer = document.createElement('div')
       productTitleContainer.classList.add('product-title')
-
       const productTitle = document.createElement('h2')
-      productTitle.innerHTML = product.title
-
+      productTitle.innerHTML = product.locale.title
       productTitleContainer.appendChild(productTitle)
       productElement.appendChild(productTitleContainer)
 
       const productMediaCover = document.createElement('div')
       productMediaCover.classList.add('product-media-cover')
-
       const imageContainer = document.createElement('div')
       imageContainer.classList.add('image')
-
       const productImageElement = document.createElement('img')
       productImageElement.src = product.image.url
       productImageElement.alt = product.image.alt
