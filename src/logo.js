@@ -40,7 +40,7 @@ class Logo extends HTMLElement {
 
       .logo h1{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
         font-weight: 700;
         margin: 0;

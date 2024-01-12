@@ -108,6 +108,7 @@ class CategoryFilter extends HTMLElement {
 
       .slider-container {
         height: 100px;
+        padding: 1rem 0;
         position: relative;
         width: 100%;
       }
@@ -140,16 +141,16 @@ class CategoryFilter extends HTMLElement {
       }
 
       .category:hover {
-        filter: brightness(1.2);
+        filter: brightness(1.4);
       }
 
       .category h3 {
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
-        font-size: 1rem;
+        font-family: 'Lato', sans-serif;
+        font-size: 1.1rem;
         font-weight: 600;
         text-align: center;
-        text-transform: uppercase;
+        text-transform: capitalize;
       }
 
       .slide-arrow {
@@ -209,7 +210,6 @@ class CategoryFilter extends HTMLElement {
     this.categories.forEach(category => {
       const categoryElement = document.createElement('div');
       categoryElement.classList.add('category');
-      categoryElement.style.backgroundColor = category.backgroundColor;
       categoryElement.dataset.categoryId = category.id;
 
       const categoryTitle = document.createElement('h3');

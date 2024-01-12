@@ -86,7 +86,7 @@ class ModalCheckout extends HTMLElement {
 
       .modal-header h4 {
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
         font-weight: 400;
         margin: 0;
@@ -185,7 +185,7 @@ class ModalCheckout extends HTMLElement {
 
       .step-title h4 {
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
         font-weight: 400;
         margin: 0;
@@ -213,14 +213,14 @@ class ModalCheckout extends HTMLElement {
       }
 
       .form-element label {
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.8rem;
       }
 
       .form-element input, .form-element select {
         border: 1px solid hsl(0, 0%, 80%);
         border-radius: 0.5rem;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.8rem;
         padding: 0.5rem;
       }
@@ -232,7 +232,7 @@ class ModalCheckout extends HTMLElement {
         border-radius: 0.5rem;
         color: hsl(0, 0%, 100%);
         cursor: pointer;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         padding: 0.5rem 1rem;
         width: max-content;
@@ -250,7 +250,7 @@ class ModalCheckout extends HTMLElement {
       }
 
       .info-message p {
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         margin: 0;
       }
@@ -334,14 +334,14 @@ class ModalCheckout extends HTMLElement {
       }
 
       .product h5{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.9rem;
         font-weight: 700;
         margin: 0;
       }
 
       .product span{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: sans-serif;
         font-size: 1rem;
         font-weight: 700;
         margin: 0;
@@ -366,7 +366,7 @@ class ModalCheckout extends HTMLElement {
       }
 
       .checkout-resume-item span{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         font-weight: 700;
         margin: 0;
@@ -375,7 +375,7 @@ class ModalCheckout extends HTMLElement {
       .checkout-resume-item input{
         border: 1px solid hsl(0, 0%, 80%);
         border-radius: 0.5rem;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.8rem;
         padding: 0.5rem;
       }
@@ -399,7 +399,7 @@ class ModalCheckout extends HTMLElement {
       }
 
       .checkout-payment-item label{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.8rem;
       }
 
@@ -413,7 +413,7 @@ class ModalCheckout extends HTMLElement {
       }
 
       .finish-info p{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         margin: 0;
       }

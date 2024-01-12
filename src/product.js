@@ -35,7 +35,7 @@ class Product extends HTMLElement {
       price: 100,
       priceBeforeDiscount: 120,
       category: "Shooter",
-      platform: "PC",
+      platforms: ["windows", "apple"],
       releaseDate: "8 de noviembre de 2011",
       developer: "Infinity Ward",
       thumbnails: [
@@ -143,6 +143,16 @@ class Product extends HTMLElement {
         min-width: 50%;
       }
 
+      .platforms{
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .platforms img{
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+
       .product-header{
         align-items: center;
         display: flex;
@@ -152,7 +162,7 @@ class Product extends HTMLElement {
 
       .product-header h2{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 2rem;
         font-weight: 700;
         margin: 0;
@@ -181,7 +191,7 @@ class Product extends HTMLElement {
 
       .product-specifications-item span{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         font-weight: 400;
         margin: 0;
@@ -204,14 +214,25 @@ class Product extends HTMLElement {
 
       .product-price span{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: sans-serif;
         font-size: 1.5rem;
         font-weight: 400;
         margin: 0;
       }
 
       .product-price-before-discount{
-        text-decoration: line-through;
+        position: relative;
+      }
+
+      .product-price-before-discount::after{
+        box-shadow: 0 0 2px black;
+        border-bottom: 2px solid hsl(0, 0%, 100%);
+        content: '';
+        left: 0px;
+        right: 0px;
+        position: absolute;
+        top: 43%;
+        transform: skewY(-8deg);
       }
 
       .product-buy button{
@@ -220,7 +241,7 @@ class Product extends HTMLElement {
         border-radius: 0.5rem;
         color: hsl(0, 0%, 100%);
         cursor: pointer;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         margin-top: 1rem;
         padding: 0.5rem 1rem;
@@ -242,7 +263,7 @@ class Product extends HTMLElement {
 
       .product-body p {
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         font-weight: 400;
         margin: 0;
@@ -265,16 +286,16 @@ class Product extends HTMLElement {
               <span>${this.product.category}</span>
             </div>
             <div class="product-specifications-item">
-              <span>Plataforma:</span>
-              <span>${this.product.platform}</span>
-            </div>
-            <div class="product-specifications-item">
               <span>Lanzamiento:</span>
               <span>${this.product.releaseDate}</span>
             </div>
             <div class="product-specifications-item">
               <span>Desarrollador:</span>
               <span>${this.product.developer}</span>
+            </div>
+            <div class="product-specifications-item">
+              <span>Plataforma:</span>
+              <div class="platforms"></div>
             </div>
           </div>
           <div class="product-buy">
@@ -345,6 +366,13 @@ class Product extends HTMLElement {
       imageElement.alt = thumbnail.alt
       thumbnailElement.appendChild(imageElement)
       this.shadow.querySelector('.product-media-thumbnails').appendChild(thumbnailElement)
+    })
+
+    this.product.platforms.forEach(platform => {
+      const platformElement = document.createElement('img')
+      platformElement.src = `http://localhost:5173/public/${platform}.svg`
+      platformElement.alt = platform
+      this.shadow.querySelector('.platforms').appendChild(platformElement)
     })
 
     this.shadow.querySelector('.product').addEventListener('click', event => {

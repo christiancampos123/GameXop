@@ -51,7 +51,7 @@ class Faqs extends HTMLElement {
 
       details {
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
       }
 
@@ -59,7 +59,7 @@ class Faqs extends HTMLElement {
         border-bottom: 1px solid hsl(0, 0%, 100%);
         color: hsl(0, 0%, 100%);
         cursor: pointer;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.5rem;
         font-weight: bold;
         margin-bottom: 1rem;
@@ -67,9 +67,7 @@ class Faqs extends HTMLElement {
       }
     </style>
 
-    <div class="faqs-container">
-    
-    </div>
+    <div class="faqs-container"></div>
     `
 
     const faqsContainer = this.shadow.querySelector('.faqs-container')

@@ -12,6 +12,7 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
+    "bowser": "^2.11.0",
     "webfontloader": "^1.6.28"
   }
 }

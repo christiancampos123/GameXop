@@ -27,6 +27,7 @@ class ProductGallery extends HTMLElement {
         priceBeforeDiscount: 120,
         percentage: 20,
         endOfDiscount: "31 de diciembre",
+        platforms: ["windows", "apple"],
         locale: {
           title: "Call of Duty Modern Warfare 3",
         },
@@ -40,6 +41,7 @@ class ProductGallery extends HTMLElement {
         path: "/juegos/payday-3",
         categoryId: 1,
         price: 100,
+        platforms: ["windows", "apple"],
         locale: {
           title: "Payday 3",
         },
@@ -53,6 +55,7 @@ class ProductGallery extends HTMLElement {
         path: "/juegos/persona-5",
         categoryId: 2,
         price: 100,
+        platforms: ["windows", "apple"],
         locale: {
           title: "Persona 5",
         },
@@ -66,6 +69,7 @@ class ProductGallery extends HTMLElement {
         path: "/juegos/red-dead-redemption-2",
         categoryId: 2,
         price: 100,
+        platforms: ["windows", "apple"],
         locale: {
           title: "Red Dead Redemption 2",
         },
@@ -79,6 +83,7 @@ class ProductGallery extends HTMLElement {
         path: "/juegos/starfield",
         categoryId: 3,
         price: 100,
+        platforms: ["windows", "apple"],
         locale: {
           title: "Starfield",
         },
@@ -92,6 +97,7 @@ class ProductGallery extends HTMLElement {
         path: "/juegos/street-fighter-6",
         categoryId: 3,
         price: 100,
+        platforms: ["windows", "apple"],
         locale: {
           title: "Street Fighter 6",
         },
@@ -113,7 +119,7 @@ class ProductGallery extends HTMLElement {
 
       .product-gallery {
         display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         gap: 1rem;
         overflow-x: auto;
         scroll-behavior: smooth;
@@ -151,7 +157,7 @@ class ProductGallery extends HTMLElement {
 
       .product-title h2 {
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
         font-weight: 700;
         margin: 0;
@@ -186,15 +192,45 @@ class ProductGallery extends HTMLElement {
         flex-direction: column;
         gap: 0.5rem;
         justify-content: flex-end;
-        height: 5vh;
+        height: 7vh;
         padding: 1rem 5%;
         width: 90%;
       }
 
+      .product-info{
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+      }
+
       .product-info span{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.9rem;
+      }
+
+      .product-info .product-discount-percentage{
+        font-size: 1.5rem;
+      }
+
+      .product-specifications{
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .product-specifications .product-platforms{
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-start;
+      }
+
+      .product-specifications .product-platforms img{
+        height: 2rem;
+        width: 2rem;
       }
 
       .product-price{
@@ -202,26 +238,33 @@ class ProductGallery extends HTMLElement {
         background-color: hsl(272 40% 35%);
         display: flex;
         gap: 0.5rem;
-        padding: 0 0.5rem;
+        padding: 0.2rem 0.5rem;
         width: max-content;
       }
 
       .product-price span{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: sans-serif;
         font-size: 1rem;
       }
 
-      .product-price span.product-discount-percentage{
-        font-size: 1.5rem;
+      .product-price span.product-price-before-discount{
+        position: relative;
       }
 
-      .product-price span.product-price-before-discount{
-        text-decoration: line-through;
+      .product-price span.product-price-before-discount::after{
+        box-shadow: 0 0 2px black;
+        border-bottom: 2px solid hsl(0, 0%, 100%);
+        content: '';
+        left: 0px;
+        right: 0px;
+        position: absolute;
+        top: 43%;
+        transform: skewY(-8deg);
       }
 
       .product-price span.product-price{
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
     </style>
 
@@ -265,20 +308,36 @@ class ProductGallery extends HTMLElement {
         const productInfoContainer = document.createElement('div')
         productInfoContainer.classList.add('product-info')
 
-        const productDiscountEnd = document.createElement('span')
-        productDiscountEnd.innerText = `Oferta hasta el ${product.endOfDiscount}`;
-        productInfoContainer.appendChild(productDiscountEnd)
-
-        productDetails.appendChild(productInfoContainer)
-
-        const productPriceContainer = document.createElement('div')
-        productPriceContainer.classList.add('product-price')
-
         const productDiscountPercentage = document.createElement('span')
         productDiscountPercentage.classList.add('product-discount-percentage')
         productDiscountPercentage.innerText = `- ${product.percentage}%`
 
-        productPriceContainer.appendChild(productDiscountPercentage)
+        productInfoContainer.appendChild(productDiscountPercentage)
+
+        const productDiscountEnd = document.createElement('span')
+        productDiscountEnd.innerText = `hasta el ${product.endOfDiscount}`;
+        productInfoContainer.appendChild(productDiscountEnd)
+
+        productDetails.appendChild(productInfoContainer)
+
+        const productSpecifications = document.createElement('div')
+        productSpecifications.classList.add('product-specifications')
+        productDetails.appendChild(productSpecifications)
+
+        const productPlatforms = document.createElement('div')
+        productPlatforms.classList.add('product-platforms')
+
+        product.platforms.forEach(platform => {
+          const productPlatform = document.createElement('img')
+          productPlatform.src = `http://localhost:5173/public/${platform}.svg`
+          productPlatform.alt = platform
+          productPlatforms.appendChild(productPlatform)
+        })
+
+        productSpecifications.appendChild(productPlatforms)
+
+        const productPriceContainer = document.createElement('div')
+        productPriceContainer.classList.add('product-price')
 
         const productPriceDiscountContainer = document.createElement('div')
         productPriceDiscountContainer.classList.add('product-price-discount')
@@ -293,9 +352,25 @@ class ProductGallery extends HTMLElement {
         productPrice.innerText = `${product.price} €`
         productPriceContainer.appendChild(productPrice)
 
-        productDetails.appendChild(productPriceContainer)
+        productSpecifications.appendChild(productPriceContainer)
 
       }else{
+
+        const productSpecifications = document.createElement('div')
+        productSpecifications.classList.add('product-specifications')
+        productDetails.appendChild(productSpecifications)
+
+        const productPlatforms = document.createElement('div')
+        productPlatforms.classList.add('product-platforms')
+
+        product.platforms.forEach(platform => {
+          const productPlatform = document.createElement('img')
+          productPlatform.src = `http://localhost:5173/public/${platform}.svg`
+          productPlatform.alt = platform
+          productPlatforms.appendChild(productPlatform)
+        })
+
+        productSpecifications.appendChild(productPlatforms)
 
         const productPriceContainer = document.createElement('div')
         productPriceContainer.classList.add('product-price')
@@ -305,7 +380,7 @@ class ProductGallery extends HTMLElement {
         productPrice.innerText = `${product.price} €`
         productPriceContainer.appendChild(productPrice)
 
-        productDetails.appendChild(productPriceContainer)
+        productSpecifications.appendChild(productPriceContainer)
       }
 
       productElement.appendChild(productDetails)

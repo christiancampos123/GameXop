@@ -1,9 +1,14 @@
-import { WebFont } from 'webfontloader'
+class FontLoader extends HTMLElement {
 
-export const renderWebFont = () => {
-  WebFont.load({
-    google: {
-      families: ['Ubuntu:700,700i', 'Ubuntu+Condensed:400']
-    }
-  })
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+
+    const font = document.createElement("link");
+    font.href = "https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap";
+    font.rel = "stylesheet"
+    document.head.appendChild(font);
+  }
 }
+
+customElements.define('font-loader-component', FontLoader)

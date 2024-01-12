@@ -1,5 +1,5 @@
+import './tracking.js'
 import './font-loader.js'
-import './limit.js'
 import './logo.js'
 import './search.js'
 import './cart.js'

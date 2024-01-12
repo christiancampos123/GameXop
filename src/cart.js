@@ -3,14 +3,24 @@ class Cart extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.fingerprint = null
   }
 
   async connectedCallback () {
+
+    if(!document.setFingerprint){
+      document.addEventListener('setFingerprint', this.handleSetFingerprint.bind(this))
+      document.setFingerprint = true
+    }
+
     if(!document.addToCart){
       document.addEventListener('addToCart', this.handleAddToCart.bind(this))
       document.addToCart = true
     }
+  }
 
+  async handleSetFingerprint (event) {
+    this.fingerprint = event.detail.fingerprint
     this.loadData().then(() => this.render())
   }
 
@@ -50,6 +60,8 @@ class Cart extends HTMLElement {
   }
 
   async loadData () {
+
+    console.log(this.fingerprint)
 
     this.products = [
       {
@@ -186,7 +198,7 @@ class Cart extends HTMLElement {
 
       .cart-header h4{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         font-weight: 400;
         margin: 0;
@@ -217,7 +229,7 @@ class Cart extends HTMLElement {
       }
 
       .cart-no-products p{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         font-weight: 700;
         margin: 0;
@@ -251,6 +263,10 @@ class Cart extends HTMLElement {
         border-bottom: none;
       }
 
+      .cart-product img{
+        border-radius: 0.5rem;
+      }
+
       .cart-product a{
         color: hsl(0, 0%, 0%);
         text-decoration: none;
@@ -261,12 +277,12 @@ class Cart extends HTMLElement {
       }
 
       .cart-product h5{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         margin: 0;
       }
 
       .cart-product span{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: sans-serif;
         font-size: 0.8rem;
         margin: 0;
         margin-right: 0.5rem;
@@ -314,14 +330,14 @@ class Cart extends HTMLElement {
 
       .cart-footer-group p{
         color: hsl(0 1.5% 40%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 0.8rem;
         font-weight: 600;
         margin: 0;
       }
 
       .cart-footer-group span{
-        font-family: 'Ubuntu', sans-serif;
+        font-family: sans-serif;
         font-weight: 700;
         margin-left: 0.5rem;
       }
@@ -336,7 +352,7 @@ class Cart extends HTMLElement {
         border-radius: 0.5rem;
         color: hsl(0, 0%, 100%);
         cursor: pointer;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1rem;
         margin-top: 1rem;
         padding: 0.5rem 1rem;

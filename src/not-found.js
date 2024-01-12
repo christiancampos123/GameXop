@@ -40,7 +40,7 @@ class NotFound extends HTMLElement {
 
       .not-found h1{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 3rem;
         font-weight: 700;
         margin: 0;
@@ -49,7 +49,7 @@ class NotFound extends HTMLElement {
 
       .not-found p{
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.5rem;
         font-weight: 400;
         margin: 1rem;
@@ -59,7 +59,7 @@ class NotFound extends HTMLElement {
         background-color: hsl(284deg 100% 50%);
         border-radius: 0.5rem;
         color: hsl(0, 0%, 100%);
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
         font-weight: 400;
         padding: 1rem 2rem;
