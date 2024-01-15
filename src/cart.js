@@ -61,8 +61,6 @@ class Cart extends HTMLElement {
 
   async loadData () {
 
-    console.log(this.fingerprint)
-
     this.products = [
       {
         id: 1,

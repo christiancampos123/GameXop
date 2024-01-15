@@ -1,4 +1,5 @@
 import Bowser from "bowser";
+import getBrowserFingerprint from 'get-browser-fingerprint';
 
 class TrackingComponent extends HTMLElement {
 
@@ -15,6 +16,9 @@ class TrackingComponent extends HTMLElement {
       this.screenWidth = window.innerWidth
       this.path = window.location.pathname
       this.startTime = Date.now()
+
+      const fingerprint = getBrowserFingerprint();
+      console.log(fingerprint);
 
       this.generateFingerprint()
       this.trackingScroll()
