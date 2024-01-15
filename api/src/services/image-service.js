@@ -12,31 +12,34 @@ module.exports = class ImageService {
     for (const key in images) {
       for (const image of images[key]) {
         try {
-          if (image.originalname.includes(' ')) {
-            image.filename = image.originalname.replace(' ', '-')
+
+          let filename = image.originalname;
+
+          if (filename.includes(' ')) {
+            filename = image.originalname.replace(/ |_|/g, '-')
           }
 
-          const oldPath = path.join(__dirname, `../storage/tmp/${image.originalname}`)
+          const tmpPath = path.join(__dirname, `../storage/tmp/${image.originalname}`)
 
-          const filename = await fs.access(path.join(__dirname, `../storage/images/gallery/original/${path.parse(image.filename).name}.webp`)).then(async () => {
-            // Dar al usuario la opción de sobreescribir la imagen
-            return `${path.parse(image.filename).name}-${new Date().getTime()}.webp`
+          const newFilename = await fs.access(path.join(__dirname, `../storage/images/gallery/original/${path.parse(filename).name}.webp`)).then(async () => {
+            //TODO Dar al usuario la opción de sobreescribir la imagen
+            return `${path.parse(filename).name}-${new Date().getTime()}.webp`
           }).catch(async () => {
-            return `${path.parse(image.filename).name}.webp`
+            return `${path.parse(filename).name}.webp`
           })
 
-          await sharp(oldPath)
+          await sharp(tmpPath)
             .webp({ lossless: true })
-            .toFile(path.join(__dirname, `../storage/images/gallery/original/${filename}`))
+            .toFile(path.join(__dirname, `../storage/images/gallery/original/${newFilename}`))
 
-          await sharp(oldPath)
+          await sharp(tmpPath)
             .resize(135, 135)
             .webp({ lossless: true })
-            .toFile(path.join(__dirname, `../storage/images/gallery/thumbnail/${filename}`))
+            .toFile(path.join(__dirname, `../storage/images/gallery/thumbnail/${newFilename}`))
 
-          await fs.unlink(oldPath)
+          await fs.unlink(tmpPath)
 
-          result.push(filename)
+          result.push(newFilename)
         } catch (error) {
           console.log(error)
         }
@@ -47,6 +50,7 @@ module.exports = class ImageService {
   }
 
   resizeImages = async (entity, entityId, images) => {
+
     try {
       for (const image in images) {
         const imageConfigurations = await ImageConfiguration.findAll({
@@ -189,6 +193,8 @@ module.exports = class ImageService {
   }
 
   deleteImages = async filename => {
+
+    //TODO: Comprobar si algún elemento de la base de datos está usando la imagen
     try {
       await fs.unlink(path.join(__dirname, `../storage/images/gallery/original/${filename}`))
       await fs.unlink(path.join(__dirname, `../storage/images/gallery/thumbnail/${filename}`))

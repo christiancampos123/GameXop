@@ -58,6 +58,7 @@ module.exports = class EmailService {
   }
 
   sendEmail (email, customer) {
+    
     console.log(emailValidator.validate(customer.email))
 
     const mailOptions = {

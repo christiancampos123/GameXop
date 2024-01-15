@@ -1,4 +1,4 @@
-const OpenAI = require('./OpenAI')
+const OpenAI = require('./openai')
 
 exports.camelCase = (name) => {
 
@@ -24,6 +24,14 @@ exports.kebabCase = (name) => {
   if(name.includes("_")) {
 
     const words = name.split('_');
+    const kebabCaseName = words.join('-');
+
+    return kebabCaseName
+  }
+
+  if(name.includes(" ")) {
+
+    const words = name.split(' ');
     const kebabCaseName = words.join('-');
 
     return kebabCaseName
