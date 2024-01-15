@@ -24,11 +24,11 @@ class PageComponent extends HTMLElement {
     let filename;
 
     if (path === "/") {
-      filename = '/home.html';
+      filename = '/pages/home.html';
     } else if (path.startsWith("/juegos/")) {
-      filename = '/game.html';
+      filename = '/pages/game.html';
     } else {
-      filename = '/404.html';
+      filename = '/pages/404.html';
     }
     
     await this.loadPage(filename);
