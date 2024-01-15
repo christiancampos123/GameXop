@@ -17,9 +17,6 @@ class TrackingComponent extends HTMLElement {
       this.path = window.location.pathname
       this.startTime = Date.now()
 
-      const fingerprint = getBrowserFingerprint();
-      console.log(fingerprint);
-
       this.generateFingerprint()
       this.trackingScroll()
       this.trackingMouse()
@@ -53,19 +50,8 @@ class TrackingComponent extends HTMLElement {
   }
 
   generateFingerprint = () => {
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    context.textBaseline = 'top'
-    context.font = '14px "Arial"'
-    context.fillStyle = '#f60'
-    context.fillRect(0, 0, 120, 40)
-    context.fillStyle = '#069'
-    context.fillText('Browser PR', 2, 2)
-    context.fillStyle = 'rgba(102, 204, 0, 0.7)'
-    context.fillText('Canvas PRing', 2, 18)
 
-    const dataURL = canvas.toDataURL()
-    this.fingerprint = this.hashCode(dataURL)
+    this.fingerprint = getBrowserFingerprint()
 
     const userAgent = Bowser.parse(window.navigator.userAgent)
 

@@ -196,8 +196,11 @@ class FeaturedGallery extends HTMLElement {
     const featuredGallery = this.shadow.querySelector('.featured-gallery')
 
     this.featured.forEach(featured => {
-      const featuredElement = document.createElement('div')
+
+      const featuredElement = document.createElement('a')
+      featuredElement.href = featured.path
       featuredElement.className = 'featured-element'
+      featuredGallery.appendChild(featuredElement)
 
       const featuredImageContainer = document.createElement('div')
       featuredImageContainer.classList.add('featured-image')
@@ -247,10 +250,6 @@ class FeaturedGallery extends HTMLElement {
       featuredTitle.textContent = featured.locale.title
       featuredTitleContainer.appendChild(featuredTitle)
       featuredDetails.appendChild(featuredTitleContainer)
-
-    
-      
-      featuredGallery.appendChild(featuredElement)
     })
   }
 }

@@ -3,6 +3,7 @@ class Cart extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.uuid = null
     this.fingerprint = null
   }
 
@@ -17,7 +18,24 @@ class Cart extends HTMLElement {
       document.addEventListener('addToCart', this.handleAddToCart.bind(this))
       document.addToCart = true
     }
-  }
+
+    if(!localStorage.getItem('cartUuid')){
+
+      const json = {
+        fingerprint: this.fingerprint
+      }
+
+      const response = {
+        uuid: '051e7702-1366-4fe9-8661-fac78acf3480'
+      }
+
+      this.uuid = response.uuid
+      localStorage.setItem('cartUuid', this.uuid)
+
+    }else{
+      this.uuid = localStorage.getItem('cartUuid')
+    }
+  }    
 
   async handleSetFingerprint (event) {
     this.fingerprint = event.detail.fingerprint
@@ -30,6 +48,11 @@ class Cart extends HTMLElement {
     this.shadow.querySelector('.cart').classList.toggle('active')
     document.body.classList.toggle('block-scroll');
     this.shadow.querySelector(`.waiting`).classList.add('active')
+
+    const json = {
+      productId: event.detail.productId,
+      cartUuid: JSON.parse(localStorage.getItem('cartUuid')),
+    }
 
     setTimeout(() => {
       const response = {
