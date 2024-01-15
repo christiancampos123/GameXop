@@ -25,11 +25,11 @@ module.exports = {
           key: 'id'
         }
       },
-      saleId: {
+      returnId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'sales',
+          model: 'returns',
           key: 'id'
         }
       },
@@ -52,14 +52,14 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
-      .then(() => queryInterface.addIndex('sale_errors', ['paymentMethodId'], {
-        name: 'saleError_paymentMethodId_fk'
+      .then(() => queryInterface.addIndex('return_errors', ['paymentMethodId'], {
+        name: 'returnError_paymentMethodId_fk'
       }))
-      .then(() => queryInterface.addIndex('sale_errors', ['customerId'], {
-        name: 'saleError_customerId_fk'
+      .then(() => queryInterface.addIndex('return_errors', ['customerId'], {
+        name: 'returnError_customerId_fk'
       }))
-      .then(() => queryInterface.addIndex('sale_errors', ['saleId'], {
-        name: 'saleError_saleId_fk'
+      .then(() => queryInterface.addIndex('return_errors', ['returnId'], {
+        name: 'returnError_returnId_fk'
       }))
   },
 

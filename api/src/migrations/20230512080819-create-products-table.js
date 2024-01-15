@@ -31,9 +31,6 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
-      .then(() => queryInterface.addIndex('products', ['productCategoryId'], {
-        name: 'product_productCategoryId_fk'
-      }))
   },
 
   down: async (queryInterface, Sequelize) => {
