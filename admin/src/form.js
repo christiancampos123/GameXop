@@ -1,20 +1,20 @@
 class Form extends HTMLElement {
 
-    constructor() {
-        super()
-        this.shadow = this.attachShadow({ mode: 'open' })
-        this.title = this.getAttribute('title')
-    }
+  constructor() {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+    this.title = this.getAttribute('title')
+  }
 
-    connectedCallback() {
-        this.render()
-    }
+  connectedCallback() {
+    this.render()
+  }
 
-    render() {
+  render() {
 
-        this.shadow.innerHTML =
-            /*html*/
-            `
+    this.shadow.innerHTML =
+      /*html*/
+      `
         <style>
          * {
   margin: 0;
@@ -197,6 +197,10 @@ p {
   display: block;
 }
 
+.border-red{
+  border: 1px solid red;
+}
+
 
 
 
@@ -314,68 +318,128 @@ p {
 
         `
 
-        const buttonSave = this.shadow.querySelector(".form-save-button");
+    const buttonSave = this.shadow.querySelector(".form-save-button");
 
-        buttonSave?.addEventListener("click", () => {
-            alert("HAS PULSADO GUARDAR");
-        });
-    
-        // boton de clean
-        const buttonBroom = this.shadow.querySelector(".form-clean-button");
-    
-        buttonBroom?.addEventListener("click", () => {
-            alert("HAS PULSADO LIMPIAR");
-        });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        // const tabsSection = document.querySelector('.form');
-    
-        // tabsSection?.addEventListener('click', async (event) => {
-        //     if (event.target.closest('.form-buttons-main')) {
-        //         document.querySelector("form-buttons-main").classList.add("form-button-active");
-        //     }
-    
-        // });
-        // Pestañas de navegación
-        // array de nodos
-    
-    
-        const buttonContainer = this.shadow.querySelector('.form-buttons-change');
-    
-        buttonContainer?.addEventListener('click', (event) => {
-    
-            if (event.target.tagName === 'BUTTON') {
-                // localizo al padre
-                let father = event.target.closest('.form-buttons-change');
-                let active = father.querySelector(".form-button-active");
-                // se lo quito al hijo que lo tiene
-                active.classList.remove("form-button-active");
-                // se lo doy al pulsado
-                event.target.classList.add('form-button-active');
-                const tabDataSet = event.target.dataset.tab;
-                //console.log(tabDataSet);
-                const form = active.closest(".form-inside");
-                console.log(form);
-                //console.log(form.querySelector(".display"));
-                form.querySelector(".display").classList.remove("display");
-                let selector = `[data-tab="${tabDataSet}"]`;
-                form.querySelector(".data-tabs").querySelector(selector).classList.add("display");
-            
+    buttonSave?.addEventListener("click", () => {
+      document.dispatchEvent(new CustomEvent('save-notification', {
+
+      }));
+    });
+
+    // boton de clean
+    const buttonBroom = this.shadow.querySelector(".form-clean-button");
+
+    buttonBroom?.addEventListener("click", () => {
+      alert("HAS PULSADO LIMPIAR");
+    });
+
+
+
+
+
+
+
+
+
+
+    // const tabsSection = document.querySelector('.form');
+
+    // tabsSection?.addEventListener('click', async (event) => {
+    //     if (event.target.closest('.form-buttons-main')) {
+    //         document.querySelector("form-buttons-main").classList.add("form-button-active");
+    //     }
+
+    // });
+    // Pestañas de navegación
+    // array de nodos
+
+
+    const buttonContainer = this.shadow.querySelector('.form-buttons-change');
+
+    buttonContainer?.addEventListener('click', (event) => {
+
+      if (event.target.tagName === 'BUTTON') {
+        // localizo al padre
+        let father = event.target.closest('.form-buttons-change');
+        let active = father.querySelector(".form-button-active");
+        // se lo quito al hijo que lo tiene
+        active.classList.remove("form-button-active");
+        // se lo doy al pulsado
+        event.target.classList.add('form-button-active');
+        const tabDataSet = event.target.dataset.tab;
+        //console.log(tabDataSet);
+        const form = active.closest(".form-inside");
+        console.log(form);
+        //console.log(form.querySelector(".display"));
+        form.querySelector(".display").classList.remove("display");
+        let selector = `[data-tab="${tabDataSet}"]`;
+        form.querySelector(".data-tabs").querySelector(selector).classList.add("display");
+
+      }
+    });
+
+    // Selecciona el elemento padre .data-tabs
+    let dataTabs = this.shadow.querySelector(".data-tabs");
+
+    // Agrega un event listener al elemento padre
+    dataTabs.addEventListener('input', (event) => {
+      // Verifica si el evento proviene de un elemento de tipo input
+      if (event.target.tagName === 'INPUT') {
+        let input = event.target.closest('.validate');
+        console.log(input);
+
+        if (input) {
+          let minLength = input.dataset.minlength;
+          console.log(minLength);
+
+          if (input.value.length < parseInt(minLength) && input.value.length > 0) {
+            input.classList.add("border-red");
+          } else {
+            input.classList.remove("border-red");
+          }
+        }
+
+        if (input) {
+          let letters = input.dataset.onlyletters;
+          console.log(letters);
+          if (letters) {
+            let expresionRegular = /^[a-zA-Z]+$/;
+            console.log(input.value);
+            expresionRegular.test(input.value)
+            console.log(expresionRegular.test(input.value));
+            if (expresionRegular.test(input.value)) {
+              input.classList.remove("border-red");
+            } else {
+              input.classList.add("border-red");
             }
-        });
-    
-    
-    
-    
-    }
+            if (input.value.length == 0) {
+              input.classList.remove("border-red");
+            }
+          }
+        }
+
+        if (input) {
+          let mail = input.dataset.mail;
+          if (mail) {
+            let expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            console.log(input.value);
+            expresionRegular.test(input.value)
+            console.log(expresionRegular.test(input.value));
+            if (expresionRegular.test(input.value)) {
+              input.classList.remove("border-red");
+            } else {
+              input.classList.add("border-red");
+            }
+            if (input.value.length == 0) {
+              input.classList.remove("border-red");
+            }
+          }
+        }
+      }
+    });
+
+
+  }
 
 
 }
