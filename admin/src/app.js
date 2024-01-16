@@ -1,5 +1,4 @@
-import './formButtons.js';
-import './image.js';
+//import './image.js';
 import './modalDestroy.js';
 import './formValidation.js';
 import './title.js';
