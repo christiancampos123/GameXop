@@ -1,14 +1,12 @@
 class Cart extends HTMLElement {
-
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.uuid = null
     this.fingerprint = null
   }
 
-  async connectedCallback() {
-
+  async connectedCallback () {
     if (!document.setFingerprint) {
       document.addEventListener('setFingerprint', this.handleSetFingerprint.bind(this))
       document.setFingerprint = true
@@ -20,7 +18,6 @@ class Cart extends HTMLElement {
     }
 
     if (!localStorage.getItem('cartUuid')) {
-
       const json = {
         fingerprint: this.fingerprint
       }
@@ -31,34 +28,32 @@ class Cart extends HTMLElement {
 
       this.uuid = response.uuid
       localStorage.setItem('cartUuid', this.uuid)
-
     } else {
       this.uuid = localStorage.getItem('cartUuid')
     }
   }
 
-  async handleSetFingerprint(event) {
+  async handleSetFingerprint (event) {
     this.fingerprint = event.detail.fingerprint
     this.loadData().then(() => this.render())
   }
 
-  async handleAddToCart(event) {
-
+  async handleAddToCart (event) {
     this.shadow.querySelector('.overlay').classList.toggle('active')
     this.shadow.querySelector('.cart').classList.toggle('active')
-    document.body.classList.toggle('block-scroll');
-    this.shadow.querySelector(`.waiting`).classList.add('active')
+    document.body.classList.toggle('block-scroll')
+    this.shadow.querySelector('.waiting').classList.add('active')
 
     const json = {
       productId: event.detail.productId,
-      cartUuid: JSON.parse(localStorage.getItem('cartUuid')),
+      cartUuid: JSON.parse(localStorage.getItem('cartUuid'))
     }
 
     setTimeout(() => {
       const response = {
         id: 7,
         productId: 1,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 7',
         price: 100,
         priceBeforeDiscount: 120,
@@ -77,17 +72,16 @@ class Cart extends HTMLElement {
       localStorage.setItem('cart', JSON.stringify(cart))
 
       this.products.push(response)
-      this.shadow.querySelector(`.waiting`).classList.remove('active')
-      this.render("active")
+      this.shadow.querySelector('.waiting').classList.remove('active')
+      this.render('active')
     }, 1000)
   }
 
-  async loadData() {
-
+  async loadData () {
     this.products = [
       {
         id: 1,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 1',
         price: 30,
         priceBeforeDiscount: 40,
@@ -98,7 +92,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 2,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 2',
         price: 30,
         image: {
@@ -108,7 +102,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 3,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 3',
         price: 30,
         image: {
@@ -118,7 +112,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 4,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 4',
         price: 30,
         priceBeforeDiscount: 40,
@@ -129,7 +123,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 5,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 5',
         price: 30,
         image: {
@@ -139,7 +133,7 @@ class Cart extends HTMLElement {
       },
       {
         id: 6,
-        path: "/juegos/call-of-duty",
+        path: '/juegos/call-of-duty',
         title: 'Producto 6',
         price: 30,
         image: {
@@ -150,9 +144,9 @@ class Cart extends HTMLElement {
     ]
   }
 
-  render(open = null) {
+  render (open = null) {
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       :host{
         justify-self: flex-end;
@@ -459,7 +453,7 @@ class Cart extends HTMLElement {
           </button>
         </div>
         <div class="cart-products"></div>
-        <div class="cart-no-products  ${this.products.length == 0 ? 'active' : ''}">
+        <div class="cart-no-products  ${this.products.length === 0 ? 'active' : ''}">
           <p>No hay productos en el carrito</p>
         </div>
         <div class="cart-footer ${this.products.length > 0 ? 'active' : ''}">
@@ -539,27 +533,24 @@ class Cart extends HTMLElement {
     })
 
     this.shadow.querySelector('.cart-container').addEventListener('click', event => {
-
       if (event.target.closest('.cart-button') || event.target.closest('.close-button') || event.target.closest('.overlay')) {
         this.shadow.querySelector('.overlay').classList.toggle('active')
         this.shadow.querySelector('.cart').classList.toggle('active')
-        document.body.classList.toggle('block-scroll');
+        document.body.classList.toggle('block-scroll')
       }
 
       if (event.target.closest('.remove-button')) {
-
         const id = parseInt(event.target.closest('.remove-button').dataset.id)
-        this.shadow.querySelector(`.waiting`).classList.add('active')
+        this.shadow.querySelector('.waiting').classList.add('active')
 
         setTimeout(() => {
           this.products = this.products.filter(product => product.id !== id)
-          this.shadow.querySelector(`.waiting`).classList.remove('active')
-          this.render("active")
+          this.shadow.querySelector('.waiting').classList.remove('active')
+          this.render('active')
         }, 1000)
       }
 
       if (event.target.closest('.checkout-button')) {
-
         this.shadow.querySelector('.overlay').classList.toggle('active')
         this.shadow.querySelector('.cart').classList.toggle('active')
 
