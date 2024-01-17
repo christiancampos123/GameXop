@@ -1,19 +1,17 @@
 class Form extends HTMLElement {
-
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.title = this.getAttribute('title')
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.render()
   }
 
-  render() {
-
+  render () {
     this.shadow.innerHTML =
-      /*html*/
+      /* html */
       `
         <style>
          * {
@@ -318,29 +316,20 @@ p {
 
         `
 
-    const buttonSave = this.shadow.querySelector(".form-save-button");
+    const buttonSave = this.shadow.querySelector('.form-save-button')
 
-    buttonSave?.addEventListener("click", () => {
+    buttonSave?.addEventListener('click', () => {
       document.dispatchEvent(new CustomEvent('save-notification', {
 
-      }));
-    });
+      }))
+    })
 
     // boton de clean
-    const buttonBroom = this.shadow.querySelector(".form-clean-button");
+    const buttonBroom = this.shadow.querySelector('.form-clean-button')
 
-    buttonBroom?.addEventListener("click", () => {
-      alert("HAS PULSADO LIMPIAR");
-    });
-
-
-
-
-
-
-
-
-
+    buttonBroom?.addEventListener('click', () => {
+      alert('HAS PULSADO LIMPIAR')
+    })
 
     // const tabsSection = document.querySelector('.form');
 
@@ -353,95 +342,88 @@ p {
     // Pestañas de navegación
     // array de nodos
 
-
-    const buttonContainer = this.shadow.querySelector('.form-buttons-change');
+    const buttonContainer = this.shadow.querySelector('.form-buttons-change')
 
     buttonContainer?.addEventListener('click', (event) => {
-
       if (event.target.tagName === 'BUTTON') {
         // localizo al padre
-        let father = event.target.closest('.form-buttons-change');
-        let active = father.querySelector(".form-button-active");
+        const father = event.target.closest('.form-buttons-change')
+        const active = father.querySelector('.form-button-active')
         // se lo quito al hijo que lo tiene
-        active.classList.remove("form-button-active");
+        active.classList.remove('form-button-active')
         // se lo doy al pulsado
-        event.target.classList.add('form-button-active');
-        const tabDataSet = event.target.dataset.tab;
-        //console.log(tabDataSet);
-        const form = active.closest(".form-inside");
-        console.log(form);
-        //console.log(form.querySelector(".display"));
-        form.querySelector(".display").classList.remove("display");
-        let selector = `[data-tab="${tabDataSet}"]`;
-        form.querySelector(".data-tabs").querySelector(selector).classList.add("display");
-
+        event.target.classList.add('form-button-active')
+        const tabDataSet = event.target.dataset.tab
+        // console.log(tabDataSet);
+        const form = active.closest('.form-inside')
+        console.log(form)
+        // console.log(form.querySelector(".display"));
+        form.querySelector('.display').classList.remove('display')
+        const selector = `[data-tab="${tabDataSet}"]`
+        form.querySelector('.data-tabs').querySelector(selector).classList.add('display')
       }
-    });
+    })
 
     // Selecciona el elemento padre .data-tabs
-    let dataTabs = this.shadow.querySelector(".data-tabs");
+    const dataTabs = this.shadow.querySelector('.data-tabs')
 
     // Agrega un event listener al elemento padre
     dataTabs.addEventListener('input', (event) => {
       // Verifica si el evento proviene de un elemento de tipo input
       if (event.target.tagName === 'INPUT') {
-        let input = event.target.closest('.validate');
-        console.log(input);
+        const input = event.target.closest('.validate')
+        console.log(input)
 
         if (input) {
-          let minLength = input.dataset.minlength;
-          console.log(minLength);
+          const minLength = input.dataset.minlength
+          console.log(minLength)
 
           if (input.value.length < parseInt(minLength) && input.value.length > 0) {
-            input.classList.add("border-red");
+            input.classList.add('border-red')
           } else {
-            input.classList.remove("border-red");
+            input.classList.remove('border-red')
           }
         }
 
         if (input) {
-          let letters = input.dataset.onlyletters;
-          console.log(letters);
+          const letters = input.dataset.onlyletters
+          console.log(letters)
           if (letters) {
-            let expresionRegular = /^[a-zA-Z]+$/;
-            console.log(input.value);
+            const expresionRegular = /^[a-zA-Z]+$/
+            console.log(input.value)
             expresionRegular.test(input.value)
-            console.log(expresionRegular.test(input.value));
+            console.log(expresionRegular.test(input.value))
             if (expresionRegular.test(input.value)) {
-              input.classList.remove("border-red");
+              input.classList.remove('border-red')
             } else {
-              input.classList.add("border-red");
+              input.classList.add('border-red')
             }
-            if (input.value.length == 0) {
-              input.classList.remove("border-red");
+            if (input.value.length === 0) {
+              input.classList.remove('border-red')
             }
           }
         }
 
         if (input) {
-          let mail = input.dataset.mail;
+          const mail = input.dataset.mail
           if (mail) {
-            let expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            console.log(input.value);
+            const expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            console.log(input.value)
             expresionRegular.test(input.value)
-            console.log(expresionRegular.test(input.value));
+            console.log(expresionRegular.test(input.value))
             if (expresionRegular.test(input.value)) {
-              input.classList.remove("border-red");
+              input.classList.remove('border-red')
             } else {
-              input.classList.add("border-red");
+              input.classList.add('border-red')
             }
-            if (input.value.length == 0) {
-              input.classList.remove("border-red");
+            if (input.value.length === 0) {
+              input.classList.remove('border-red')
             }
           }
         }
       }
-    });
-
-
+    })
   }
-
-
 }
 
-customElements.define('form-component', Form);
+customElements.define('form-component', Form)

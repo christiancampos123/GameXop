@@ -1,15 +1,2 @@
-<<<<<<< HEAD
 /node_modules
-/src/config/config.json
-.env
-package-lock.json
-=======
-# Dependencias
-node_modules/
-
-# Archivos de configuración
-*.env
-
-# Logs y archivos temporales
-*.log
->>>>>>> 5395657482bb5938ab2de316cc3ca8152d72ae47
+/package-lock.json

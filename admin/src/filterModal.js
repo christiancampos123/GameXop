@@ -1,26 +1,24 @@
 class FilterModal extends HTMLElement {
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+    // this.title = this.getAttribute('title')
+  }
 
-    constructor() {
-        super()
-        this.shadow = this.attachShadow({ mode: 'open' })
-        //this.title = this.getAttribute('title')
-    }
+  connectedCallback () {
+    const background = document.querySelector('.background-block')
+    // const filterMenu = document.querySelector(".filter-modal");
 
-    connectedCallback() {
-        const background = document.querySelector(".background-block");
-        // const filterMenu = document.querySelector(".filter-modal");
+    document.addEventListener('showFilterModal', event => {
+      background.classList.add('background-block-active')
+      this.openModal()
+    })
+    this.render()
+  }
 
-        document.addEventListener("showFilterModal", (event => {
-            background.classList.add("background-block-active");
-            this.openModal();
-        }));
-        this.render()
-    }
-
-    render() {
-
-        this.shadow.innerHTML =
-            /*html*/
+  render () {
+    this.shadow.innerHTML =
+            /* html */
             `
             <style>
                 * {
@@ -211,6 +209,7 @@ class FilterModal extends HTMLElement {
                 justify-content: center;
                 padding: 0.7rem;
                 width: 100%;
+                color: white;
                 }
 
                 .modal-delete-box-buttons-accept {
@@ -265,46 +264,32 @@ class FilterModal extends HTMLElement {
             </section>
 
             `
-        //modal
-        const buttonAccept = this.shadow.querySelector(".filter-inside-buttons-accept");
-        const buttonDecline = this.shadow.querySelector(".filter-inside-buttons-decline");
-        const background = this.shadow.querySelector(".background-block");
-        const filterMenu = this.shadow.querySelector(".filter-modal");
+    // modal
+    const buttonAccept = this.shadow.querySelector('.filter-inside-buttons-accept')
+    const buttonDecline = this.shadow.querySelector('.filter-inside-buttons-decline')
 
+    buttonAccept?.addEventListener('click', () => {
+      this.closeModal()
+    })
 
-        buttonAccept?.addEventListener("click", () => {
-            this.closeModal();
-        });
+    buttonDecline?.addEventListener('click', () => {
+      this.closeModal()
+    })
+  }
 
-        buttonDecline?.addEventListener("click", () => {
-            this.closeModal();
-        });
+  openModal () {
+    const filterMenu = this.shadow.querySelector('.filter-modal')
+    filterMenu.classList.add('filter-modal-active')
+  }
 
-    }
+  closeModal () {
+    // const background = this.shadow.querySelector(".background-block");
+    const filterMenu = this.shadow.querySelector('.filter-modal')
+    const background = document.querySelector('.background-block')
 
-    openModal() {
-        const filterMenu = this.shadow.querySelector(".filter-modal");
-        filterMenu.classList.add("filter-modal-active");
-    }
-
-    closeModal() {
-        //const background = this.shadow.querySelector(".background-block");
-        const filterMenu = this.shadow.querySelector(".filter-modal");
-        const background = document.querySelector(".background-block");
-
-        background.classList.remove("background-block-active");
-        filterMenu.classList.remove("filter-modal-active");
-    }
-
-
+    background.classList.remove('background-block-active')
+    filterMenu.classList.remove('filter-modal-active')
+  }
 }
 
-customElements.define('filter-modal', FilterModal);
-
-
-
-
-
-
-
-
+customElements.define('filter-modal', FilterModal)

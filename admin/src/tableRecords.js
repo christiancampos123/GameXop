@@ -1,19 +1,16 @@
 class TableRecords extends HTMLElement {
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+  }
 
-    constructor() {
-        super()
-        this.shadow = this.attachShadow({ mode: 'open' })
-    }
+  connectedCallback () {
+    this.render()
+  }
 
-    connectedCallback() {
-
-        this.render()
-    }
-
-    render() {
-
-        this.shadow.innerHTML =
-            /*html*/
+  render () {
+    this.shadow.innerHTML =
+            /* html */
             `
         <style>
 
@@ -258,63 +255,26 @@ p {
             </article>
         </section>
         `
-        const filterButton = this.shadow.querySelector(".filter-button");
+    const filterButton = this.shadow.querySelector('.filter-button')
 
-        filterButton?.addEventListener("click", () => {
-            document.dispatchEvent(new CustomEvent('showFilterModal', {
-            }));
-        });
+    filterButton?.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('showFilterModal', {
+      }))
+    })
 
-        const tableSection = this.shadow.querySelector('.table-component');
-        tableSection?.addEventListener('click', async (event) => {
-            if (event.target.closest('.edit-button')) {
-                alert("Has pulsado edition");
-            }
+    const tableSection = this.shadow.querySelector('.table-component')
+    tableSection?.addEventListener('click', async (event) => {
+      if (event.target.closest('.edit-button')) {
+        alert('Has pulsado edition')
+      }
 
-            if (event.target.closest('.delete-button')) {
-                document.dispatchEvent(new CustomEvent('showDeleteModal', {
+      if (event.target.closest('.delete-button')) {
+        document.dispatchEvent(new CustomEvent('showDeleteModal', {
 
-                }));
-
-            }
-        });
-
-
-    }
-
-
-
+        }))
+      }
+    })
+  }
 }
 
-customElements.define('table-records-component', TableRecords);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+customElements.define('table-records-component', TableRecords)

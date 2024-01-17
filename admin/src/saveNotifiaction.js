@@ -1,33 +1,32 @@
 class SaveNotification extends HTMLElement {
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+    this.notificationMessage = this.getAttribute('message')
+  }
 
-    constructor() {
-      super();
-      this.shadow = this.attachShadow({ mode: 'open' });
-      this.notificationMessage = this.getAttribute('message');
-    }
-  
-    connectedCallback() {
-      // Agrega un listener para el evento personalizado "save-notification"
-      document.addEventListener("save-notification", () => {
-        this.showNotification();
-      });
-  
-      this.render();
-    }
-  
-    showNotification() {
-      this.shadow.querySelector('.notification-container').classList.add('show');
-      setTimeout(() => {
-        this.hideNotification();
-      }, 5000); // La notificación se ocultará después de 5 segundos
-    }
-  
-    hideNotification() {
-      this.shadow.querySelector('.notification-container').classList.remove('show');
-    }
-  
-    render() {
-      this.shadow.innerHTML = /*html*/ `
+  connectedCallback () {
+    // Agrega un listener para el evento personalizado "save-notification"
+    document.addEventListener('save-notification', () => {
+      this.showNotification()
+    })
+
+    this.render()
+  }
+
+  showNotification () {
+    this.shadow.querySelector('.notification-container').classList.add('show')
+    setTimeout(() => {
+      this.hideNotification()
+    }, 5000) // La notificación se ocultará después de 5 segundos
+  }
+
+  hideNotification () {
+    this.shadow.querySelector('.notification-container').classList.remove('show')
+  }
+
+  render () {
+    this.shadow.innerHTML = /* html */ `
         <style>
           .notification-container {
             display: none;
@@ -50,11 +49,10 @@ class SaveNotification extends HTMLElement {
         <div class="notification-container">
           <p>Se haguardado correctamente</p>
         </div>
-      `;
-  
-      // No es necesario mostrar la notificación aquí, ya que se mostrará cuando se reciba el evento
-    }
+      `
+
+    // No es necesario mostrar la notificación aquí, ya que se mostrará cuando se reciba el evento
   }
-  
-  customElements.define('save-notification-component', SaveNotification);
-  
+}
+
+customElements.define('save-notification-component', SaveNotification)

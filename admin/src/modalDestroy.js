@@ -1,30 +1,29 @@
 class ModalDestroy extends HTMLElement {
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+  }
 
-    constructor() {
-        super()
-        this.shadow = this.attachShadow({ mode: 'open' })
-    }
+  connectedCallback () {
+    const background = document.querySelector('.background-block')
+    // const filterMenu = document.querySelector(".filter-modal");
 
-    connectedCallback() {
-        const background = document.querySelector(".background-block");
-        // const filterMenu = document.querySelector(".filter-modal");
+    document.addEventListener('showDeleteModal', event => {
+      background.classList.add('background-block-active')
+      this.openModal()
+    })
+    this.render()
+  }
 
-        document.addEventListener("showDeleteModal", (event => {
-            background.classList.add("background-block-active");
-            this.openModal();
-        }));
-        this.render()
-    }
-
-    render() {
-
-        this.shadow.innerHTML =
-            /*html*/
+  render () {
+    this.shadow.innerHTML =
+            /* html */
             `
         <style>
             /* modal de delete VVVVVVVV */
             .modal-delete {
             display: none;
+            color:white;
             }
 
             .modal-delete-active {
@@ -63,6 +62,7 @@ class ModalDestroy extends HTMLElement {
             justify-content: center;
             padding: 0.7rem;
             width: 100%;
+            color:white;
             }
 
             .modal-delete-box-buttons-accept {
@@ -94,32 +94,29 @@ class ModalDestroy extends HTMLElement {
         </div>
     </section>
         `
-        const acceptButton = this.shadow.querySelector(".modal-delete-box-buttons-accept");
-        const cancelButton = this.shadow.querySelector(".modal-delete-box-buttons-decline");
-        
-        acceptButton?.addEventListener("click", () => {
-            this.closeModal();
-        });
-    
-        cancelButton?.addEventListener("click", () => {
-            this.closeModal();
-        });
+    const acceptButton = this.shadow.querySelector('.modal-delete-box-buttons-accept')
+    const cancelButton = this.shadow.querySelector('.modal-delete-box-buttons-decline')
 
-    }
+    acceptButton?.addEventListener('click', () => {
+      this.closeModal()
+    })
 
-    openModal() {
-        const deleteModal = this.shadow.querySelector(".modal-delete");
-        deleteModal.classList.add("modal-delete-active");
-    }
+    cancelButton?.addEventListener('click', () => {
+      this.closeModal()
+    })
+  }
 
-    closeModal() {
-        const deleteModal = this.shadow.querySelector(".modal-delete");
-        const background = document.querySelector(".background-block");
+  openModal () {
+    const deleteModal = this.shadow.querySelector('.modal-delete')
+    deleteModal.classList.add('modal-delete-active')
+  }
 
-        background.classList.remove("background-block-active");
-        deleteModal.classList.remove("modal-delete-active");
-    }
-
+  closeModal () {
+    const deleteModal = this.shadow.querySelector('.modal-delete')
+    const background = document.querySelector('.background-block')
+    background.classList.remove('background-block-active')
+    deleteModal.classList.remove('modal-delete-active')
+  }
 }
 
-customElements.define('modal-destroy-component', ModalDestroy);
+customElements.define('modal-destroy-component', ModalDestroy)
