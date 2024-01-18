@@ -18,12 +18,8 @@ module.exports = {
         }
       },
       parentSlugId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'locale_seo_slugs',
-          key: 'id'
-        }
+        allowNull: false,
+        type: Sequelize.STRING
       },
       languageAlias: {
         allowNull: false,
