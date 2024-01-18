@@ -2,71 +2,56 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('cart_details', {
+    await queryInterface.createTable('customer_trackings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      cartId: {
-        allowNull: false,
+      customerId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
-          model: 'carts',
+          model: 'customers',
           key: 'id'
         }
       },
-      productId: {
+      fingerprint: {
         allowNull: false,
+        type: Sequelize.STRING
+      },
+      localeSeoId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
-          model: 'products',
+          model: 'locale_seos',
           key: 'id'
         }
       },
-      localeId: {
-        allowNull: false,
+      localeSlugSeoId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
-          model: 'locales',
+          model: 'locale_seo_slugs',
           key: 'id'
         }
       },
-      priceId: {
+      path: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'prices',
-          key: 'id'
-        }
+        type: Sequelize.STRING
       },
-      priceDiscountId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'price_discounts',
-          key: 'id'
-        }
-      },
-      taxId: {
+      eventTime: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'taxes',
-          key: 'id'
-        }
+        type: Sequelize.DOUBLE
       },
-      basePrice: {
+      eventName: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.STRING
       },
-      taxPrice: {
+      event: {
         allowNull: false,
-        type: Sequelize.DECIMAL
-      },
-      quantity: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.JSON
       },
       createdAt: {
         allowNull: false,
@@ -83,6 +68,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('cart_details')
+    await queryInterface.dropTable('customer_trackings')
   }
 }
