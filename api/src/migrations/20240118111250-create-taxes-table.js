@@ -45,6 +45,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('dial_codes', ['countryId'], {
+      name: 'taxes_countryId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {

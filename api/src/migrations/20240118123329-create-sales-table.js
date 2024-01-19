@@ -78,6 +78,18 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('sales', ['cartId'], {
+      name: 'sales_cartId_fk'
+    })
+    await queryInterface.addIndex('sales', ['customerId'], {
+      name: 'sales_customerId_fk'
+    })
+    await queryInterface.addIndex('sales', ['paymentMethodId'], {
+      name: 'sales_paymentMethodId_fk'
+    })
+    await queryInterface.addIndex('sales', ['couponId'], {
+      name: 'sales_couponId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {

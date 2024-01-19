@@ -69,6 +69,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('images', ['imageConfigurationId'], {
+      name: 'images_imageConfigurationId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {

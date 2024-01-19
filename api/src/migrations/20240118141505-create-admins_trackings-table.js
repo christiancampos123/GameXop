@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'users', // Cambiado a 'users' para hacer referencia a la tabla correcta
+          model: 'users',
           key: 'id'
         }
       },
@@ -36,6 +36,9 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE
       }
+    })
+    await queryInterface.addIndex('admin_trackings', ['userId'], {
+      name: 'admin_trackings_userId_fk'
     })
   },
 

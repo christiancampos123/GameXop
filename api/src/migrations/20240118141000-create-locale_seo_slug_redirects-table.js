@@ -37,6 +37,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('locale_seo_slug_redirects', ['localeSeoSlugId'], {
+      name: 'locale_seo_slug_redirects_localeSeoSlugId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {

@@ -33,6 +33,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('cities', ['countryId'], {
+      name: 'cities_countryId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {

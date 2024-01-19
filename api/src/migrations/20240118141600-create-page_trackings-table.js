@@ -71,6 +71,15 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('page_trackings', ['customerId'], {
+      name: 'page_trackings_customerId_fk'
+    })
+    await queryInterface.addIndex('page_trackings', ['localeSeoId'], {
+      name: 'page_trackings_localeSeoId_fk'
+    })
+    await queryInterface.addIndex('page_trackings', ['localeSlugSeoId'], {
+      name: 'page_trackings_localeSlugSeoId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {

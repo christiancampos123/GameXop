@@ -14,11 +14,19 @@ module.exports = {
         type: Sequelize.UUID
       },
       customerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'customers',
+          key: 'id'
+        }
       },
       fingerprintId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'fingerprints',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +39,12 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE
       }
+    })
+    await queryInterface.addIndex('carts', ['customerId'], {
+      name: 'carts_customerId_fk'
+    })
+    await queryInterface.addIndex('carts', ['fingerprintId'], {
+      name: 'carts_fingerprintId_fk'
     })
   },
 

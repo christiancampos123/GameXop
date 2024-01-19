@@ -45,6 +45,12 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+    await queryInterface.addIndex('prices', ['productId'], {
+      name: 'prices_productId_fk'
+    })
+    await queryInterface.addIndex('prices', ['taxId'], {
+      name: 'prices_taxId_fk'
+    })
   },
 
   down: async (queryInterface, Sequelize) => {
