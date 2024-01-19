@@ -18,8 +18,8 @@ module.exports = {
         }
       },
       parentSlugId: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        defaultValue: null
       },
       languageAlias: {
         allowNull: false,

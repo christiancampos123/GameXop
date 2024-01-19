@@ -33,6 +33,10 @@ module.exports = {
           key: 'id'
         }
       },
+      productName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       priceId: {
         allowNull: false,
         type: Sequelize.INTEGER,

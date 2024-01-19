@@ -56,6 +56,10 @@ module.exports = {
           key: 'id'
         }
       },
+      productName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       basePrice: {
         allowNull: false,
         type: Sequelize.DECIMAL(10, 2)

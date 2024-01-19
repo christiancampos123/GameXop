@@ -19,10 +19,11 @@ module.exports = {
       },
       userId: {
         allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      action: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users', // Cambiado a 'users' para hacer referencia a la tabla correcta
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

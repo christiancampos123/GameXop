@@ -9,17 +9,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      countryId: {
+      iso2: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'countries',
-          key: 'id'
-        }
+        type: Sequelize.STRING
+      },
+      iso3: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      visible: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 1
       },
       createdAt: {
         allowNull: false,
