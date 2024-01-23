@@ -63,6 +63,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Coupon.associate = function (models) {
+    Coupon.hasMany(models.Sale, { as: 'sales', foreignKey: 'couponId' })
 
   }
 

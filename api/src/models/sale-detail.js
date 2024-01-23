@@ -129,6 +129,7 @@ module.exports = function (sequelize, DataTypes) {
     SaleDetail.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId' })
     SaleDetail.belongsTo(models.PriceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId' })
     SaleDetail.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId' })
+
   }
 
   return SaleDetail

@@ -97,6 +97,8 @@ module.exports = function (sequelize, DataTypes) {
     Fingerprint.hasMany(models.Cart, { as: 'carts', foreignKey: 'fingerprintId' })
     Fingerprint.hasMany(models.Contact, { as: 'contacts', foreignKey: 'fingerprintId' })
     Fingerprint.hasMany(models.CustomerTracking, { as: 'customerTrackings', foreignKey: 'fingerprintId' })
+    Fingerprint.hasMany(models.pageTracking, { as: 'pageTrackings', foreignKey: 'fingerprintId' })
+
   }
 
   return Fingerprint

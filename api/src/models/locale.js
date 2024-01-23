@@ -74,6 +74,9 @@ module.exports = function (sequelize, DataTypes) {
     // algo
 
     Locale.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'localeId' })
+    Locale.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'localeId' })
+    Locale.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'localeId' })
+
   }
 
   return Locale
