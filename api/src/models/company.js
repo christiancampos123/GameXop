@@ -53,6 +53,27 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'companies_countryId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'countryId' }
+        ]
+      },
+      {
+        name: 'companies_cityId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'cityId' }
+        ]
+      },
+      {
+        name: 'companies_dialCodeId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'dialCodeId' }
+        ]
       }
     ]
   })

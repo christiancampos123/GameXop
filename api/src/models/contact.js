@@ -56,6 +56,20 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'contacts_fingerprintId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'fingerprintId' }
+        ]
+      },
+      {
+        name: 'contacts_email_index',
+        using: 'BTREE',
+        fields: [
+          { name: 'email' }
+        ]
       }
     ]
   })

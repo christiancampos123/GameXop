@@ -53,6 +53,13 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'admin_trackings_userId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'userId' }
+        ]
       }
     ]
   })

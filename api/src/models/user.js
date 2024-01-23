@@ -6,38 +6,18 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
-    languageAlias: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    url: {
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.STRING
-    },
-    redirection: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: 0
-    },
-    menu: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: 1
-    },
-    changeFrequency: {
-      type: DataTypes.STRING
-    },
-    priority: {
-      type: DataTypes.DECIMAL
-    },
-    sitemap: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: 1
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -68,6 +48,13 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'users_email_index',
+        using: 'BTREE',
+        fields: [
+          { name: 'email' }
         ]
       }
     ]

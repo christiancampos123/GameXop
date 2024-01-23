@@ -76,6 +76,34 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'sales_cartId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'cartId' }
+        ]
+      },
+      {
+        name: 'sales_customerId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'sales_paymentMethodId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'paymentMethodId' }
+        ]
+      },
+      {
+        name: 'sales_couponId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'couponId' }
+        ]
       }
     ]
   })
