@@ -13,6 +13,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
+    customerId: {
+      type: DataTypes.INTEGER
+    },
+    fingerprintId: {
+      type: DataTypes.INTEGER
+    },
     createdAt: {
       type: DataTypes.DATE,
       get () {
@@ -47,8 +53,6 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Cart.associate = function (models) {
-    Cart.belongsTo(models.Country, { foreignKey: 'countryId', as: 'country' })
-    // Define otras asociaciones si es necesario
   }
 
   return Cart

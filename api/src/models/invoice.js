@@ -1,23 +1,18 @@
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const Invoice = sequelize.define('Invoice', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
+    reference: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
+      allowNull: false
     },
-    order: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
+    path: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,9 +30,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'invoices',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +48,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  Invoice.associate = function (models) {
+
   }
 
-  return Faq
+  return Invoice
 }

@@ -1,23 +1,16 @@
+// models/EmailError.js
+
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const EmailError = sequelize.define('EmailError', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
-    },
-    order: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
+    error: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -37,7 +30,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'email_errors',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -50,10 +43,11 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
+
   })
 
-  Faq.associate = function (models) {
+  EmailError.associate = function (models) {
   }
 
-  return Faq
+  return EmailError
 }

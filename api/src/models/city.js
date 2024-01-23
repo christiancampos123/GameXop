@@ -46,8 +46,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   City.associate = function (models) {
-    City.belongsTo(models.Country, { foreignKey: 'countryId', as: 'country' })
-    // Define otras asociaciones si es necesario
+
   }
 
   return City

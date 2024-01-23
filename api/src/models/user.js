@@ -1,23 +1,43 @@
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const User = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
+    languageAlias: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
+      allowNull: false
     },
-    order: {
-      type: DataTypes.INTEGER,
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING
+    },
+    redirection: {
+      type: DataTypes.BOOLEAN,
       defaultValue: 0
+    },
+    menu: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 1
+    },
+    changeFrequency: {
+      type: DataTypes.STRING
+    },
+    priority: {
+      type: DataTypes.DECIMAL
+    },
+    sitemap: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 1
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,9 +55,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'users',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +73,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  User.associate = function (models) {
+
   }
 
-  return Faq
+  return User
 }

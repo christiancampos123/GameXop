@@ -1,23 +1,17 @@
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const SaleError = sequelize.define('SaleError', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
-    },
-    order: {
+    errorCode: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      allowNull: false
+    },
+    errorMessage: {
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,9 +29,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'sale_errors',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +47,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  SaleError.associate = function (models) {
+
   }
 
-  return Faq
+  return SaleError
 }

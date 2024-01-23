@@ -1,23 +1,10 @@
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const SentEmail = sequelize.define('SentEmail', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
-    },
-    order: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,9 +22,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'sent_emails',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +40,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  SentEmail.associate = function (models) {
+
   }
 
-  return Faq
+  return SentEmail
 }

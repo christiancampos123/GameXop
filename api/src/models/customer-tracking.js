@@ -1,23 +1,23 @@
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const CustomerTracking = sequelize.define('CustomerTracking', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
+    eventTime: {
+      type: DataTypes.DOUBLE
     },
-    order: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
+    eventName: {
+      type: DataTypes.STRING
+    },
+    path: {
+      type: DataTypes.STRING
+    },
+    event: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'customer_trackings',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +52,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  CustomerTracking.associate = function (models) {
+
   }
 
-  return Faq
+  return CustomerTracking
 }

@@ -1,19 +1,56 @@
-// models/Email.js
+// models/ApiTracking.js
 
 module.exports = function (sequelize, DataTypes) {
-  const Email = sequelize.define('Email', {
+  const ApiTracking = sequelize.define('ApiTracking', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
-    subject: {
+    customerId: {
+      type: DataTypes.INTEGER
+    },
+    fingerprintId: {
+      type: DataTypes.INTEGER
+    },
+    ip: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    path: {
+    isRobot: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    resource: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    resourceElement: {
+      type: DataTypes.INTEGER
+    },
+    method: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    httpCode: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    message: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    startTime: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    endTime: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    latencyMS: {
+      type: DataTypes.DOUBLE,
       allowNull: false
     },
     createdAt: {
@@ -34,7 +71,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'emails',
+    tableName: 'api_trackings',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -47,12 +84,10 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-
   })
 
-  Email.associate = function (models) {
-
+  ApiTracking.associate = function (models) {
   }
 
-  return Email
+  return ApiTracking
 }

@@ -1,23 +1,34 @@
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const PageTracking = sequelize.define('PageTracking', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
+    path: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
+      allowNull: false
     },
-    order: {
+    ip: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    isRobot: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    startTime: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    endTime: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    latencyMS: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,9 +46,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'page_trackings',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +64,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  PageTracking.associate = function (models) {
+
   }
 
-  return Faq
+  return PageTracking
 }

@@ -1,23 +1,28 @@
+// models/AdminTracking.js
+
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const AdminTracking = sequelize.define('AdminTracking', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
-    },
-    order: {
+    userId: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      allowNull: false
+    },
+    entity: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    entityId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    action: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -37,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'admin_trackings',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +57,8 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  AdminTracking.associate = function (models) {
   }
 
-  return Faq
+  return AdminTracking
 }

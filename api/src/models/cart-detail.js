@@ -1,23 +1,46 @@
+// models/CartDetail.js
+
 module.exports = function (sequelize, DataTypes) {
-  const Faq = sequelize.define('Faq', {
+  const CartDetail = sequelize.define('CartDetail', {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
-        }
-      }
-    },
-    order: {
+    cartId: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    localeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    priceId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    priceDiscountId: {
+      type: DataTypes.INTEGER
+    },
+    productName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    basePrice: {
+      type: DataTypes.DECIMAL(6, 2),
+      allowNull: false
+    },
+    taxPrice: {
+      type: DataTypes.DECIMAL(6, 2)
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -37,7 +60,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'faqs',
+    tableName: 'cart_details',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,8 +75,8 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  Faq.associate = function (models) {
+  CartDetail.associate = function (models) {
   }
 
-  return Faq
+  return CartDetail
 }
