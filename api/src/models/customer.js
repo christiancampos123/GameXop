@@ -109,7 +109,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Customer.associate = function (models) {
-
+    // Customer.belongsTo(models.email, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId' })
+    Customer.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
+    Customer.belongsTo(models.City, { as: 'city', foreignKey: 'cityId' })
+    Customer.belongsTo(models.DialCode, { as: 'dialCode', foreignKey: 'dialCodeId' })
   }
 
   return Customer

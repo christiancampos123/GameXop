@@ -1,5 +1,3 @@
-// models/Cart.js
-
 module.exports = function (sequelize, DataTypes) {
   const Cart = sequelize.define('Cart', {
     id: {
@@ -67,6 +65,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Cart.associate = function (models) {
+    Cart.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Cart.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId' })
   }
 
   return Cart

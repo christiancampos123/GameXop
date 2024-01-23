@@ -75,7 +75,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Contact.associate = function (models) {
-
+    Contact.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId' })
+    // Contact.belongsTo(models.email, { as: 'dialCode', foreignKey: 'dialCodeId' })
   }
 
   return Contact

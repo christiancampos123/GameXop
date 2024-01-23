@@ -68,7 +68,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ImageConfiguration.associate = function (models) {
-
+    // Fingerprint.belongsTo(models.City, { as: 'City', foreignKey: 'cityId' })
   }
 
   return ImageConfiguration

@@ -71,7 +71,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Locale.associate = function (models) {
-
+    // algo
   }
 
   return Locale

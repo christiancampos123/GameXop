@@ -1,5 +1,3 @@
-// models/EmailError.js
-
 module.exports = function (sequelize, DataTypes) {
   const EmailError = sequelize.define('EmailError', {
     id: {
@@ -69,6 +67,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   EmailError.associate = function (models) {
+    EmailError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    EmailError.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId' })
   }
 
   return EmailError

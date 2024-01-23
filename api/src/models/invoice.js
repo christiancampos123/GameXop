@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    SaleId: {
+    saleId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -82,7 +82,9 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Invoice.associate = function (models) {
-
+    Invoice.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Invoice.belongsTo(models.SaleId, { as: 'saleId', foreignKey: 'sale' })
+    Invoice.belongsTo(models.ReturnId, { as: 'return', foreignKey: 'returnId' })
   }
 
   return Invoice

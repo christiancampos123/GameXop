@@ -61,6 +61,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   User.associate = function (models) {
+    // Ticket.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
 
   }
 

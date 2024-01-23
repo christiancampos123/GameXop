@@ -1,5 +1,3 @@
-// models/AdminTracking.js
-
 module.exports = function (sequelize, DataTypes) {
   const AdminTracking = sequelize.define('AdminTracking', {
     id: {
@@ -63,8 +61,9 @@ module.exports = function (sequelize, DataTypes) {
       }
     ]
   })
-
+  // claves foraneas
   AdminTracking.associate = function (models) {
+    AdminTracking.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
   }
 
   return AdminTracking

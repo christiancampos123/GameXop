@@ -1,5 +1,3 @@
-// models/DialCode.js
-
 module.exports = function (sequelize, DataTypes) {
   const DialCode = sequelize.define('DialCode', {
     id: {
@@ -58,6 +56,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   DialCode.associate = function (models) {
+    DialCode.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
   }
 
   return DialCode

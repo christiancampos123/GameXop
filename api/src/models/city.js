@@ -1,5 +1,3 @@
-// models/city.js
-
 module.exports = function (sequelize, DataTypes) {
   const City = sequelize.define('City', {
     id: {
@@ -57,7 +55,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   City.associate = function (models) {
-
+    City.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
   }
 
   return City

@@ -82,7 +82,9 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Ticket.associate = function (models) {
-
+    Ticket.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Ticket.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
+    Ticket.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId' })
   }
 
   return Ticket

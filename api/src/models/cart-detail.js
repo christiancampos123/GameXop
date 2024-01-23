@@ -1,5 +1,3 @@
-// models/CartDetail.js
-
 module.exports = function (sequelize, DataTypes) {
   const CartDetail = sequelize.define('CartDetail', {
     id: {
@@ -111,6 +109,11 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   CartDetail.associate = function (models) {
+    CartDetail.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId' })
+    CartDetail.belongsTo(models.Product, { as: 'product', foreignKey: 'productId' })
+    CartDetail.belongsTo(models.Locale, { as: 'locale', foreignKey: 'localeId' })
+    CartDetail.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId' })
+    CartDetail.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId' })
   }
 
   return CartDetail

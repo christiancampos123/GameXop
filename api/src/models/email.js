@@ -1,5 +1,3 @@
-// models/Email.js
-
 module.exports = function (sequelize, DataTypes) {
   const Email = sequelize.define('Email', {
     id: {
