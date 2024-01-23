@@ -8,13 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     priceId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'prices',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'NO ACTION'
+      allowNull: false
     },
     percentage: {
       type: DataTypes.DECIMAL

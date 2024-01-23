@@ -6,6 +6,22 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    customerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    fingerprintId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    localeSeoId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    localeSeoSlugId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     eventTime: {
       type: DataTypes.DOUBLE
     },

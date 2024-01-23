@@ -6,6 +6,14 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    taxId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     basePrice: {
       type: DataTypes.DECIMAL
     },

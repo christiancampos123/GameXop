@@ -6,6 +6,10 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    imageConfigurationId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     entityId: {
       type: DataTypes.INTEGER
     },

@@ -6,7 +6,14 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
-
+    customerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    cityId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     fingerprint: {
       type: DataTypes.STRING,
       allowNull: false

@@ -6,6 +6,31 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    returnId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    localeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    priceId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    taxId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    priceDiscountId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     productName: {
       type: DataTypes.STRING,
       allowNull: false

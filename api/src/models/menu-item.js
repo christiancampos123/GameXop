@@ -6,6 +6,14 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    menuId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    localeSeoId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     parent: {
       type: DataTypes.INTEGER
     },

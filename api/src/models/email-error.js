@@ -8,6 +8,14 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    customerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    emailId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     error: {
       type: DataTypes.TEXT,
       allowNull: false

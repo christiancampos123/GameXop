@@ -8,6 +8,10 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    countryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     dialCode: {
       type: DataTypes.STRING,
       allowNull: false

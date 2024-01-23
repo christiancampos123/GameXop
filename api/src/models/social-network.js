@@ -1,29 +1,18 @@
 module.exports = function (sequelize, DataTypes) {
-  const SaleError = sequelize.define('SaleError', {
+  const SocialNetwork = sequelize.define('SocialNetwork', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
-    customerId: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    cartId: {
-      type: DataTypes.INTEGER,
+    baseUrl: {
+      type: DataTypes.STRING,
       allowNull: false
-    },
-    paymentMethodId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    errorCode: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    errorMessage: {
-      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -44,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
   },
   {
     sequelize,
-    tableName: 'sale_errors',
+    tableName: 'social_networks',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -59,9 +48,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  SaleError.associate = function (models) {
+  SocialNetwork.associate = function (models) {
 
   }
 
-  return SaleError
+  return SocialNetwork
 }

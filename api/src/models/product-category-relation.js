@@ -6,6 +6,14 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    productCategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     createdAt: {
       type: DataTypes.DATE,
       get () {

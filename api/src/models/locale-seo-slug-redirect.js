@@ -6,6 +6,10 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
+    LocaleSeoSlugId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     languageAlias: {
       type: DataTypes.STRING
     },
