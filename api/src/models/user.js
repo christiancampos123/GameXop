@@ -62,7 +62,7 @@ module.exports = function (sequelize, DataTypes) {
 
   User.associate = function (models) {
     // Ticket.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
-
+    User.hasMany(models.AdminTracking, { as: 'adminTrackings', foreignKey: 'userId' })
   }
 
   return User

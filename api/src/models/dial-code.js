@@ -57,6 +57,8 @@ module.exports = function (sequelize, DataTypes) {
 
   DialCode.associate = function (models) {
     DialCode.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
+
+    DialCode.hasMany(models.Company, { as: 'companies', foreignKey: 'dialCodeId' })
   }
 
   return DialCode
