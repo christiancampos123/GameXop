@@ -1,15 +1,9 @@
-// models/city.js
-
 module.exports = function (sequelize, DataTypes) {
-  const City = sequelize.define('City', {
+  const ProductCategoryRelation = sequelize.define('ProductCategoryRelation', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
-    },
-    name: {
-      type: DataTypes.STRING,
       allowNull: false
     },
     createdAt: {
@@ -28,9 +22,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'cities',
+    tableName: 'product_category_relations',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -45,10 +40,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  City.associate = function (models) {
-    City.belongsTo(models.Country, { foreignKey: 'countryId', as: 'country' })
-    // Define otras asociaciones si es necesario
+  ProductCategoryRelation.associate = function (models) {
+
   }
 
-  return City
+  return ProductCategoryRelation
 }

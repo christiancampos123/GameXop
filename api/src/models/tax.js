@@ -1,15 +1,25 @@
-// models/city.js
-
 module.exports = function (sequelize, DataTypes) {
-  const City = sequelize.define('City', {
+  const Tax = sequelize.define('Tax', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
-    name: {
+    type: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    rate: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false
+    },
+    multiplier: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false
+    },
+    current: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     createdAt: {
@@ -28,9 +38,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'cities',
+    tableName: 'taxes',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -45,10 +56,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  City.associate = function (models) {
-    City.belongsTo(models.Country, { foreignKey: 'countryId', as: 'country' })
-    // Define otras asociaciones si es necesario
+  Tax.associate = function (models) {
+
   }
 
-  return City
+  return Tax
 }

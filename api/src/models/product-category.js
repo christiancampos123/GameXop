@@ -1,7 +1,5 @@
-// models/city.js
-
 module.exports = function (sequelize, DataTypes) {
-  const City = sequelize.define('City', {
+  const ProductCategory = sequelize.define('ProductCategory', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -10,6 +8,10 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    visible: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     createdAt: {
@@ -28,9 +30,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'cities',
+    tableName: 'product_categories',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -45,10 +48,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  City.associate = function (models) {
-    City.belongsTo(models.Country, { foreignKey: 'countryId', as: 'country' })
-    // Define otras asociaciones si es necesario
+  ProductCategory.associate = function (models) {
+
   }
 
-  return City
+  return ProductCategory
 }

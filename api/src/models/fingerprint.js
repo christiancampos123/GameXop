@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
-    
+
     fingerprint: {
       type: DataTypes.STRING,
       allowNull: false

@@ -1,16 +1,28 @@
-// models/city.js
-
 module.exports = function (sequelize, DataTypes) {
-  const City = sequelize.define('City', {
+  const ImageConfiguration = sequelize.define('ImageConfiguration', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
+    entity: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    mediaQuery: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    widthPx: {
+      type: DataTypes.INTEGER
+    },
+    heightPx: {
+      type: DataTypes.INTEGER
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -28,9 +40,10 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
-    tableName: 'cities',
+    tableName: 'image_configurations',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -45,10 +58,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  City.associate = function (models) {
-    City.belongsTo(models.Country, { foreignKey: 'countryId', as: 'country' })
-    // Define otras asociaciones si es necesario
+  ImageConfiguration.associate = function (models) {
+
   }
 
-  return City
+  return ImageConfiguration
 }
