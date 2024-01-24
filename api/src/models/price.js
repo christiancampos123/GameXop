@@ -75,7 +75,6 @@ module.exports = function (sequelize, DataTypes) {
     Price.hasMany(models.PriceDiscount, { as: 'priceDiscounts', foreignKey: 'priceId' })
     Price.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'priceId' })
     Price.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'priceId' })
-
   }
 
   return Price

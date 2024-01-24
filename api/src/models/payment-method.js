@@ -58,7 +58,6 @@ module.exports = function (sequelize, DataTypes) {
     PaymentMethods.hasMany(models.Return, { as: 'returns', foreignKey: 'paymentMethodId' })
     PaymentMethods.hasMany(models.SaleError, { as: 'saleErrors', foreignKey: 'paymentMethodId' })
     PaymentMethods.hasMany(models.Sale, { as: 'sales', foreignKey: 'paymentMethodId' })
-
   }
 
   return PaymentMethods

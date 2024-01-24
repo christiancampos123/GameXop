@@ -127,7 +127,6 @@ module.exports = function (sequelize, DataTypes) {
     Customer.hasMany(models.Sale, { as: 'sales', foreignKey: 'customerId' })
     Customer.hasMany(models.SentEmail, { as: 'sentEmails', foreignKey: 'customerId' })
     Customer.hasMany(models.Ticket, { as: 'tickets', foreignKey: 'customerId' })
-
   }
 
   return Customer

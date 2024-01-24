@@ -62,8 +62,6 @@ module.exports = function (sequelize, DataTypes) {
     Country.hasMany(models.Customer, { as: 'customers', foreignKey: 'countryId' })
     Country.hasMany(models.DialCode, { as: 'dialCodes', foreignKey: 'countryId' })
     Country.hasMany(models.Tax, { as: 'taxes', foreignKey: 'countryId' })
-
-
   }
 
   return Country

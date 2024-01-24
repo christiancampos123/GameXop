@@ -60,7 +60,6 @@ module.exports = function (sequelize, DataTypes) {
     City.hasMany(models.Company, { as: 'companies', foreignKey: 'cityId' })
     City.hasMany(models.Customer, { as: 'customers', foreignKey: 'cityId' })
     City.hasMany(models.Fingerprint, { as: 'fingerprints', foreignKey: 'cityId' })
-
   }
 
   return City

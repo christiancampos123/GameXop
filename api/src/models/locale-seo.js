@@ -79,7 +79,6 @@ module.exports = function (sequelize, DataTypes) {
     LocaleSeo.hasMany(models.LocaleSeoSlug, { as: 'localeSeoSlugs', foreignKey: 'localeSeoId' })
     LocaleSeo.hasMany(models.MenuItem, { as: 'menuItems', foreignKey: 'localeSeoId' })
     LocaleSeo.hasMany(models.pageTracking, { as: 'pageTrackings', foreignKey: 'localeSeoId' })
-
   }
 
   return LocaleSeo

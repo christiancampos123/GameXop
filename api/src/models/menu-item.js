@@ -14,6 +14,10 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    localeSeoSlugId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     parent: {
       type: DataTypes.INTEGER
     },

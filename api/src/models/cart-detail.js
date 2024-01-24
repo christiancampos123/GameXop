@@ -22,6 +22,10 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    taxId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     priceDiscountId: {
       type: DataTypes.INTEGER
     },
@@ -113,6 +117,7 @@ module.exports = function (sequelize, DataTypes) {
     CartDetail.belongsTo(models.Product, { as: 'product', foreignKey: 'productId' })
     CartDetail.belongsTo(models.Locale, { as: 'locale', foreignKey: 'localeId' })
     CartDetail.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId' })
+    CartDetail.belongsTo(models.PriceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId' })
     CartDetail.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId' })
   }
 
