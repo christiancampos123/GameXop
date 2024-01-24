@@ -51,6 +51,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Product.associate = function (models) {
+    //Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'productCategory', foreignKey: 'productId' })
+
     Product.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'productId' })
     Product.hasMany(models.Price, { as: 'prices', foreignKey: 'productId' })
     Product.hasMany(models.ProductCategoryRelation, { as: 'productCategoryRelations', foreignKey: 'productId' })
