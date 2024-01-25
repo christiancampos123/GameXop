@@ -14,15 +14,30 @@ module.exports = function (sequelize, DataTypes) {
     },
     ip: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "IP".'
+        },
+        isIp: {
+          msg: 'Por favor, introduzca una IP valida".'
+        }
+      }
     },
     isRobot: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      notNull: {
+        msg: 'Por favor, indique si es un robot.'
+      }
+
     },
     resource: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      notNull: {
+        msg: 'Por favor, rellena el campo "resource".'
+      }
     },
     resourceElement: {
       type: DataTypes.INTEGER

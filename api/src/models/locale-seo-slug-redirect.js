@@ -1,4 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const LocaleSeoSlugRedirect = sequelize.define('LocaleSeoSlugRedirect', {
     id: {
       type: DataTypes.INTEGER,
@@ -6,9 +8,13 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
-    LocaleSeoSlugId: {
+    localeSeoSlugId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID del slug SEO local debe ser un número entero válido.' },
+        notNull: { msg: 'El ID del slug SEO local no puede ser nulo.' }
+      }
     },
     languageAlias: {
       type: DataTypes.STRING
@@ -19,21 +25,16 @@ module.exports = function (sequelize, DataTypes) {
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
       }
     }
-  },
-  {
+  }, {
     sequelize,
     tableName: 'locale_seo_slug_redirects',
     timestamps: true,

@@ -106,6 +106,7 @@ module.exports = function (sequelize, DataTypes) {
     Return.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'returnId' })
     Return.hasMany(models.ReturnError, { as: 'returnErrors', foreignKey: 'returnId' })
     Return.hasMany(models.Ticket, { as: 'tickets', foreignKey: 'returnId' })
+    Return.belongsToMany(models.Product, { through: models.ReturnDetail, as: 'products', foreignKey: 'returnId' })
   }
 
   return Return

@@ -118,6 +118,7 @@ module.exports = function (sequelize, DataTypes) {
     Sale.hasMany(models.Return, { as: 'returns', foreignKey: 'saleId' })
     Sale.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'saleId' })
     Sale.hasMany(models.Ticket, { as: 'tickets', foreignKey: 'saleId' })
+    Sale.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'saleId' })
   }
 
   return Sale

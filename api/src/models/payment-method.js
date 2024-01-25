@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const PaymentMethods = sequelize.define('PaymentMethods', {
+  const PaymentMethod = sequelize.define('PaymentMethods', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -53,12 +53,13 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  PaymentMethods.associate = function (models) {
-    PaymentMethods.hasMany(models.ReturnError, { as: 'returnErrors', foreignKey: 'paymentMethodId' })
-    PaymentMethods.hasMany(models.Return, { as: 'returns', foreignKey: 'paymentMethodId' })
-    PaymentMethods.hasMany(models.SaleError, { as: 'saleErrors', foreignKey: 'paymentMethodId' })
-    PaymentMethods.hasMany(models.Sale, { as: 'sales', foreignKey: 'paymentMethodId' })
+  PaymentMethod.associate = function (models) {
+    PaymentMethod.hasMany(models.ReturnError, { as: 'returnErrors', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.Return, { as: 'returns', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.SaleError, { as: 'saleErrors', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.Sale, { as: 'sales', foreignKey: 'paymentMethodId' })
+    PaymentMethod.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'paymentMethodId' })
   }
 
-  return PaymentMethods
+  return PaymentMethod
 }
