@@ -200,9 +200,6 @@ p {
   border: 1px solid red;
 }
 
-
-
-
         </style>
     <section class="form-inside">
     <div class="form-buttons">
@@ -295,18 +292,18 @@ p {
       </div>
 
 
-
+  <div class="inside-buttons-panel">
     <div class="form-buttons">
     <div class="form-buttons-change">
       <!-- cambiar tanta clase anidada, no es necesario -->
       <div class="form-buttons-main">
         <button class="form-button-active" data-tab="tab-main">
-          Principal
+          tab1
         </button>
       </div>
       <div class="form-buttons-images">
         <button data-tab="tab-images">
-          Imagenes
+          Tab2
         </button>
       </div>
       <div class="form-buttons-git">
@@ -315,6 +312,30 @@ p {
         </button>
       </div>
     </div>
+    </div>
+
+    <div class="form-row">
+    <div class="form-element">
+      <div class="form-element-label">
+        <label for="name">
+          Nombre
+        </label>
+      </div>
+      <div class="form-element-input">
+        <input type="text" class="validate" data-onlyletters=true>
+      </div>
+    </div>
+    <div class="form-element">
+      <div class="form-element-label">
+        <label for="email">
+          Email
+        </label>
+      </div>
+      <div class="form-element-input">
+        <input type="email" class="validate" data-mail="true">
+      </div>
+    </div>
+  </div>
 
     </section>
     
@@ -385,6 +406,24 @@ p {
         form.querySelector('.display').classList.remove('display')
         const selector = `[data-tab="${tabDataSet}"]`
         form.querySelector('.data-tabs').querySelector(selector).classList.add('display')
+      }
+    })
+
+    const buttonCont2 = this.shadow.querySelector('.inside-buttons-panel')
+
+    buttonCont2?.addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON') {
+        // localizo al padre
+        const father = event.target.closest('.form-buttons-change')
+        const active = father.querySelector('.form-button-active')
+        // se lo quito al hijo que lo tiene
+        active.classList.remove('form-button-active')
+        // se lo doy al pulsado
+        event.target.classList.add('form-button-active')
+        // console.log(tabDataSet);
+        const form = active.closest('.form-inside')
+        console.log(form)
+        // console.log(form.querySelector(".display"));
       }
     })
 
