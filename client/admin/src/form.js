@@ -69,6 +69,7 @@ p {
   gap: 0.5rem;
   margin-bottom: 1rem;
   padding-right: 0.5rem;
+  height:2.5rem;
 }
 
 .form-buttons-change>div {
@@ -293,7 +294,30 @@ p {
         </div>
       </div>
 
+
+
+    <div class="form-buttons">
+    <div class="form-buttons-change">
+      <!-- cambiar tanta clase anidada, no es necesario -->
+      <div class="form-buttons-main">
+        <button class="form-button-active" data-tab="tab-main">
+          Principal
+        </button>
+      </div>
+      <div class="form-buttons-images">
+        <button data-tab="tab-images">
+          Imagenes
+        </button>
+      </div>
+      <div class="form-buttons-git">
+        <button data-tab="tab-git">
+          GIT
+        </button>
+      </div>
+    </div>
+
     </section>
+    
     <!-- section images index 1 -->
     <section class="tab-content images" data-tab="tab-images">
       <div class="images-TODO">
