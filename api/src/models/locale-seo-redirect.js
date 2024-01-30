@@ -1,4 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const LocaleSeoRedirect = sequelize.define('LocaleSeoRedirect', {
     id: {
       type: DataTypes.INTEGER,
@@ -8,23 +10,41 @@ module.exports = function (sequelize, DataTypes) {
     },
     localeSeoId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID de localeSeo debe ser un número entero válido.' }
+      }
     },
     languageAlias: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'El alias de idioma no puede estar vacío.' }
+      }
     },
     group: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: 'El grupo no puede estar vacío.' }
+      }
     },
     key: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: 'La clave no puede estar vacía.' }
+      }
     },
     subdomain: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: 'El subdominio no puede estar vacío.' }
+      }
     },
     oldUrl: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: 'La antigua URL no puede estar vacía.' }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -42,8 +62,7 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  },
-  {
+  }, {
     sequelize,
     tableName: 'locale_seo_redirects',
     timestamps: true,

@@ -1,4 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const DialCode = sequelize.define('DialCode', {
     id: {
       type: DataTypes.INTEGER,
@@ -8,26 +10,30 @@ module.exports = function (sequelize, DataTypes) {
     },
     countryId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true
+      }
     },
     dialCode: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        notNull: true
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
       }
     }
   }, {
@@ -52,7 +58,6 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-
   })
 
   DialCode.associate = function (models) {

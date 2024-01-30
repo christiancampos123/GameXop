@@ -53,6 +53,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Faq.associate = function (models) {
+    // Any associations with other models can be added here if needed.
   }
 
   return Faq

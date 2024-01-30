@@ -8,41 +8,94 @@ module.exports = function (sequelize, DataTypes) {
     },
     cartId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "ID del carrito".'
+        }
+      }
     },
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "ID del producto".'
+        }
+      }
     },
     localeId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "ID del idioma".'
+        }
+      }
     },
     priceId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "ID del precio".'
+        }
+      }
     },
     taxId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "ID del impuesto".'
+        }
+      }
     },
     priceDiscountId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          msg: 'Por favor, introduce un valor entero para "ID del descuento de precio".'
+        }
+      }
     },
     productName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Nombre del producto".'
+        }
+      }
     },
     basePrice: {
       type: DataTypes.DECIMAL(6, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Precio base".'
+        }
+      }
     },
     taxPrice: {
-      type: DataTypes.DECIMAL(6, 2)
+      type: DataTypes.DECIMAL(6, 2),
+      validate: {
+        isDecimal: {
+          msg: 'Por favor, introduce un valor decimal para "Precio del impuesto".'
+        }
+      }
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Cantidad".'
+        },
+        isInt: {
+          msg: 'Por favor, introduce un valor entero para "Cantidad".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,

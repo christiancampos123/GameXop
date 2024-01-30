@@ -12,15 +12,30 @@ module.exports = function (sequelize, DataTypes) {
     },
     entity: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Entidad".'
+        }
+      }
     },
     entityId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "EntidadId".'
+        }
+      }
     },
     action: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Accion".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -68,3 +83,6 @@ module.exports = function (sequelize, DataTypes) {
 
   return AdminTracking
 }
+
+// npx sequelize migration:generate --name=create-return_errors-table
+// npx sequelize db:migrate

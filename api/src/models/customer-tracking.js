@@ -1,4 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const CustomerTracking = sequelize.define('CustomerTracking', {
     id: {
       type: DataTypes.INTEGER,
@@ -8,47 +10,71 @@ module.exports = function (sequelize, DataTypes) {
     },
     customerId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true
+      }
     },
     fingerprintId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true
+      }
     },
     localeSeoId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true
+      }
     },
     localeSeoSlugId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true
+      }
     },
     eventTime: {
-      type: DataTypes.DOUBLE
+      type: DataTypes.DOUBLE,
+      validate: {
+        isNumeric: true
+      }
     },
     eventName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        isAlpha: true
+      }
     },
     path: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
     },
     event: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
       }
     }
   }, {

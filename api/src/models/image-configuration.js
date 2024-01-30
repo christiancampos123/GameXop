@@ -1,4 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const ImageConfiguration = sequelize.define('ImageConfiguration', {
     id: {
       type: DataTypes.INTEGER,
@@ -8,40 +10,53 @@ module.exports = function (sequelize, DataTypes) {
     },
     entity: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La entidad no puede estar vacía.' },
+        notNull: { msg: 'La entidad no puede ser nula.' }
+      }
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'El nombre no puede estar vacío.' },
+        notNull: { msg: 'El nombre no puede ser nulo.' }
+      }
     },
     mediaQuery: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La mediaQuery no puede estar vacía.' },
+        notNull: { msg: 'La mediaQuery no puede ser nula.' }
+      }
     },
     widthPx: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: { msg: 'El ancho en píxeles debe ser un número entero válido.' }
+      }
     },
     heightPx: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: { msg: 'La altura en píxeles debe ser un número entero válido.' }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
       }
     }
-  },
-  {
+  }, {
     sequelize,
     tableName: 'image_configurations',
     timestamps: true,
@@ -68,8 +83,6 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ImageConfiguration.associate = function (models) {
-    // Fingerprint.belongsTo(models.City, { as: 'City', foreignKey: 'cityId' })
-
     ImageConfiguration.hasMany(models.Image, { as: 'images', foreignKey: 'imageConfigurationId' })
   }
 

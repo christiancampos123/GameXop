@@ -1,34 +1,44 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const Contact = sequelize.define('Contact', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID debe ser un número entero válido.' },
+        notNull: { msg: 'El ID no puede ser nulo.' }
+      }
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'El nombre no puede estar vacío.' },
+        notNull: { msg: 'El nombre no puede ser nulo.' }
+      }
     },
     alias: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: { msg: 'El alias debe ser único.' },
+      validate: {
+        notEmpty: { msg: 'El alias no puede estar vacío.' },
+        notNull: { msg: 'El alias no puede ser nulo.' }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
       }
     }
   },
@@ -50,7 +60,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Contact.associate = function (models) {
-
+    // Asociaciones si es necesario
   }
 
   return Contact

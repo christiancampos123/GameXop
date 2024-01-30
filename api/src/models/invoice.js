@@ -1,45 +1,67 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const Invoice = sequelize.define('Invoice', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID debe ser un número entero válido.' },
+        notNull: { msg: 'El ID no puede ser nulo.' }
+      }
     },
     customerId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID del cliente debe ser un número entero válido.' },
+        notNull: { msg: 'El ID del cliente no puede ser nulo.' }
+      }
     },
     saleId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID de la venta debe ser un número entero válido.' },
+        notNull: { msg: 'El ID de la venta no puede ser nulo.' }
+      }
     },
     returnId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'El ID de la devolución debe ser un número entero válido.' },
+        notNull: { msg: 'El ID de la devolución no puede ser nulo.' }
+      }
     },
     reference: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La referencia no puede estar vacía.' },
+        notNull: { msg: 'La referencia no puede ser nula.' }
+      }
     },
     path: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La ruta no puede estar vacía.' },
+        notNull: { msg: 'La ruta no puede ser nula.' }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
       }
     }
   },
@@ -83,7 +105,7 @@ module.exports = function (sequelize, DataTypes) {
 
   Invoice.associate = function (models) {
     Invoice.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
-    Invoice.belongsTo(models.SaleId, { as: 'saleId', foreignKey: 'sale' })
+    Invoice.belongsTo(models.SaleId, { as: 'saleId', foreignKey: 'saleId' })
     Invoice.belongsTo(models.ReturnId, { as: 'return', foreignKey: 'returnId' })
   }
 

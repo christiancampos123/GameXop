@@ -8,26 +8,55 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     },
     code: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     },
     percentage: {
-      type: DataTypes.DECIMAL
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true,
+        min: 0,
+        max: 100
+      }
     },
     multiplier: {
-      type: DataTypes.DECIMAL
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true,
+        min: 0
+      }
     },
     current: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isIn: {
+          args: [[0, 1, true, false]],
+          msg: 'El campo "Actual" debe ser un valor booleano.'
+        }
+      }
     },
     startsAt: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        isDate: true
+      }
     },
     endsAt: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        isDate: true
+      }
     },
     createdAt: {
       type: DataTypes.DATE,

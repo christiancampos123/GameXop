@@ -4,23 +4,53 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, proporciona un valor para "ID".'
+        }
+      }
     },
     countryId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, proporciona un valor para "ID del país".'
+        }
+      }
     },
     cityId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, proporciona un valor para "ID de la ciudad".'
+        }
+      }
     },
     dialCodeId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, proporciona un valor para "ID del prefijo telefónico".'
+        }
+      }
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, proporciona un valor para "Nombre de la empresa".'
+        },
+        len: {
+          args: [2, 100], // Name length between 2 and 100 characters
+          msg: 'El nombre de la empresa debe tener entre 2 y 100 caracteres.'
+        }
+        // You can add more validations as needed
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
