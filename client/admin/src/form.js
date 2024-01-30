@@ -201,7 +201,7 @@ p {
 }
 
         </style>
-    <section class="form-inside">
+  <section class="form-inside">
     <div class="form-buttons">
     <div class="form-buttons-change">
       <!-- cambiar tanta clase anidada, no es necesario -->
@@ -292,51 +292,30 @@ p {
       </div>
 
 
-  <div class="inside-buttons-panel">
-    <div class="form-buttons">
-    <div class="form-buttons-change">
-      <!-- cambiar tanta clase anidada, no es necesario -->
-      <div class="form-buttons-main">
-        <button class="form-button-active" data-tab="tab-main">
-          tab1
-        </button>
-      </div>
-      <div class="form-buttons-images">
-        <button data-tab="tab-images">
-          Tab2
-        </button>
-      </div>
-      <div class="form-buttons-git">
-        <button data-tab="tab-git">
-          GIT
-        </button>
-      </div>
-    </div>
-    </div>
 
-    <div class="form-row">
-    <div class="form-element">
-      <div class="form-element-label">
-        <label for="name">
-          Nombre
-        </label>
+      <div class="form-buttons inside-buttons-panel">
+      <div class="form-buttons-change">
+        <!-- cambiar tanta clase anidada, no es necesario -->
+        <div class="form-buttons-main">
+          <button class="form-button-active" data-tab="tab-main">
+            Principal
+          </button>
+        </div>
+        <div class="form-buttons-images">
+          <button data-tab="tab-images2">
+            Imagenes
+          </button>
+        </div>
+        <div class="form-buttons-git">
+          <button data-tab="tab-git">
+            GIT
+          </button>
+        </div>
       </div>
-      <div class="form-element-input">
-        <input type="text" class="validate" data-onlyletters=true>
-      </div>
-    </div>
-    <div class="form-element">
-      <div class="form-element-label">
-        <label for="email">
-          Email
-        </label>
-      </div>
-      <div class="form-element-input">
-        <input type="email" class="validate" data-mail="true">
-      </div>
-    </div>
-  </div>
 
+
+
+      
     </section>
     
     <!-- section images index 1 -->
