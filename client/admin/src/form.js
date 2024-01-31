@@ -1,15 +1,15 @@
 class Form extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.title = this.getAttribute('title')
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this.render()
   }
 
-  render () {
+  render() {
     this.shadow.innerHTML =
       /* html */
       `
@@ -86,7 +86,8 @@ p {
     background-color: #b0b0b0;
     display: flex;
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
 }
 
 .tab:hover{
@@ -95,6 +96,8 @@ p {
 
 .tab button{
     color: blue;
+    pointer-events: none; /* Deshabilita las interacciones del usuario */
+    cursor: not-allowed;
 }
 
 .tab.active button{
@@ -459,7 +462,7 @@ textarea{
     // })doc
 
     const main = this.shadow.querySelector('.form')
-    console.log(main)
+    // console.log(main)
     main?.addEventListener('click', (event) => {
       // event.preventDefault()
 
