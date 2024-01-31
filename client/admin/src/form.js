@@ -48,7 +48,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: hsl(0, 0%, 100%);
+  color: white;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -63,284 +63,354 @@ p {
   font-family: 'Roboto', sans-serif;
 }
 
+.form {
+    flex: 2;
+}
+
+.form-top-bar{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    height: 3rem;
+    width: 100%;
+    margin-bottom: 2rem;
+
+}
+.tabs{
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.tab{
+    background-color: #b0b0b0;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.tab:hover{
+  background-color: #e5a450;
+}
+
+.tab button{
+    color: blue;
+}
+
+.tab.active button{
+    color: white;
+}
+
+.tab.active{
+    background-color: #e69428;
+    color: white;
+}
+
+.tab-contents{
+  width: 100%;
+}
+
+.tab-content.active{
+  width: 100%;
+  display: block;
+}
+
+.tab-content{
+  display: none;
+}
+
 .form-buttons {
   background-color: hsl(0, 0%, 100%);
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding-right: 0.5rem;
-  height:2.5rem;
-}
-
-.form-buttons-change>div {
-  display: flex;
-  align-items: center;
-  background-color: hsl(0, 0%, 69%);
-}
-
-.form-button-active{
-  background-color: hsl(34, 100%, 51%);
-}
-
-
-.form-buttons-change>div>button:hover {
-  background-color: hsl(34, 79%, 53%);
-}
-
-.form-buttons-change>div>button {
-  height: 100%;
-  width: 5rem;
-}
-
-.form-buttons-change {
-  display: flex;
-  width: 50%;
-
-}
-
-.form-buttons-actions {
-  display: flex;
   justify-content: flex-end;
-  width: 50%;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  padding-right: 0.5rem;
 }
 
-.form-clean-button button svg,
-.form-save-button button svg {
+.create-button button svg,
+.store-button button svg {
   width: 2rem;
+    
 }
 
-.form-clean-button button svg path,
-.form-save-button button svg path {
-  fill: hsl(207, 85%, 69%);
+.create-button button svg path,
+.store-button button svg path {
+  fill: #6db7f3;
 }
 
-.form-clean-button button:hover svg path,
-.form-save-button button:hover svg path {
-  fill: hsl(34, 79%, 53%);
+.create-button button:hover svg path,
+.store-button button:hover svg path {
+  fill: #e69428;
 }
 
-
-.form-row {
+.form-row{
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .form-element {
   display: flex;
-  flex: 1;
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1rem;
-}
-
-.form-element-label label {
-  font-weight: 700;
+  width: 100%;
 }
 
 .form-element-input * {
-  background-color: hsl(226, 64%, 66%);
+  background-color: #718be0;
   border: none;
   box-sizing: border-box;
   font-size: 1rem;
-  height: 2rem;
   outline: transparent;
   padding: 0.5rem;
   width: 100%;
 }
 
-.form-element-input input[type="number"]::-webkit-outer-spin-button,
-.form-element-input input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+textarea{
+  height: 15vh;
 }
 
-.form-element-input input[type="date"]::-webkit-calendar-picker-indicator,
-.form-element-input input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}
-
-.form-element-input textarea {
-  height: 20vh;
-  resize: none;
-}
-
-.images {
-  display: none;
-  flex: 2;
-}
-
-.image-placeholder {
-  width: 300px;
-  height: 200px;
-  background-color: #ddd;
-  border: 1px solid #999;
+.language-contents{
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  color: #666;
-}
-
-.images-TODO {
-  display: flex;
-  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-top: 5rem;
 }
 
-.tab-content{
-  display:none;
+.form-language-bar{
+  background-color: white;
+  width: 100%;
+  height: 3rem;
+  margin: 1rem 0;
 }
 
-.display {
-  display: block;
-}
 
-.border-red{
-  border: 1px solid red;
-}
+
 
         </style>
-  <section class="form-inside">
+<div class="form">
+  <div class="form-top-bar">
+    <div class="tabs">
+      <div class="tab active" data-tab="general">
+        <button>
+          General
+        </button>
+      </div>
+      <div class="tab" data-tab="images">
+        <button>
+          Imágenes
+        </button>
+      </div>
+    </div>
     <div class="form-buttons">
-    <div class="form-buttons-change">
-      <!-- cambiar tanta clase anidada, no es necesario -->
-      <div class="form-buttons-main">
-        <button class="form-button-active" data-tab="tab-main">
-          Principal
-        </button>
-      </div>
-      <div class="form-buttons-images">
-        <button data-tab="tab-images">
-          Imagenes
-        </button>
-      </div>
-      <div class="form-buttons-git">
-        <button data-tab="tab-git">
-          GIT
-        </button>
-      </div>
-    </div>
-    <div class="form-buttons-actions">
-      <div class="form-clean-button">
+      <div class="create-button"  data-endpoint="">
         <button>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>broom</title>
-            <path
-              d="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z" />
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>broom</title><path d="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z" /></svg>
         </button>
       </div>
-      <div class="form-save-button">
+      <div class="store-button" data-endpoint="">
         <button>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>save</title>
-            <path
-              d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>content-save</title><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg>
         </button>
       </div>
     </div>
   </div>
-  <!-- seccion main index 0 -->
-  <div class="data-tabs">
-    <section class="tab-content display" data-tab="tab-main">
-
-      <div class="form-row">
-        <div class="form-element">
-          <div class="form-element-label">
-            <label for="name">
-              Nombre
-            </label>
+  <form class="admin-form">
+    <input type="hidden" name="id" value="">
+    <div class="tab-contents">
+      <div class="tab-content active" data-tab="general">
+        <div class="form-row">
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="title">
+                Titulo
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="text" name="name" value="">
+            </div>
           </div>
-          <div class="form-element-input">
-            <input type="text" class="validate" data-onlyletters=true>
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="address">
+                Lugar del evento
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="text" name="address" value="">
+            </div>
           </div>
         </div>
-        <div class="form-element">
-          <div class="form-element-label">
-            <label for="email">
-              Email
-            </label>
+  
+        <div class="form-row">
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="date">
+                Fecha Inicio
+              </label>
+            </div>
+            <div class="form-element-input">
+            <input type="date" name="start_date" value="">
+            </div>
           </div>
-          <div class="form-element-input">
-            <input type="email" class="validate" data-mail="true">
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="date">
+                Fecha Fin
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="date" name="end_date" value="">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="price">
+                Precio
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="number" name="price" value="">
+            </div>
+          </div>
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="town">
+                Poblacion
+              </label>
+            </div>
+            <div class="form-element-input">
+              <select id="town_id" name="town_id">
+                <option value="">Seleccione una Poblacion</option>
+  
+                    <option value=""></option>
+  
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="start_time">
+                Hora Inicio
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="time" name="start_time" value="">
+            </div>
+          </div>
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="start_time">
+                Hora Fin
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="time" name="end_time" value="">
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-language-bar">
+          <div class="tabs">
+  
+              <div class="tab active" data-tab="es">
+                <button>
+                  ES
+                </button>
+              </div>
+              <div class="tab" data-tab="en">
+                <button>
+                  EN
+                </button>
+              </div>
+  
+          </div>
+        </div>
+  
+  
+          <div class="tab-contents">
+            <div class="tab-content active" data-tab="es">
+              <div class="form-row">
+                <div class="form-element">
+                  <div class="form-element-label">
+                    <label for="title">
+                      Titulo
+                    </label>
+                  </div>
+                  <div class="form-element-input">
+                    <input type="text" name="" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-element">
+                  <div class="form-element-label">
+                    <label for="description">
+                      Descripcion
+                    </label>
+                  </div>
+                  <div class="form-element-input">
+                    <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" data-tab="en">
+              <div class="form-row">
+                <div class="form-element">
+                  <div class="form-element-label">
+                    <label for="title">
+                      Titulo
+                    </label>
+                  </div>
+                  <div class="form-element-input">
+                    <input type="text" name="" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-element">
+                  <div class="form-element-label">
+                    <label for="description">
+                      Descripcion
+                    </label>
+                  </div>
+                  <div class="form-element-input">
+                    <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+      </div>
+      <div class="tab-content" data-tab="images">
+        <div class="form-row">
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="main-image">
+                Imagen Principal
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="image" name="" value="">
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-element">
-          <div class="form-element-label">
-            <label for="password">
-              Contraseña
-            </label>
-          </div>
-          <div class="form-element-input">
-            <input type="password" class="validate" data-minlength=8>
-          </div>
-        </div>
-        <div class="form-element">
-          <div class="form-element-label">
-            <label for="confirmar-password" class="validate" data-minlength=15>
-              Repetir contraseña
-            </label>
-          </div>
-          <div class="form-element-input">
-            <input type="password" class="validate" data-minlength=18>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="form-buttons inside-buttons-panel">
-      <div class="form-buttons-change">
-        <!-- cambiar tanta clase anidada, no es necesario -->
-        <div class="form-buttons-main">
-          <button class="form-button-active" data-tab="tab-main">
-            Principal
-          </button>
-        </div>
-        <div class="form-buttons-images">
-          <button data-tab="tab-images2">
-            Imagenes
-          </button>
-        </div>
-        <div class="form-buttons-git">
-          <button data-tab="tab-git">
-            GIT
-          </button>
-        </div>
-      </div>
-
-
-
-      
-    </section>
-    
-    <!-- section images index 1 -->
-    <section class="tab-content images" data-tab="tab-images">
-      <div class="images-TODO">
-        <div class="image-placeholder">1</div>
-        <div class="image-placeholder">2</div>
-        <div class="image-placeholder">3</div>
-        <div class="image-placeholder">4</div>
-        <div class="image-placeholder">5</div>
-      </div>
-    </section>
-    <section class="tab-content images" data-tab="tab-git">
-      <div class="images-TODO">
-        <div class="image-placeholder">1</div>
-        <div class="image-placeholder">2</div>
-        <div class="image-placeholder">3</div>
-      </div>
-    </section>
-  </div>
-  </section>
+    </div>
+  </form>
+</div>
 
         `
 
-    const buttonSave = this.shadow.querySelector('.form-save-button')
+    const buttonSave = this.shadow.querySelector('.store-button')
 
     buttonSave?.addEventListener('click', () => {
       document.dispatchEvent(new CustomEvent('save-notification', {
@@ -349,7 +419,7 @@ p {
     })
 
     // boton de clean
-    const buttonBroom = this.shadow.querySelector('.form-clean-button')
+    const buttonBroom = this.shadow.querySelector('.create-button')
 
     buttonBroom?.addEventListener('click', () => {
       alert('HAS PULSADO LIMPIAR')
@@ -366,105 +436,109 @@ p {
     // Pestañas de navegación
     // array de nodos
 
-    const buttonContainer = this.shadow.querySelector('.form-buttons-change')
+    // const buttonContainer = this.shadow.querySelector('.form-buttons-change')
 
-    buttonContainer?.addEventListener('click', (event) => {
-      if (event.target.tagName === 'BUTTON') {
-        // localizo al padre
-        const father = event.target.closest('.form-buttons-change')
-        const active = father.querySelector('.form-button-active')
-        // se lo quito al hijo que lo tiene
-        active.classList.remove('form-button-active')
-        // se lo doy al pulsado
-        event.target.classList.add('form-button-active')
-        const tabDataSet = event.target.dataset.tab
-        // console.log(tabDataSet);
-        const form = active.closest('.form-inside')
-        console.log(form)
-        // console.log(form.querySelector(".display"));
-        form.querySelector('.display').classList.remove('display')
-        const selector = `[data-tab="${tabDataSet}"]`
-        form.querySelector('.data-tabs').querySelector(selector).classList.add('display')
+    // buttonContainer?.addEventListener('click', (event) => {
+    //   if (event.target.tagName === 'BUTTON') {
+    //     // localizo al padre
+    //     const father = event.target.closest('.form-buttons-change')
+    //     const active = father.querySelector('.form-button-active')
+    //     // se lo quito al hijo que lo tiene
+    //     active.classList.remove('form-button-active')
+    //     // se lo doy al pulsado
+    //     event.target.classList.add('form-button-active')
+    //     const tabDataSet = event.target.dataset.tab
+    //     // console.log(tabDataSet);
+    //     const form = active.closest('.form-inside')
+    //     console.log(form)
+    //     // console.log(form.querySelector(".display"));
+    //     form.querySelector('.display').classList.remove('display')
+    //     const selector = `[data-tab="${tabDataSet}"]`
+    //     form.querySelector('.data-tabs').querySelector(selector).classList.add('display')
+    //   }
+    // })doc
+
+    const main = this.shadow.querySelector('.form')
+    console.log(main)
+    main?.addEventListener('click', (event) => {
+      // event.preventDefault()
+
+      if (event.target.closest('.tab')) {
+        if (event.target.closest('.tab').classList.contains('active')) {
+          return
+        }
+
+        const tabClicked = event.target.closest('.tab')
+        const tabActive = tabClicked.parentElement.querySelector('.active')
+
+        console.log(tabClicked)
+        tabClicked.classList.add('active')
+        tabActive.classList.remove('active')
+
+        this.shadow.querySelector(`.tab-content.active[data-tab="${tabActive.dataset.tab}"]`).classList.remove('active')
+        this.shadow.querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`).classList.add('active')
       }
     })
 
-    const buttonCont2 = this.shadow.querySelector('.inside-buttons-panel')
+    // // Selecciona el elemento padre .data-tabs
+    // const dataTabs = this.shadow.querySelector('.data-tabs')
 
-    buttonCont2?.addEventListener('click', (event) => {
-      if (event.target.tagName === 'BUTTON') {
-        // localizo al padre
-        const father = event.target.closest('.form-buttons-change')
-        const active = father.querySelector('.form-button-active')
-        // se lo quito al hijo que lo tiene
-        active.classList.remove('form-button-active')
-        // se lo doy al pulsado
-        event.target.classList.add('form-button-active')
-        // console.log(tabDataSet);
-        const form = active.closest('.form-inside')
-        console.log(form)
-        // console.log(form.querySelector(".display"));
-      }
-    })
+    // // Agrega un event listener al elemento padre
+    // dataTabs.addEventListener('input', (event) => {
+    //   // Verifica si el evento proviene de un elemento de tipo input
+    //   if (event.target.tagName === 'INPUT') {
+    //     const input = event.target.closest('.validate')
+    //     console.log(input)
 
-    // Selecciona el elemento padre .data-tabs
-    const dataTabs = this.shadow.querySelector('.data-tabs')
+    //     if (input) {
+    //       const minLength = input.dataset.minlength
+    //       console.log(minLength)
 
-    // Agrega un event listener al elemento padre
-    dataTabs.addEventListener('input', (event) => {
-      // Verifica si el evento proviene de un elemento de tipo input
-      if (event.target.tagName === 'INPUT') {
-        const input = event.target.closest('.validate')
-        console.log(input)
+    //       if (input.value.length < parseInt(minLength) && input.value.length > 0) {
+    //         input.classList.add('border-red')
+    //       } else {
+    //         input.classList.remove('border-red')
+    //       }
+    //     }
 
-        if (input) {
-          const minLength = input.dataset.minlength
-          console.log(minLength)
+    // if (input) {
+    //   const letters = input.dataset.onlyletters
+    //   console.log(letters)
+    //   if (letters) {
+    //     const expresionRegular = /^[a-zA-Z]+$/
+    //     console.log(input.value)
+    //     expresionRegular.test(input.value)
+    //     console.log(expresionRegular.test(input.value))
+    //     if (expresionRegular.test(input.value)) {
+    //       input.classList.remove('border-red')
+    //     } else {
+    //       input.classList.add('border-red')
+    //     }
+    //     if (input.value.length === 0) {
+    //       input.classList.remove('border-red')
+    //     }
+    //   }
+    // }
 
-          if (input.value.length < parseInt(minLength) && input.value.length > 0) {
-            input.classList.add('border-red')
-          } else {
-            input.classList.remove('border-red')
-          }
-        }
-
-        if (input) {
-          const letters = input.dataset.onlyletters
-          console.log(letters)
-          if (letters) {
-            const expresionRegular = /^[a-zA-Z]+$/
-            console.log(input.value)
-            expresionRegular.test(input.value)
-            console.log(expresionRegular.test(input.value))
-            if (expresionRegular.test(input.value)) {
-              input.classList.remove('border-red')
-            } else {
-              input.classList.add('border-red')
-            }
-            if (input.value.length === 0) {
-              input.classList.remove('border-red')
-            }
-          }
-        }
-
-        if (input) {
-          const mail = input.dataset.mail
-          if (mail) {
-            const expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            console.log(input.value)
-            expresionRegular.test(input.value)
-            console.log(expresionRegular.test(input.value))
-            if (expresionRegular.test(input.value)) {
-              input.classList.remove('border-red')
-            } else {
-              input.classList.add('border-red')
-            }
-            if (input.value.length === 0) {
-              input.classList.remove('border-red')
-            }
-          }
-        }
-      }
-    })
+    // if (input) {
+    //   const mail = input.dataset.mail
+    //   if (mail) {
+    //     const expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    //     console.log(input.value)
+    //     expresionRegular.test(input.value)
+    //     console.log(expresionRegular.test(input.value))
+    //     if (expresionRegular.test(input.value)) {
+    //       input.classList.remove('border-red')
+    //     } else {
+    //       input.classList.add('border-red')
+    //     }
+    //     if (input.value.length === 0) {
+    //       input.classList.remove('border-red')
+    //     }
+    //   }
+    // }
+    // }
+    // })
   }
 }
 
