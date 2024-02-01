@@ -224,7 +224,6 @@ class Gallery extends HTMLElement {
         }
 
         const tabClicked = event.target.closest('.tab')
-        console.log(tabClicked)
         const tabActive = tabClicked.parentElement.querySelector('.active')
 
         // console.log(tabClicked)
