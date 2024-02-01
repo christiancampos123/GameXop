@@ -144,7 +144,6 @@ class Gallery extends HTMLElement {
     }
 
     .upload-button{
-      background-color:white;
       display:flex;
       justify-content:center;
       align-items:center;
