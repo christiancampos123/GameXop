@@ -155,6 +155,38 @@ class Gallery extends HTMLElement {
       right:2rem;
     }
 
+    .tab-content-upload {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .images-preview img {
+  max-width: 200px; /* Ancho máximo */
+  max-height: 150px; /* Altura máxima */
+  width: auto; /* Para mantener la proporción original y ajustar automáticamente el ancho */
+  height: auto; /* Para mantener la proporción original y ajustar automáticamente la altura */
+  border: 1px solid #ccc; /* Borde opcional para resaltar la imagen */
+}
+
       </style>
       
       <div class="modal-gallery-back">
@@ -206,13 +238,52 @@ class Gallery extends HTMLElement {
   
   
   
-        <div class="tab-content" data-tab="images">
+      <div class="tab-content" data-tab="images">
         <div class="tab-content-upload">
-          <button><input type="file"></button>
-          </div>
+        <label for="imagen">Selecciona una imagen:</label>
+        <button class="buttonInput">Subir imagen</button>
+        <input type="file" class="imagen" name="imagen" accept="image/*">
+        </div>
+        <div class="images-preview">
         </div>
       </div>
+      </div>
       `
+
+    const input = this.shadow.querySelector('.imagen')
+    const buttonInput = this.shadow.querySelector('.buttonInput')
+    const previewDiv = this.shadow.querySelector('.images-preview');
+
+
+    buttonInput.addEventListener('click', (event) => {
+      input.click()
+    })
+
+    input.addEventListener('change', (event) => {
+      // Verifica si se seleccionó algún archivo
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+    
+        // Configura la función que se ejecutará cuando la lectura del archivo esté completa
+        reader.onload = function (e) {
+          // Crea un elemento de imagen y establece su src como la vista previa
+          const imgPreview = document.createElement('img');
+          imgPreview.src = e.target.result;
+    
+          // Limpia cualquier contenido previo en el div de vista previa
+          previewDiv.innerHTML = '';
+    
+          // Agrega la imagen al div de vista previa
+          previewDiv.appendChild(imgPreview);
+        };
+    
+        // Lee el archivo como una URL de datos
+        reader.readAsDataURL(input.files[0]);
+      }
+    });
+
+
+
     const main = this.shadow.querySelector('.modal-gallery')
     // console.log(main)
     main?.addEventListener('click', (event) => {
