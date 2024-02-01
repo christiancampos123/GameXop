@@ -208,7 +208,7 @@ class Gallery extends HTMLElement {
   
         <div class="tab-content" data-tab="images">
         <div class="tab-content-upload">
-          adios
+          <button><input type="file"></button>
           </div>
         </div>
       </div>
