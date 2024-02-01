@@ -1,15 +1,15 @@
 class Form extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.title = this.getAttribute('title')
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.render()
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */
       `
@@ -58,6 +58,7 @@ select,
 textarea,
 li,
 span,
+div,
 p {
   color: hsl(0, 0%, 100%);
   font-family: 'Roboto', sans-serif;
@@ -191,20 +192,15 @@ textarea{
 
 
 
-
         </style>
 <div class="form">
   <div class="form-top-bar">
     <div class="tabs">
-      <div class="tab active" data-tab="general">
-        <button>
+      <div class="tab  " data-tab="general">
           General
-        </button>
       </div>
-      <div class="tab" data-tab="images">
-        <button>
+      <div class="tab active" data-tab="images">
           Imágenes
-        </button>
       </div>
     </div>
     <div class="form-buttons">
@@ -223,7 +219,7 @@ textarea{
   <form class="admin-form">
     <input type="hidden" name="id" value="">
     <div class="tab-contents">
-      <div class="tab-content active" data-tab="general">
+      <div class="tab-content" data-tab="general">
         <div class="form-row">
           <div class="form-element">
             <div class="form-element-label">
@@ -323,14 +319,10 @@ textarea{
           <div class="tabs">
   
               <div class="tab active" data-tab="es">
-                <button>
                   ES
-                </button>
               </div>
               <div class="tab" data-tab="en">
-                <button>
                   EN
-                </button>
               </div>
   
           </div>
@@ -391,21 +383,11 @@ textarea{
               </div>
             </div>
           </div>
-  
       </div>
-      <div class="tab-content" data-tab="images">
-        <div class="form-row">
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="main-image">
-                Imagen Principal
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="image" name="" value="">
-            </div>
-          </div>
-        </div>
+
+      <!-- image Gallery -->
+      <div class="tab-content active" data-tab="images">
+      <upload-image-component> </upload-image-component>
       </div>
     </div>
   </form>
