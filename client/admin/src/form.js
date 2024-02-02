@@ -2,7 +2,6 @@ class Form extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.title = this.getAttribute('title')
   }
 
   connectedCallback () {
@@ -97,7 +96,7 @@ p {
 
 .tab button{
     color: blue;
-    pointer-events: none; /* Deshabilita las interacciones del usuario */
+    pointer-events: none;
     cursor: not-allowed;
 }
 
