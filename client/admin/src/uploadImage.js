@@ -16,6 +16,10 @@ class UploadImage extends HTMLElement {
           padding: 0;
         }
 
+        :host:hover{
+          transform:scale(1.03);
+        }
+
   /* Estilo para los divs */
   .square {
     width: 100px;
@@ -25,6 +29,11 @@ class UploadImage extends HTMLElement {
     line-height: 100px;
     margin: 10px;
     cursor: pointer;
+    transition: transform 0.15s ease-in-out;
+  }
+
+  .square:hover{
+    transform: scale(102%);
   }
 
   /* Estilo para el símbolo */

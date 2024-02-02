@@ -1,4 +1,4 @@
-class SaveNotification extends HTMLElement {
+class ModalNotification extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
@@ -6,16 +6,19 @@ class SaveNotification extends HTMLElement {
   }
 
   connectedCallback () {
-    // Agrega un listener para el evento personalizado "save-notification"
-    document.addEventListener('save-notification', () => {
-      this.showNotification()
+    document.addEventListener('custom-notification', (event) => {
+      const customMessage = event.detail.message
+      this.showNotification(customMessage)
     })
 
     this.render()
   }
 
-  showNotification () {
-    this.shadow.querySelector('.notification-container').classList.add('show')
+  showNotification (customMessage) {
+    const notificationContainer = this.shadow.querySelector('.notification-container')
+    notificationContainer.classList.add('show')
+    notificationContainer.querySelector('p').innerText = customMessage
+
     setTimeout(() => {
       this.hideNotification()
     }, 5000) // La notificación se ocultará después de 5 segundos
@@ -28,6 +31,9 @@ class SaveNotification extends HTMLElement {
   render () {
     this.shadow.innerHTML = /* html */ `
         <style>
+          :host{
+            z-index:11
+          }
           .notification-container {
             display: none;
             position: fixed;
@@ -47,12 +53,10 @@ class SaveNotification extends HTMLElement {
         </style>
   
         <div class="notification-container">
-          <p>Se haguardado correctamente</p>
+          <p>${this.notificationMessage}</p>
         </div>
       `
-
-    // No es necesario mostrar la notificación aquí, ya que se mostrará cuando se reciba el evento
   }
 }
 
-customElements.define('save-notification-component', SaveNotification)
+customElements.define('modal-notification-component', ModalNotification)

@@ -3,14 +3,38 @@ class Gallery extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.activeTab = 1
+
+    this.galleryData = [
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' }
+    ]
   }
 
   connectedCallback () {
     this.render()
-    this.addEventListeners()
+    this.generateGalleryItems()
   }
 
-  addEventListeners () {
+  generateGalleryItems () {
+    const galleryContainer = this.shadow.querySelector('.avatar-container')
+
+    this.galleryData.forEach(item => {
+      const avatarDiv = document.createElement('div')
+      avatarDiv.classList.add('avatar')
+      const img = document.createElement('img')
+      img.src = item.imageUrl
+      img.alt = `Image ${item.id}`
+      avatarDiv.appendChild(img)
+      galleryContainer.appendChild(avatarDiv)
+    })
   }
 
   render () {
@@ -111,18 +135,25 @@ class Gallery extends HTMLElement {
           box-sizing: border-box;
         }
 
-    .avatar {
-      width: 100px;
-      height: 100px;
-      background-color: #3498db;
-      margin: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
+        .avatar {
+  width: 100px;
+  height: 100px;
+  background-color: #3498db;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2em;
+  overflow: hidden; /* Para ocultar partes de la imagen que excedan el contenedor */
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen para cubrir completamente el contenedor */
+}
 
     /* Estilo para el contenedor que envuelve los avatares */
     .avatar-container {
@@ -143,7 +174,7 @@ class Gallery extends HTMLElement {
       justify-content:center;
     }
 
-    .upload-button{
+    .chose-button{
       display:flex;
       justify-content:center;
       align-items:center;
@@ -207,11 +238,7 @@ class Gallery extends HTMLElement {
         <div class="tab-content active" data-tab="gallery">
           <div class="tab-content-images">
           <div class="avatar-container">
-          <!-- Avatares individuales -->
-          <div class="avatar">A</div>
-          <div class="avatar">B</div>
-          <div class="avatar">C</div>
-          <div class="avatar">D</div>
+
           <!-- Añade más avatares según sea necesario -->
         </div>
           </div>
@@ -229,8 +256,8 @@ class Gallery extends HTMLElement {
               </label>
               <input type="text">
             </form>
-            <button class="upload-button">
-              Subir
+            <button class="chose-button">
+              Elegir
             </button>
           </div>
         </div>
@@ -249,10 +276,20 @@ class Gallery extends HTMLElement {
       </div>
       `
 
+    const buttonChose = this.shadow.querySelector('.chose-button')
+    buttonChose.addEventListener('click', (event) => {
+      const choseNotificationEvent = new CustomEvent('custom-notification', {
+        detail: {
+          message: 'Se ha elegido la imagen correctamente'
+        }
+      })
+
+      document.dispatchEvent(choseNotificationEvent)
+    })
+
     const input = this.shadow.querySelector('.imagen')
     const buttonInput = this.shadow.querySelector('.buttonInput')
-    const previewDiv = this.shadow.querySelector('.images-preview');
-
+    const previewDiv = this.shadow.querySelector('.images-preview')
 
     buttonInput.addEventListener('click', (event) => {
       input.click()
@@ -261,27 +298,25 @@ class Gallery extends HTMLElement {
     input.addEventListener('change', (event) => {
       // Verifica si se seleccionó algún archivo
       if (input.files && input.files[0]) {
-        const reader = new FileReader();
-    
+        const reader = new FileReader()
+
         // Configura la función que se ejecutará cuando la lectura del archivo esté completa
         reader.onload = function (e) {
           // Crea un elemento de imagen y establece su src como la vista previa
-          const imgPreview = document.createElement('img');
-          imgPreview.src = e.target.result;
-    
+          const imgPreview = document.createElement('img')
+          imgPreview.src = e.target.result
+
           // Limpia cualquier contenido previo en el div de vista previa
-          previewDiv.innerHTML = '';
-    
+          previewDiv.innerHTML = ''
+
           // Agrega la imagen al div de vista previa
-          previewDiv.appendChild(imgPreview);
-        };
-    
+          previewDiv.appendChild(imgPreview)
+        }
+
         // Lee el archivo como una URL de datos
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(input.files[0])
       }
-    });
-
-
+    })
 
     const main = this.shadow.querySelector('.modal-gallery')
     // console.log(main)

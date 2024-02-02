@@ -190,16 +190,27 @@ textarea{
   margin: 1rem 0;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}
 
 
         </style>
 <div class="form">
   <div class="form-top-bar">
     <div class="tabs">
-      <div class="tab  " data-tab="general">
+      <div class="tab active" data-tab="general">
           General
       </div>
-      <div class="tab active" data-tab="images">
+      <div class="tab" data-tab="images">
           Imágenes
       </div>
     </div>
@@ -219,7 +230,7 @@ textarea{
   <form class="admin-form">
     <input type="hidden" name="id" value="">
     <div class="tab-contents">
-      <div class="tab-content" data-tab="general">
+      <div class="tab-content active" data-tab="general">
         <div class="form-row">
           <div class="form-element">
             <div class="form-element-label">
@@ -386,7 +397,7 @@ textarea{
       </div>
 
       <!-- image Gallery -->
-      <div class="tab-content active" data-tab="images">
+      <div class="tab-content" data-tab="images">
       <upload-image-component> </upload-image-component>
       </div>
     </div>
@@ -398,16 +409,26 @@ textarea{
     const buttonSave = this.shadow.querySelector('.store-button')
 
     buttonSave?.addEventListener('click', () => {
-      document.dispatchEvent(new CustomEvent('save-notification', {
+      const saveNotificationEvent = new CustomEvent('custom-notification', {
+        detail: {
+          message: 'Se ha guardado correctamente'
+        }
+      })
 
-      }))
+      document.dispatchEvent(saveNotificationEvent)
     })
 
     // boton de clean
     const buttonBroom = this.shadow.querySelector('.create-button')
 
     buttonBroom?.addEventListener('click', () => {
-      alert('HAS PULSADO LIMPIAR')
+      const saveNotificationEvent = new CustomEvent('custom-notification', {
+        detail: {
+          message: 'Se ha limpiado correctamente'
+        }
+      })
+
+      document.dispatchEvent(saveNotificationEvent)
     })
 
     // const tabsSection = document.querySelector('.form');
