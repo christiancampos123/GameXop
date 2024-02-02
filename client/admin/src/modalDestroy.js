@@ -5,14 +5,16 @@ class ModalDestroy extends HTMLElement {
   }
 
   connectedCallback () {
-    const background = document.querySelector('.background-block')
-    // const filterMenu = document.querySelector(".filter-modal");
+    document.addEventListener('showDeleteModal', this.handleShowDeleteModal.bind(this))
 
-    document.addEventListener('showDeleteModal', event => {
-      background.classList.add('background-block-active')
-      this.openModal()
-    })
     this.render()
+  }
+
+  handleShowDeleteModal (event) {
+    const background = document.querySelector('.background-block')
+    background.classList.add('background-block-active')
+    const deleteModal = this.shadow.querySelector('.modal-delete')
+    deleteModal.classList.add('modal-delete-active')
   }
 
   render () {
@@ -104,11 +106,6 @@ class ModalDestroy extends HTMLElement {
     cancelButton?.addEventListener('click', () => {
       this.closeModal()
     })
-  }
-
-  openModal () {
-    const deleteModal = this.shadow.querySelector('.modal-delete')
-    deleteModal.classList.add('modal-delete-active')
   }
 
   closeModal () {

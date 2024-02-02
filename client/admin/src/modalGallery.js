@@ -20,7 +20,14 @@ class Gallery extends HTMLElement {
 
   connectedCallback () {
     this.render()
+
+    document.addEventListener('showGalleryModal', this.handleShowGalleryModal.bind(this))
     this.generateGalleryItems()
+  }
+
+  handleShowGalleryModal (event) {
+    const modal = this.shadow.querySelector('.modal-gallery-back')
+    modal.classList.add('active')
   }
 
   generateGalleryItems () {
@@ -340,9 +347,6 @@ class Gallery extends HTMLElement {
       }
     })
     const modal = this.shadow.querySelector('.modal-gallery-back')
-    document.addEventListener('showGalleryModal', event => {
-      modal.classList.add('active')
-    })
 
     const closeButton = this.shadow.querySelector('.close-button')
     closeButton.addEventListener('click', () => modal.classList.remove('active'))
@@ -353,8 +357,7 @@ class Gallery extends HTMLElement {
     })
 
     main.addEventListener('click', function (event) {
-      event.stopPropagation() // Evita que el evento se propague al contenedor exterior
-      // console.log('Se hizo clic en el contenedor interior')
+      event.stopPropagation()
     })
   }
 }

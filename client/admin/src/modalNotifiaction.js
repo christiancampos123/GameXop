@@ -7,14 +7,13 @@ class ModalNotification extends HTMLElement {
 
   connectedCallback () {
     document.addEventListener('custom-notification', (event) => {
-      const customMessage = event.detail.message
-      this.showNotification(customMessage)
+      this.handleShowModal(event.detail.message) // Pasa el mensaje como argumento
     })
 
     this.render()
   }
 
-  showNotification (customMessage) {
+  handleShowModal (customMessage) {
     const notificationContainer = this.shadow.querySelector('.notification-container')
     notificationContainer.classList.add('show')
     notificationContainer.querySelector('p').innerText = customMessage
@@ -32,7 +31,8 @@ class ModalNotification extends HTMLElement {
     this.shadow.innerHTML = /* html */ `
         <style>
           :host{
-            z-index:11
+            z-index:11;
+            position:absolute;
           }
           .notification-container {
             display: none;

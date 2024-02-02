@@ -6,14 +6,16 @@ class FilterModal extends HTMLElement {
   }
 
   connectedCallback () {
-    const background = document.querySelector('.background-block')
-    // const filterMenu = document.querySelector(".filter-modal");
+    document.addEventListener('showFilterModal', this.handleShowFilterModal.bind(this))
 
-    document.addEventListener('showFilterModal', event => {
-      background.classList.add('background-block-active')
-      this.openModal()
-    })
     this.render()
+  }
+
+  handleShowFilterModal (event) {
+    const background = document.querySelector('.background-block')
+    background.classList.add('background-block-active')
+    const filterMenu = this.shadow.querySelector('.filter-modal')
+    filterMenu.classList.add('filter-modal-active')
   }
 
   render () {

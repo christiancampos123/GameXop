@@ -36,15 +36,6 @@ class UploadImage extends HTMLElement {
     transform: scale(102%);
   }
 
-  /* Estilo para el símbolo */
-  .square::before {
-    font-size: 30px;
-  }
-
-  .square::before {
-      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Eupload%3C/title%3E%3Cpath d='M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z' /%3E%3C/svg%3E");
-      font-size: 30px;
-    }
       </style>
       
       <div class="form-row">
@@ -56,6 +47,7 @@ class UploadImage extends HTMLElement {
         </div>
         <div class="form-element-input">
           <div class="square">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" /></svg>
           </div>
         </div>
       </div>
