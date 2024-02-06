@@ -410,7 +410,8 @@ select {
     buttonSave?.addEventListener('click', () => {
       const saveNotificationEvent = new CustomEvent('custom-notification', {
         detail: {
-          message: 'Se ha guardado correctamente'
+          message: 'Se ha guardado correctamente',
+          color: 'green'
         }
       })
 
@@ -421,13 +422,14 @@ select {
     const buttonBroom = this.shadow.querySelector('.create-button')
 
     buttonBroom?.addEventListener('click', () => {
-      const saveNotificationEvent = new CustomEvent('custom-notification', {
+      const broomNotificationEvent = new CustomEvent('custom-notification', {
         detail: {
-          message: 'Se ha limpiado correctamente'
+          message: 'Se ha limpiado correctamente',
+          color: 'red'
         }
       })
 
-      document.dispatchEvent(saveNotificationEvent)
+      document.dispatchEvent(broomNotificationEvent)
     })
 
     // const tabsSection = document.querySelector('.form');

@@ -14,7 +14,78 @@ class Gallery extends HTMLElement {
       { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
       { id: '8', imageUrl: '../src/images/logo.png' },
       { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
+      { id: '10', imageUrl: '../src/images/logo.png' },
+      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '2', imageUrl: '../src/images/gmail.png' },
+      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '4', imageUrl: '../src/images/logo.png' },
+      { id: '5', imageUrl: '../src/images/gmail.png' },
+      { id: '6', imageUrl: '../src/images/logo.png' },
+      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
+      { id: '8', imageUrl: '../src/images/logo.png' },
+      { id: '9', imageUrl: '../src/images/gmail.png' },
       { id: '10', imageUrl: '../src/images/logo.png' }
+
     ]
   }
 
@@ -63,7 +134,7 @@ class Gallery extends HTMLElement {
           background-color: rgba(0, 0, 0, 0.5);
           z-index:10;
           display:none;
-           /* Semi-transparent background */
+
         }
 
         .modal-gallery-back.active {
@@ -77,7 +148,7 @@ class Gallery extends HTMLElement {
           background-color: white;
           z-index: 10;
           padding-top:1rem;
-          overflow: hidden;
+          overflow:hidden;
         }
         .modal-gallery-title{
           margin-bottom:2rem;
@@ -105,8 +176,11 @@ class Gallery extends HTMLElement {
           padding: 10px;
           border: 1px solid #ccc;
         }
+        .tab:hover{
+          background-color:#E5A450
+        }
         .tab.active{
-          background-color:#2A4CBB
+          background-color:#E69428
         }
         .modal-gallery-title{
           margin-left:1rem;
@@ -123,10 +197,14 @@ class Gallery extends HTMLElement {
           display: flex;
         }
 
-        .tab-content-images{
-          padding-left:1rem;
-          padding-top:1rem;
-          flex:3;
+        .tab-content-images {
+          padding-left: 1rem;
+          padding-top: 1rem;
+          flex: 3;
+          overflow: auto; /* Añade un scrollbar cuando sea necesario */
+          max-height: calc(80vh - 10rem); /* 80% de la altura de la ventana modal menos la altura del título y otros elementos */
+          scrollbar-width: thin; /* para navegadores que no son webkit */
+          scrollbar-color: transparent transparent;
         }
 
         .tab-content-upload{
@@ -143,92 +221,106 @@ class Gallery extends HTMLElement {
         }
 
         .avatar {
-  width: 100px;
-  height: 100px;
-  background-color: #3498db;
-  margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 1.2em;
-  overflow: hidden; /* Para ocultar partes de la imagen que excedan el contenedor */
-}
+          width: 100px;
+          height: 100px;
+          background-color: #3498db;
+          margin: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          font-weight: bold;
+          font-size: 1.2em;
+          overflow: hidden; /* Para ocultar partes de la imagen que excedan el contenedor */
+        }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ajusta la imagen para cubrir completamente el contenedor */
-}
+        .avatar img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* Ajusta la imagen para cubrir completamente el contenedor */
+        }
 
-    /* Estilo para el contenedor que envuelve los avatares */
-    .avatar-container {
-      display: flex;
-      flex-wrap: wrap;
+        /* Estilo para el contenedor que envuelve los avatares */
+        .avatar-container {
+          display: flex;
+          flex-wrap: wrap;
+          max-height: 100%; /* Ocupa el máximo de la altura disponible */
+          width: 100%; /* Ocupa todo el ancho disponible */
+        }
 
-    }
+        .gallery{
+          display:flex;
+          flex-direction:column;
+          gap:1rem;
+          margin-top:2rem;
+        }
 
-    .gallery{
-      display:flex;
-      flex-direction:column;
-      gap:1rem;
-      margin-top:2rem;
-    }
+        .title-form{
+          display:flex;
+          justify-content:center;
+        }
 
-    .title-form{
-      display:flex;
-      justify-content:center;
-    }
+        .chose-button{
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          width:3rem;
+          height:2rem;
+          position:absolute;
+          bottom:2rem;
+          right:2rem;
+        }
 
-    .chose-button{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      width:3rem;
-      height:2rem;
-      position:absolute;
-      bottom:2rem;
-      right:2rem;
-    }
-
-    .tab-content-upload {
-            background-color: #fff;
-            padding: 20px;
-            text-align: center;
+        .tab-content-upload {
+          background-color: #fff;
+          padding: 20px;
+          text-align: center;
         }
 
         button {
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
+          background-color: #3498db;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 4px;
+          cursor: pointer;
         }
 
         button:hover {
-            background-color: #2980b9;
+          background-color: #2980b9;
         }
 
         input[type="file"] {
-            display: none;
+          display: none;
+        }
+
+        .close-button svg{
+          fill:red;
+          width:2rem;
+          height:2rem;
+          transition: transform 0.09s ease-in-out;
+        }
+
+        .close-button svg:hover{
+          transform: scale(105%);
         }
 
         .images-preview img {
-  max-width: 200px; /* Ancho máximo */
-  max-height: 150px; /* Altura máxima */
-  width: auto; /* Para mantener la proporción original y ajustar automáticamente el ancho */
-  height: auto; /* Para mantener la proporción original y ajustar automáticamente la altura */
-  border: 1px solid #ccc; /* Borde opcional para resaltar la imagen */
-}
+          max-width: 200px; /* Ancho máximo */
+          max-height: 150px; /* Altura máxima */
+          width: auto; /* Para mantener la proporción original y ajustar automáticamente el ancho */
+          height: auto; /* Para mantener la proporción original y ajustar automáticamente la altura */
+          border: 1px solid #ccc; /* Borde opcional para resaltar la imagen */
+        }
 
       </style>
       
       <div class="modal-gallery-back">
         <div class="modal-gallery">
-          <span class="close-button">X</span>
+          <span class="close-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close-box</title><path d="M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z" /></svg>
+          </span>
           <div class = "modal-gallery-title">
           Imagenes
           </div>
@@ -287,7 +379,8 @@ class Gallery extends HTMLElement {
     buttonChose.addEventListener('click', (event) => {
       const choseNotificationEvent = new CustomEvent('custom-notification', {
         detail: {
-          message: 'Se ha elegido la imagen correctamente'
+          message: 'Se ha elegido la imagen correctamente',
+          color: 'green'
         }
       })
 

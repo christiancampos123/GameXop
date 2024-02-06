@@ -7,16 +7,23 @@ class ModalNotification extends HTMLElement {
 
   connectedCallback () {
     document.addEventListener('custom-notification', (event) => {
-      this.handleShowModal(event.detail.message) // Pasa el mensaje como argumento
+      this.handleShowModal(event.detail.message, event.detail.color) // Pasa el mensaje como argumento
     })
 
     this.render()
   }
 
-  handleShowModal (customMessage) {
-    const notificationContainer = this.shadow.querySelector('.notification-container')
-    notificationContainer.classList.add('show')
-    notificationContainer.querySelector('p').innerText = customMessage
+  handleShowModal (customMessage, color) {
+    if (color === 'green') {
+      const notificationContainer = this.shadow.querySelector('.notification-container')
+      notificationContainer.classList.add('show-green')
+      notificationContainer.querySelector('p').innerText = customMessage
+    }
+    if (color === 'red') {
+      const notificationContainer = this.shadow.querySelector('.notification-container')
+      notificationContainer.classList.add('show-red')
+      notificationContainer.querySelector('p').innerText = customMessage
+    }
 
     setTimeout(() => {
       this.hideNotification()
@@ -24,7 +31,16 @@ class ModalNotification extends HTMLElement {
   }
 
   hideNotification () {
-    this.shadow.querySelector('.notification-container').classList.remove('show')
+    try {
+      this.shadow.querySelector('.notification-container').classList.remove('show-green')
+    } catch (error) {
+
+    }
+    try {
+      this.shadow.querySelector('.notification-container').classList.remove('show-red')
+    } catch (error) {
+
+    }
   }
 
   render () {
@@ -39,7 +55,6 @@ class ModalNotification extends HTMLElement {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #090;
             color: #fff;
             padding: 10px;
             border-radius: 5px;
@@ -47,8 +62,14 @@ class ModalNotification extends HTMLElement {
             transition: display 0.3s ease-in-out;
           }
   
-          .notification-container.show {
+          .notification-container.show-green {
             display: block;
+            background-color: #090;
+          }
+
+          .notification-container.show-red {
+            display: block;
+            background-color: #900;
           }
         </style>
   
