@@ -15,11 +15,13 @@ class ModalNotification extends HTMLElement {
 
   handleShowModal (customMessage, color) {
     if (color === 'green') {
+      this.hideNotification()
       const notificationContainer = this.shadow.querySelector('.notification-container')
       notificationContainer.classList.add('show-green')
       notificationContainer.querySelector('p').innerText = customMessage
     }
     if (color === 'red') {
+      this.hideNotification()
       const notificationContainer = this.shadow.querySelector('.notification-container')
       notificationContainer.classList.add('show-red')
       notificationContainer.querySelector('p').innerText = customMessage

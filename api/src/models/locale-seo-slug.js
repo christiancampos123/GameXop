@@ -106,7 +106,7 @@ module.exports = function (sequelize) {
 
     LocaleSeoSlug.hasMany(models.CustomerTracking, { as: 'customerTrackings', foreignKey: 'localeSeoSlugId' })
     LocaleSeoSlug.hasMany(models.MenuItem, { as: 'menuItems', foreignKey: 'localeSeoSlugId' })
-    LocaleSeoSlug.hasMany(models.pageTracking, { as: 'pageTrackings', foreignKey: 'localeSeoSlugId' })
+    LocaleSeoSlug.hasMany(models.PageTracking, { as: 'pageTrackings', foreignKey: 'localeSeoSlugId' })
   }
 
   return LocaleSeoSlug

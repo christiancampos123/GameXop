@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const PaymentMethod = sequelize.define('PaymentMethods', {
+  const PaymentMethod = sequelize.define('PaymentMethod', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,

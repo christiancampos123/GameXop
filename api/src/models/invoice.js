@@ -105,8 +105,8 @@ module.exports = function (sequelize) {
 
   Invoice.associate = function (models) {
     Invoice.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
-    Invoice.belongsTo(models.SaleId, { as: 'saleId', foreignKey: 'saleId' })
-    Invoice.belongsTo(models.ReturnId, { as: 'return', foreignKey: 'returnId' })
+    Invoice.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
+    Invoice.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId' })
   }
 
   return Invoice
