@@ -29,7 +29,7 @@ module.exports = {
         onDelete: 'NO ACTION'
       },
       basePrice: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 2)
       },
       current: {
         type: Sequelize.BOOLEAN

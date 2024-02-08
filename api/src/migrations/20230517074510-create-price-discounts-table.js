@@ -21,10 +21,10 @@ module.exports = {
         onDelete: 'NO ACTION'
       },
       percentage: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 2)
       },
       multiplier: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 2)
       },
       current: {
         type: Sequelize.BOOLEAN

@@ -5,6 +5,7 @@ exports.create = (req, res) => {
   Contact.create(req.body).then(data => {
     res.status(200).send(data)
   }).catch(err => {
+    console.log(err)
     res.status(500).send({
       message: err.errors || 'Algún error ha surgido al insertar el dato.'
     })

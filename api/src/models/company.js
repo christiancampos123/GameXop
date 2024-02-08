@@ -4,19 +4,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, proporciona un valor para "ID".'
-        }
-      }
+      allowNull: false
     },
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, proporciona un valor para "ID del país".'
+        isInt: {
+          msg: 'Please provide a valid country ID.'
         }
       }
     },
@@ -24,8 +19,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, proporciona un valor para "ID de la ciudad".'
+        isInt: {
+          msg: 'Please provide a valid city ID.'
         }
       }
     },
@@ -33,23 +28,84 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, proporciona un valor para "ID del prefijo telefónico".'
+        isInt: {
+          msg: 'Please provide a valid dial code ID.'
         }
       }
     },
-    name: {
+    fiscalName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, proporciona un valor para "Nombre de la empresa".'
-        },
-        len: {
-          args: [2, 100], // Name length between 2 and 100 characters
-          msg: 'El nombre de la empresa debe tener entre 2 y 100 caracteres.'
+        notEmpty: {
+          msg: 'Please provide a fiscal name.'
         }
-        // You can add more validations as needed
+      }
+    },
+    comercialName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a commercial name.'
+        }
+      }
+    },
+    vat: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a VAT number.'
+        }
+      }
+    },
+    comercialAddress: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    fiscalAddress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a fiscal address.'
+        }
+      }
+    },
+    postalCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a postal code.'
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: {
+          msg: 'Please provide a valid email address.'
+        }
+      }
+    },
+    web: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: {
+          msg: 'Please provide a valid URL for the website.'
+        }
+      }
+    },
+    telephone: {
+      type: DataTypes.STRING,
+      validate: {
+        isNumeric: {
+          msg: 'Please provide a valid telephone number.'
+        }
       }
     },
     createdAt: {
@@ -84,6 +140,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'companies_countryId_fk',
+        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'countryId' }
@@ -91,6 +148,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'companies_cityId_fk',
+        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'cityId' }
@@ -98,6 +156,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'companies_dialCodeId_fk',
+        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'dialCodeId' }

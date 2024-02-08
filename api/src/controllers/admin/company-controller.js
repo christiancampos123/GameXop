@@ -17,7 +17,7 @@ exports.findAll = (req, res) => {
   const offset = (page - 1) * limit
 
   Company.findAndCountAll({
-    attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'fiscalname', 'comercialName', 'vat', 'comercialAddress', 'fiscalAddress', 'postalCode', 'email', 'web', 'telephone', 'createdAt', 'deletedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]
@@ -49,6 +49,7 @@ exports.findOne = (req, res) => {
       })
     }
   }).catch(_ => {
+    console.log(_)
     res.status(500).send({
       message: 'Algún error ha surgido al recuperar la id=' + id
     })

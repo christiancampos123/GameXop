@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DECIMAL
       },
       multiplier: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 2)
       },
       current: {
         type: Sequelize.BOOLEAN

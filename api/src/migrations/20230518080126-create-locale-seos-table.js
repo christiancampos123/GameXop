@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       priority: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 2)
       },
       sitemap: {
         type: Sequelize.BOOLEAN,
