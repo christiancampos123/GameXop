@@ -1,14 +1,14 @@
 class Form extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this.render()
   }
 
-  render () {
+  render() {
     this.shadow.innerHTML =
       /* html */
       `
@@ -201,6 +201,24 @@ select {
   cursor: pointer;
 }
 
+.errors-modal{
+  position:absolute;
+  display:none;
+  top:10rem;
+  width:57%;
+  background-color: green;
+}
+
+.errors-modal.active{
+  position:absolute;
+  display:block;
+  top:10rem;
+  width:57%;
+  background-color: green;
+}
+
+
+
 
         </style>
 <div class="form">
@@ -323,10 +341,21 @@ select {
   </form>
 </div>
 
+<div class="errors-modal"> 
+    <button class="close-btn">X</button>
+    <ul>
+    </ul>
+</div>
+
         `
+
+    const closeButton = this.shadow.querySelector(".close-btn");
+    closeButton.addEventListener("click", () => {
+      const modalError = this.shadow.querySelector(".errors-modal");
+        modalError.classList.remove("active")// Ocultar el modal al hacer clic en el botón de cierre
+    });
     const main = this.shadow.querySelector('.form')
-    // console.log(main)
-    // console.log(main)
+
     main?.addEventListener('click', async (event) => {
       const buttonSave = this.shadow.querySelector('.store-button')
 
@@ -365,8 +394,18 @@ select {
         } catch (response) {
           const errors = await response.json()
           errors.message.forEach(error => {
-            console.log(error.message)
-          })
+            const modalError = this.shadow.querySelector(".errors-modal");
+            const ulElement = modalError.querySelector("ul");
+
+            // Eliminar todos los elementos <li> existentes dentro de <ul>
+            ulElement.innerHTML = 'errores';
+
+            const liElement = document.createElement("li");
+            liElement.textContent = error.message;
+            ulElement.appendChild(liElement);
+          });
+          const modalError = this.shadow.querySelector(".errors-modal");
+          modalError.classList.add("active")
         }
       }
 
