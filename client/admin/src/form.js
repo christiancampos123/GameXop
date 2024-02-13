@@ -324,63 +324,68 @@ select {
 </div>
 
         `
+    const main = this.shadow.querySelector('.form')
+    // console.log(main)
+    // console.log(main)
+    main?.addEventListener('click', async (event) => {
+      const buttonSave = this.shadow.querySelector('.store-button')
 
-    const buttonSave = this.shadow.querySelector('.store-button')
+      // Si el evento se origina dentro del botón de guardar
+      if (event.target.closest('.store-button')) {
+        event.preventDefault()
 
-    buttonSave?.addEventListener('click', async (event) => {
-      event.preventDefault()
+        const form = this.shadow.querySelector('.faq-form')
+        const formData = new FormData(form)
+        const formDataJson = Object.fromEntries(formData.entries())
+        delete formDataJson.id
 
-      const form = this.shadow.querySelector('.faq-form')
-      const formData = new FormData(form)
-      const formDataJson = Object.fromEntries(formData.entries())
-      delete formDataJson.id
+        try {
+          const response = await fetch('http://127.0.0.1:8080/api/admin/faqs', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formDataJson)
+          })
 
-      try {
-        const response = await fetch('http://127.0.0.1:8080/api/admin/faqs', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formDataJson)
-        })
+          if (response.status === 500 || response.status === 422) {
+            throw response
+          }
 
-        if (response.status === 500 || response.status === 422) {
-          throw response
+          const data = await response.json()
+
+          const saveNotificationEvent = new CustomEvent('custom-notification', {
+            detail: {
+              message: 'Se ha guardado correctamente',
+              color: 'green'
+            }
+          })
+
+          document.dispatchEvent(saveNotificationEvent)
+        } catch (response) {
+          const errors = await response.json()
+          errors.message.forEach(error => {
+            console.log(error.message)
+          })
         }
+      }
 
-        const data = await response.json()
+      // boton de clean
+      // const buttonBroom = this.shadow.querySelector('.create-button')
 
-        const saveNotificationEvent = new CustomEvent('custom-notification', {
+      // buttonBroom?.addEventListener('click', (event) => {
+      if (event.target.closest('.create-button')) {
+        event.preventDefault()
+        const broomNotificationEvent = new CustomEvent('custom-notification', {
           detail: {
-            message: 'Se ha guardado correctamente',
-            color: 'green'
+            message: 'Se ha limpiado correctamente',
+            color: 'red'
           }
         })
 
-        document.dispatchEvent(saveNotificationEvent)
-      } catch (error) {
-        console.log(error)
+        document.dispatchEvent(broomNotificationEvent)
       }
-    })
 
-    // boton de clean
-    const buttonBroom = this.shadow.querySelector('.create-button')
-
-    buttonBroom?.addEventListener('click', (event) => {
-      event.preventDefault()
-      const broomNotificationEvent = new CustomEvent('custom-notification', {
-        detail: {
-          message: 'Se ha limpiado correctamente',
-          color: 'red'
-        }
-      })
-
-      document.dispatchEvent(broomNotificationEvent)
-    })
-
-    const main = this.shadow.querySelector('.form')
-    // console.log(main)
-    main?.addEventListener('click', (event) => {
       // event.preventDefault()
 
       if (event.target.closest('.tab')) {
