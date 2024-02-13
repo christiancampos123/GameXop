@@ -9,7 +9,6 @@ class KonamiCode extends HTMLElement {
 
   handleKeyDown (event) {
     const key = event.code
-    console.log(key)
 
     if (key === this.konamiCode[this.codeIndex]) {
       this.codeIndex++
