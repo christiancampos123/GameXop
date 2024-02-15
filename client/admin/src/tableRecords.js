@@ -2,141 +2,219 @@ class TableRecords extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.rows = null
+    this.datas = null
   }
 
   connectedCallback () {
-    this.render()
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData () {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
+    const data = await response.json()
+    this.rows = data.rows
+    this.datas = data
+    console.log(data)
   }
 
   render () {
     this.shadow.innerHTML =
-            /* html */
-            `
+      /* html */
+      `
         <style>
 
-* {
-  margin: 0;
-  padding: 0;
-}
+          * {
+            margin: 0;
+            padding: 0;
+          }
 
-section {
-  margin: 0;
-  padding: 0;
-}
+          section {
+            margin: 0;
+            padding: 0;
+          }
 
-.none {
-  display: none;
-}
+          .none {
+            display: none;
+          }
 
-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
+          button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+          }
 
-a {
-  text-decoration: none;
-}
+          a {
+            text-decoration: none;
+          }
 
-ul {
-  list-style: none;
-}
+          ul {
+            list-style: none;
+          }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: hsl(0, 0%, 100%);
-  font-family: 'Roboto', sans-serif;
-}
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6 {
+            color: hsl(0, 0%, 100%);
+            font-family: 'Roboto', sans-serif;
+          }
 
 
-input,
-label,
-select,
-textarea,
-li,
-span,
-p {
-  color: hsl(0, 0%, 100%);
-  font-family: 'Roboto', sans-serif;
-}
-            .filter {
-  align-items: center;
-  background-color: hsl(0, 0%, 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0.2rem 0;
-}
+          input,
+          label,
+          select,
+          textarea,
+          li,
+          span,
+          p {
+            color: hsl(0, 0%, 100%);
+            font-family: 'Roboto', sans-serif;
+          }
+                      .filter {
+            align-items: center;
+            background-color: hsl(0, 0%, 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0.2rem 0;
+          }
 
-.filter-button button svg {
-  width: 2rem;
-}
+          .filter-button button svg {
+            width: 2rem;
+          }
 
-.filter-button button svg path {
-  fill: hsl(207, 85%, 69%);
-}
+          .filter-button button svg path {
+            fill: hsl(207, 85%, 69%);
+          }
 
-.filter-button button:hover svg path {
-  fill: hsl(34, 79%, 53%);
-}
+          .filter-button button:hover svg path {
+            fill: hsl(34, 79%, 53%);
+          }
 
-.table-component {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 1rem;
-}
+          .table-component {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 1rem;
+          }
 
-.table-buttons {
-  background-color: hsl(207, 85%, 69%);
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-}
+          .table-buttons {
+            background-color: hsl(207, 85%, 69%);
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+          }
 
-.edit-button button svg,
-.delete-button button svg {
-  width: 2rem;
-}
+          .edit-button button svg,
+          .delete-button button svg {
+            width: 2rem;
+          }
 
-.edit-button button svg path,
-.delete-button button svg path {
-  fill: hsl(0, 0%, 100%);
-}
+          .edit-button button svg path,
+          .delete-button button svg path {
+            fill: hsl(0, 0%, 100%);
+          }
 
-.edit-button button:hover svg path,
-.delete-button button:hover svg path {
-  fill: hsl(34, 79%, 53%);
-}
+          .edit-button button:hover svg path,
+          .delete-button button:hover svg path {
+            fill: hsl(34, 79%, 53%);
+          }
 
-            .table-data {
-  background-color: hsl(226, 64%, 66%);
-  padding: 0.5rem;
-}
+                      .table-data {
+            background-color: hsl(226, 64%, 66%);
+            padding: 0.5rem;
+          }
 
-.table-data ul {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+          .table-data ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
 
-.table-data ul li span {
-  font-weight: 700;
-}
+          .table-data ul li span {
+            font-weight: 700;
+          }
 
-.table-data ul li span::after {
-  content: ":";
-  margin-right: 0.5rem;
-}
+          .table-data ul li span::after {
+            content: ":";
+            margin-right: 0.5rem;
+          }
+
+          .table-records {
+            max-height: 600px; /* o el valor que prefieras */
+            overflow: auto;
+          }
+
+          .table-records::-webkit-scrollbar {
+            width: 6px; /* Grosor de la barra de desplazamiento */
+          }
+
+          .table-records::-webkit-scrollbar-thumb {
+            background-color: #888; /* Color del control deslizante */
+            border-radius: 3px; /* Redondea las esquinas del control deslizante */
+          }
+
+          .table-record{
+            margin-bottom:1.5rem;
+          }
+
+          .edit-button button:hover::after,
+          .delete-button button:hover::after {
+              content: attr(data-id); /* Muestra el valor del atributo data-id */
+              top: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              padding: 0.2rem 0.5rem;
+              background-color: rgba(0, 0, 0, 0.7);
+              color: #fff;
+              border-radius: 4px;
+              font-size: 12px;
+              white-space: nowrap;
+          }
+
+          .pagination {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          }
+
+          .btn {
+              padding: 8px 16px;
+              margin: 0 5px;
+              border: none;
+              border-radius: 5px;
+              background-color: #007bff;
+              color: #fff;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+          }
+
+          .btn:hover {
+              background-color: #0056b3;
+          }
+
+          .page-number {
+              width: 40px;
+              height: 40px;
+              line-height: 40px;
+              text-align: center;
+              background-color: #f0f0f0;
+              border-radius: 5px;
+              margin: 0 5px;
+          }
+
+          .remaining-pages {
+              margin-left: 10px;
+          }
+
         </style>
     
 
         <section class="table-component">
-            <section class="filter">
+          <section class="filter">
             <div class="filter-button">
                 <button>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -148,113 +226,113 @@ p {
             </div>
             </section>
 
+            <div class="table-records"></div>
 
+            <div class="pagination">
+              <button class="btn prev">Anterior</button>
+              <div class="page-number"></div>
+              <button class="btn next">Siguiente</button>
+              <div class="remaining-pages"><span></span></div>
+            </div>
+
+          <!--
             <article class="table-record">
-            <div class="table-buttons">
-                <div class="edit-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
-                    </svg>
-                </button>
-                </div>
-                <div class="delete-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                    </svg>
-                </button>
-                </div>
-            </div>
-            <div class="table-data">
-                <ul>
-                <li><span>Email</span>bolitakinki69@hotmail.com</li>
-                <li><span>Nombre</span>Carlos</li>
-                </ul>
-            </div>
+              <div class="table-buttons">
+                  <div class="edit-button">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                        </svg>
+                    </button>
+                  </div>
+                  <div class="delete-button">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                        </svg>
+                    </button>
+                  </div>
+              </div>
+              <div class="table-data">
+                  <ul>
+                    <li><span>Email</span>bolitakinki69@hotmail.com</li>
+                    <li><span>Nombre</span>Carlos</li>
+                  </ul>
+              </div>
             </article>
-
-
-
-
-            <article class="table-record">
-            <div class="table-buttons">
-                <div class="edit-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
-                    </svg>
-                </button>
-                </div>
-                <div class="delete-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                    </svg>
-                </button>
-                </div>
-            </div>
-            <div class="table-data">
-                <ul>
-                <li><span>Email</span>bolitakinki69@hotmail.com</li>
-                <li><span>Nombre</span>Carlos</li>
-                </ul>
-            </div>
-            </article>
-            <article class="table-record">
-            <div class="table-buttons">
-                <div class="edit-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
-                    </svg>
-                </button>
-                </div>
-                <div class="delete-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                    </svg>
-                </button>
-                </div>
-            </div>
-            <div class="table-data">
-                <ul>
-                <li><span>Email</span>bolitakinki69@hotmail.com</li>
-                <li><span>Nombre</span>Carlos</li>
-                </ul>
-            </div>
-            </article>
-            <article class="table-record">
-            <div class="table-buttons">
-                <div class="edit-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
-                    </svg>
-                </button>
-                </div>
-                <div class="delete-button">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                    </svg>
-                </button>
-                </div>
-            </div>
-            <div class="table-data">
-                <ul>
-                <li><span>Email</span>bolitakinki69@hotmail.com</li>
-                <li><span>Nombre</span>Carlos</li>
-                </ul>
-            </div>
-            </article>
-        </section>
+          -->
+          <div class="page-bar">
+          </div>
+          </section>
         `
+    const contenedor = this.shadow.querySelector('.table-records')
+
+    // console.log(this.datas.count)
+
+    this.rows.forEach(row => {
+      // Crea el elemento article
+      const article = document.createElement('article')
+      article.className = 'table-record'
+
+      // Crea el div con los botones de editar y borrar
+      const divButtons = document.createElement('div')
+      divButtons.className = 'table-buttons'
+
+      // Botón de editar
+      const editButtonDiv = document.createElement('div')
+      editButtonDiv.className = 'edit-button'
+      const editButton = document.createElement('button')
+      editButton.setAttribute('data-id', row.id) // Establece el atributo data-id con el ID correspondiente
+      editButton.setAttribute('data-action', 'edit') // Establece el atributo data-action con la acción 'edit'
+      editButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+          </svg>`
+      editButtonDiv.appendChild(editButton)
+
+      // Botón de borrar
+      const deleteButtonDiv = document.createElement('div')
+      deleteButtonDiv.className = 'delete-button'
+      const deleteButton = document.createElement('button')
+      deleteButton.setAttribute('data-id', row.id) // Establece el atributo data-id con el ID correspondiente
+      deleteButton.setAttribute('data-action', 'delete') // Establece el atributo data-action con la acción 'delete'
+      deleteButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+          </svg>`
+      deleteButtonDiv.appendChild(deleteButton)
+
+      // Agrega los botones al div de botones
+      divButtons.appendChild(editButtonDiv)
+      divButtons.appendChild(deleteButtonDiv)
+
+      // Crea el div con los datos de la tabla
+      const divData = document.createElement('div')
+      divData.className = 'table-data'
+      const ul = document.createElement('ul')
+      const liName = document.createElement('li')
+      liName.innerHTML = `<span>${row.key}</span>${row.name}`
+      const liOrder = document.createElement('li')
+      liOrder.innerHTML = `<span>Orden</span>${row.order}`
+      ul.appendChild(liName)
+      ul.appendChild(liOrder)
+      divData.appendChild(ul)
+
+      // Agrega los divs al article
+      article.appendChild(divButtons)
+      article.appendChild(divData)
+
+      // Agrega el article al contenedor
+      contenedor.appendChild(article)
+
+      const pageNumber = this.shadowRoot.querySelector('.remaining-pages')
+      pageNumber.innerHTML = `${this.datas.meta.pages}`
+
+      const actualPage = this.shadowRoot.querySelector('.page-number')
+      actualPage.innerHTML = `${this.datas.meta.currentPage}`
+    })
+
     const filterButton = this.shadow.querySelector('.filter-button')
 
     filterButton?.addEventListener('click', () => {

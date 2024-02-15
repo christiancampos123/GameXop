@@ -1,14 +1,14 @@
 class Form extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.render()
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */
       `
@@ -202,19 +202,25 @@ select {
 }
 
 .errors-modal{
-  position:absolute;
   display:none;
-  top:10rem;
-  width:57%;
-  background-color: green;
+  background-color: grey;
 }
 
 .errors-modal.active{
-  position:absolute;
-  display:block;
-  top:10rem;
-  width:57%;
-  background-color: green;
+  display:flex;
+  flex-direction:column;
+  background-color: grey;
+  cursor:pointer;
+  padding:0.5rem;
+}
+
+.errors-modal-title{
+  margin-bottom:0.7rem;
+}
+
+ul{
+  margin:0;
+  padding:0;
 }
 
 
@@ -245,6 +251,14 @@ select {
         </div>
       </div>
     </div>
+
+
+
+    <div class="errors-modal">
+    <div class=errors-modal-title> Errores</div>
+      <ul>
+      </ul>
+    </div>
   
     <input type="hidden" name="id" value="">
     <div class="tab-contents">
@@ -260,9 +274,9 @@ select {
               <input type="text" name="name" value="">
             </div>
           </div>
-        </div>
+      </div>
 
-  
+
         <div class="form-language-bar">
           <div class="tabs">
   
@@ -341,35 +355,26 @@ select {
   </form>
 </div>
 
-<div class="errors-modal"> 
-    <button class="close-btn">X</button>
-    <ul>
-    </ul>
-</div>
 
         `
 
-    const closeButton = this.shadow.querySelector(".close-btn");
-    closeButton.addEventListener("click", () => {
-      const modalError = this.shadow.querySelector(".errors-modal");
-        modalError.classList.remove("active")// Ocultar el modal al hacer clic en el botón de cierre
-    });
     const main = this.shadow.querySelector('.form')
 
     main?.addEventListener('click', async (event) => {
-      const buttonSave = this.shadow.querySelector('.store-button')
-
+      event.preventDefault()
+      if (event.target.closest('.errors-modal')) {
+        const modalError = this.shadow.querySelector('.errors-modal')
+        modalError.classList.remove('active')// Ocultar el modal al hacer clic en el botón de cierre
+      }
       // Si el evento se origina dentro del botón de guardar
       if (event.target.closest('.store-button')) {
-        event.preventDefault()
-
         const form = this.shadow.querySelector('.faq-form')
         const formData = new FormData(form)
         const formDataJson = Object.fromEntries(formData.entries())
         delete formDataJson.id
 
         try {
-          const response = await fetch('http://127.0.0.1:8080/api/admin/faqs', {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -393,19 +398,21 @@ select {
           document.dispatchEvent(saveNotificationEvent)
         } catch (response) {
           const errors = await response.json()
+          const modalError = this.shadow.querySelector('.errors-modal')
+          const ulElement = modalError.querySelector('ul')
+          // Eliminar todos los elementos <li> existentes dentro de <ul>
+          ulElement.innerHTML = ''
           errors.message.forEach(error => {
-            const modalError = this.shadow.querySelector(".errors-modal");
-            const ulElement = modalError.querySelector("ul");
-
+            const modalError = this.shadow.querySelector('.errors-modal')
+            const ulElement = modalError.querySelector('ul')
             // Eliminar todos los elementos <li> existentes dentro de <ul>
-            ulElement.innerHTML = 'errores';
-
-            const liElement = document.createElement("li");
-            liElement.textContent = error.message;
-            ulElement.appendChild(liElement);
-          });
-          const modalError = this.shadow.querySelector(".errors-modal");
-          modalError.classList.add("active")
+            // ulElement.innerHTML = ''
+            const liElement = document.createElement('li')
+            liElement.textContent = error.message
+            ulElement.appendChild(liElement)
+          })
+          // const modalError = this.shadow.querySelector('.errors-modal')
+          modalError.classList.add('active')
         }
       }
 

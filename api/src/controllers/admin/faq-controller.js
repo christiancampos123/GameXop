@@ -21,12 +21,13 @@ exports.findAll = (req, res) => {
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
+  const order = req.query.order || 'DESC'
 
   Faq.findAndCountAll({
     attributes: ['id', 'name', 'order', 'createdAt', 'updatedAt'],
     limit,
     offset,
-    order: [['createdAt', 'DESC']]
+    order: [['createdAt', order]]
   })
     .then(result => {
       result.meta = {
