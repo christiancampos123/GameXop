@@ -331,6 +331,7 @@ class TableRecords extends HTMLElement {
 
       const actualPage = this.shadowRoot.querySelector('.page-number')
       actualPage.innerHTML = `${this.datas.meta.currentPage}`
+      console.log(row)
     })
 
     const filterButton = this.shadow.querySelector('.filter-button')
