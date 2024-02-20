@@ -12,7 +12,6 @@ class ModalErrors extends HTMLElement {
     this.render()
   }
 
-
   render () {
     this.shadow.innerHTML = /* html */ `
         <style>

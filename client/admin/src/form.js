@@ -5,8 +5,18 @@ class Form extends HTMLElement {
   }
 
   connectedCallback () {
+    document.addEventListener('showElement', this.handleShowElement.bind(this))
+    // document.addEventListener('delete-tab', this.handleDeleteRecord.bind(this))
     this.render()
   }
+
+  handleShowElement (event) {
+    this.showElement(event.detail.element)
+  }
+
+  // handleDeleteRecord (event) {
+  //   this.deleteRecord(event.detail.id)
+  // }
 
   render () {
     this.shadow.innerHTML =
@@ -371,11 +381,13 @@ ul{
         const form = this.shadow.querySelector('.faq-form')
         const formData = new FormData(form)
         const formDataJson = Object.fromEntries(formData.entries())
+        const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
+        const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
 
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`, {
-            method: 'POST',
+          const response = await fetch(endpoint, {
+            method,
             headers: {
               'Content-Type': 'application/json'
             },
@@ -414,6 +426,11 @@ ul{
           // const modalError = this.shadow.querySelector('.errors-modal')
           modalError.classList.add('active')
         }
+
+        const refreshTableRecords = new CustomEvent('refresh-table-records', {
+        })
+        document.dispatchEvent(refreshTableRecords)
+        this.render()
       }
 
       // boton de clean
@@ -449,6 +466,20 @@ ul{
         this.shadow.querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`).classList.add('active')
       }
     })
+  }
+
+  showElement (element) {
+    Object.entries(element).forEach(([key, value]) => {
+      // Verificar si el nombre de la clave coincide con el atributo 'name' del input
+      const input = this.shadow.querySelector(`input[name="${key}"]`)
+      if (input) {
+        input.value = value
+      }
+    })
+  }
+
+  deleteRecord (id) {
+    alert(id)
   }
 }
 

@@ -4,18 +4,26 @@ class TableRecords extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' })
     this.rows = null
     this.datas = null
+    this.currentPage = 1
   }
 
   connectedCallback () {
-    this.loadData().then(() => this.render())
+    document.addEventListener('refresh-table-records', this.handleTableRecords.bind(this))
+    // delete-tab
+    this.loadData(this.currentPage).then(() => this.render())
   }
 
-  async loadData () {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
+  handleTableRecords () {
+    this.loadData(this.currentPage).then(() => this.render())
+  }
+
+  async loadData (page) {
+    page = page || 1
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}?size=10&page=${page}`)
     const data = await response.json()
     this.rows = data.rows
     this.datas = data
-    console.log(data)
+    this.render()
   }
 
   render () {
@@ -161,20 +169,6 @@ class TableRecords extends HTMLElement {
             margin-bottom:1.5rem;
           }
 
-          .edit-button button:hover::after,
-          .delete-button button:hover::after {
-              content: attr(data-id); /* Muestra el valor del atributo data-id */
-              top: 100%;
-              left: 50%;
-              transform: translateX(-50%);
-              padding: 0.2rem 0.5rem;
-              background-color: rgba(0, 0, 0, 0.7);
-              color: #fff;
-              border-radius: 4px;
-              font-size: 12px;
-              white-space: nowrap;
-          }
-
           .pagination {
               display: flex;
               align-items: center;
@@ -269,11 +263,12 @@ class TableRecords extends HTMLElement {
     const contenedor = this.shadow.querySelector('.table-records')
 
     // console.log(this.datas.count)
+    const next = this.shadow.querySelector
 
     this.rows.forEach(row => {
       // Crea el elemento article
       const article = document.createElement('article')
-      article.className = 'table-record'
+      article.classList.add('table-record')
 
       // Crea el div con los botones de editar y borrar
       const divButtons = document.createElement('div')
@@ -281,10 +276,9 @@ class TableRecords extends HTMLElement {
 
       // Botón de editar
       const editButtonDiv = document.createElement('div')
-      editButtonDiv.className = 'edit-button'
+      editButtonDiv.classList.add('edit-button')
+      editButtonDiv.dataset.id = row.id
       const editButton = document.createElement('button')
-      editButton.setAttribute('data-id', row.id) // Establece el atributo data-id con el ID correspondiente
-      editButton.setAttribute('data-action', 'edit') // Establece el atributo data-action con la acción 'edit'
       editButton.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
@@ -293,10 +287,9 @@ class TableRecords extends HTMLElement {
 
       // Botón de borrar
       const deleteButtonDiv = document.createElement('div')
-      deleteButtonDiv.className = 'delete-button'
+      deleteButtonDiv.classList.add('delete-button')
+      deleteButtonDiv.dataset.id = row.id
       const deleteButton = document.createElement('button')
-      deleteButton.setAttribute('data-id', row.id) // Establece el atributo data-id con el ID correspondiente
-      deleteButton.setAttribute('data-action', 'delete') // Establece el atributo data-action con la acción 'delete'
       deleteButton.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
@@ -309,10 +302,10 @@ class TableRecords extends HTMLElement {
 
       // Crea el div con los datos de la tabla
       const divData = document.createElement('div')
-      divData.className = 'table-data'
+      divData.classList.add('table-data')
       const ul = document.createElement('ul')
       const liName = document.createElement('li')
-      liName.innerHTML = `<span>${row.key}</span>${row.name}`
+      liName.innerHTML = `<span>Nombre</span>${row.name}`
       const liOrder = document.createElement('li')
       liOrder.innerHTML = `<span>Orden</span>${row.order}`
       ul.appendChild(liName)
@@ -331,7 +324,7 @@ class TableRecords extends HTMLElement {
 
       const actualPage = this.shadowRoot.querySelector('.page-number')
       actualPage.innerHTML = `${this.datas.meta.currentPage}`
-      console.log(row)
+      // console.log(row)
     })
 
     const filterButton = this.shadow.querySelector('.filter-button')
@@ -344,12 +337,26 @@ class TableRecords extends HTMLElement {
     const tableSection = this.shadow.querySelector('.table-component')
     tableSection?.addEventListener('click', async (event) => {
       if (event.target.closest('.edit-button')) {
-        alert('Has pulsado edition')
+        const id = event.target.closest('.edit-button').dataset.id
+        const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
+        const data = await response.json()
+        this.rows = data.rows
+        // console.log(data)
+        // alert(data.name)
+        document.dispatchEvent(new CustomEvent('showElement', {
+          detail: {
+            element: data
+          }
+        }))
+        // console.log(fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}?size=10&id=${id}`))
       }
 
       if (event.target.closest('.delete-button')) {
+        // alert(event.target.closest('.delete-button').dataset.id)
         document.dispatchEvent(new CustomEvent('showDeleteModal', {
-
+          detail: {
+            id: `${this.getAttribute('endpoint')}/${event.target.closest('.delete-button').dataset.id}`
+          }
         }))
       }
     })

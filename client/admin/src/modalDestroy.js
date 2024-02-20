@@ -2,6 +2,7 @@ class ModalDestroy extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.id = null
   }
 
   connectedCallback () {
@@ -15,6 +16,7 @@ class ModalDestroy extends HTMLElement {
     background.classList.add('background-block-active')
     const deleteModal = this.shadow.querySelector('.modal-delete')
     deleteModal.classList.add('modal-delete-active')
+    this.id = event.detail.id
   }
 
   render () {
@@ -99,7 +101,41 @@ class ModalDestroy extends HTMLElement {
     const acceptButton = this.shadow.querySelector('.modal-delete-box-buttons-accept')
     const cancelButton = this.shadow.querySelector('.modal-delete-box-buttons-decline')
 
-    acceptButton?.addEventListener('click', () => {
+    acceptButton?.addEventListener('click', async (event) => {
+      // alert(this.id)
+      const endpoint = this.id
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+        if (response.status === 500 || response.status === 422) {
+          throw response
+        }
+
+        const deleteNotification = new CustomEvent('custom-notification', {
+          detail: {
+            message: 'Se ha eliminado',
+            color: 'red'
+          }
+        })
+
+        document.dispatchEvent(deleteNotification)
+        const refreshTableRecords = new CustomEvent('refresh-table-records', {
+        })
+        document.dispatchEvent(refreshTableRecords)
+      } catch (response) {
+
+      }
+      // document.dispatchEvent(new CustomEvent('delete-tab', {
+      //   detail: {
+      //     id: this.id
+      //   }
+      // }))
+
       this.closeModal()
     })
 
