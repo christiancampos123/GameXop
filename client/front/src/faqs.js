@@ -2,6 +2,8 @@ class Faqs extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.rows = null
+    this.datas = null
   }
 
   async connectedCallback () {
@@ -9,32 +11,12 @@ class Faqs extends HTMLElement {
   }
 
   async loadData () {
-    this.faqs = [
-      {
-        title: '¿Qué es GameXop?',
-        description: `
-          GameXop es una tienda de videojuegos online. En ella podrás encontrar los últimos lanzamientos, preventas y juegos en oferta.
-        `
-      },
-      {
-        title: '¿Puedo hacer devoluciones de juegos?',
-        description: `
-          Sí, puedes hacer devoluciones de juegos siempre y cuando no hayan pasado más de 7 días desde la compra.
-        `
-      },
-      {
-        title: '¿Cuánto tarda en llegar mi pedido?',
-        description: `
-          El tiempo de entrega de los pedidos es instantáneo. Una vez realizada la compra, podrás descargar el juego en tu consola o PC.
-        `
-      },
-      {
-        title: '¿Cómo puedo pagar mi pedido?',
-        description: `
-          Puedes pagar tu pedido con tarjeta de crédito o débito, PayPal o MercadoPago.
-        `
-      }
-    ]
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}?size=4`)
+    const data = await response.json()
+    this.rows = data.rows
+    this.datas = data
+    console.log(this.datas)
+    this.render()
   }
 
   render () {
@@ -71,13 +53,13 @@ class Faqs extends HTMLElement {
 
     const faqsContainer = this.shadow.querySelector('.faqs-container')
 
-    this.faqs.forEach(faq => {
+    this.rows.forEach(row => {
       const faqElement = document.createElement('details')
       const faqElementSummary = document.createElement('summary')
       faqElement.name = 'faq'
-      faqElementSummary.textContent = faq.title
+      faqElementSummary.textContent = row.name
       faqElement.appendChild(faqElementSummary)
-      faqElement.innerHTML += faq.description
+      faqElement.innerHTML += row.order
       faqsContainer.appendChild(faqElement)
     })
   }
