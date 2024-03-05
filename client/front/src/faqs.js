@@ -2,8 +2,6 @@ class Faqs extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.rows = null
-    this.datas = null
   }
 
   async connectedCallback () {
@@ -11,12 +9,16 @@ class Faqs extends HTMLElement {
   }
 
   async loadData () {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}?size=4`)
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
-    this.rows = data.rows
-    this.datas = data
-    console.log(this.datas)
-    this.render()
+    this.rows = data
+    this.faqs = []
+    this.rows.forEach(row => {
+      this.faqs.push({
+        title: row.locales.question,
+        description: row.locales.answer
+      })
+    })
   }
 
   render () {
@@ -53,13 +55,13 @@ class Faqs extends HTMLElement {
 
     const faqsContainer = this.shadow.querySelector('.faqs-container')
 
-    this.rows.forEach(row => {
+    this.faqs.forEach(faq => {
       const faqElement = document.createElement('details')
       const faqElementSummary = document.createElement('summary')
       faqElement.name = 'faq'
-      faqElementSummary.textContent = row.name
+      faqElementSummary.textContent = faq.title
       faqElement.appendChild(faqElementSummary)
-      faqElement.innerHTML += row.order
+      faqElement.innerHTML += faq.description
       faqsContainer.appendChild(faqElement)
     })
   }

@@ -396,6 +396,14 @@ ul{
             }
 
             formDataJson[prefix][locales][field] = value ?? null
+          } else if (key.includes('.')) {
+            const [prefix, field] = key.split('.')
+
+            if (!(prefix in formDataJson)) {
+              formDataJson[prefix] = {}
+            }
+
+            formDataJson[prefix][field] = value ?? null
           } else {
             formDataJson[key] = value ?? null
           }
@@ -482,12 +490,31 @@ ul{
     })
   }
 
-  showElement (element) {
+  showElement (element, parentKey = '') {
     Object.entries(element).forEach(([key, value]) => {
-      // Verificar si el nombre de la clave coincide con el atributo 'name' del input
-      const input = this.shadow.querySelector(`input[name="${key}"]`)
-      if (input) {
-        input.value = value
+      const currentKey = parentKey ? `${parentKey}.${key}` : key
+      if (typeof value === 'object' && value !== null) {
+        this.showElement(value, currentKey)
+      } else {
+        try {
+          // Verificar si el nombre de la clave coincide con el atributo 'name' del input
+          console.log(`${currentKey}`)
+          const input = this.shadow.querySelector(`input[name="${currentKey}"]`)
+          if (input) {
+            input.value = value
+          }
+        } catch {
+
+        }
+        try {
+          console.log(`${currentKey}`)
+          const textarea = this.shadow.querySelector(`textarea[name="${currentKey}"]`)
+          if (textarea) {
+            textarea.value = value
+          }
+        } catch {
+
+        }
       }
     })
   }
