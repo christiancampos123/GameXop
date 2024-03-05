@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Ticket = db.Ticket
+const sequelizeDb = require('../../models/sequelize')
+const Ticket = sequelizeDb.Ticket
 
 exports.create = (req, res) => {
   Ticket.create(req.body).then(data => {

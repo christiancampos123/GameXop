@@ -1,5 +1,6 @@
-const db = require('../../models')
-const City = db.City
+const sequelizeDb = require('../../models/sequelize')
+
+const City = sequelizeDb.City
 
 exports.create = (req, res) => {
   City.create(req.body).then(data => {

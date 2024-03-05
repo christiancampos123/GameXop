@@ -311,7 +311,7 @@ ul{
                     </label>
                   </div>
                   <div class="form-element-input">
-                    <input type="text" name="pregunta" value="">
+                    <input type="text" name="locales.es.question" value="">
                   </div>
                 </div>
               </div>
@@ -323,7 +323,7 @@ ul{
                     </label>
                   </div>
                   <div class="form-element-input">
-                    <textarea name="respuesta" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                    <textarea name="locales.es.answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
                   </div>
                 </div>
               </div>
@@ -337,7 +337,7 @@ ul{
                     </label>
                   </div>
                   <div class="form-element-input">
-                    <input type="text" name="question" value="">
+                    <input type="text" name="locales.en.question" value="">
                   </div>
                 </div>
               </div>
@@ -349,7 +349,7 @@ ul{
                     </label>
                   </div>
                   <div class="form-element-input">
-                    <textarea name="answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                    <textarea name="locales.en.answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
                   </div>
                 </div>
               </div>
@@ -380,7 +380,27 @@ ul{
       if (event.target.closest('.store-button')) {
         const form = this.shadow.querySelector('.faq-form')
         const formData = new FormData(form)
-        const formDataJson = Object.fromEntries(formData.entries())
+
+        const formDataJson = {}
+
+        for (const [key, value] of formData.entries()) {
+          if (key.includes('locales')) {
+            const [prefix, locales, field] = key.split('.')
+
+            if (!(prefix in formDataJson)) {
+              formDataJson[prefix] = {}
+            }
+
+            if (!(locales in formDataJson[prefix])) {
+              formDataJson[prefix][locales] = {}
+            }
+
+            formDataJson[prefix][locales][field] = value ?? null
+          } else {
+            formDataJson[key] = value ?? null
+          }
+        }
+
         const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
         const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
@@ -427,16 +447,10 @@ ul{
           modalError.classList.add('active')
         }
 
-        const refreshTableRecords = new CustomEvent('refresh-table-records', {
-        })
-        document.dispatchEvent(refreshTableRecords)
+        document.dispatchEvent(new CustomEvent('refresh-table-records'))
         this.render()
       }
 
-      // boton de clean
-      // const buttonBroom = this.shadow.querySelector('.create-button')
-
-      // buttonBroom?.addEventListener('click', (event) => {
       if (event.target.closest('.create-button')) {
         event.preventDefault()
         const broomNotificationEvent = new CustomEvent('custom-notification', {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Sale = db.Sale
+const sequelizeDb = require('../../models/sequelize')
+const Sale = sequelizeDb.Sale
 
 exports.create = (req, res) => {
   Sale.create(req.body).then(data => {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Faq = db.Faq
+const sequelizeDb = require('../../models/sequelize')
+const Faq = sequelizeDb.Faq
 
 exports.findAll = (req, res) => {
   const limit = parseInt(req.query.size) || 5

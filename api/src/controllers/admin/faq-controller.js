@@ -1,20 +1,21 @@
-const db = require('../../models')
-const Faq = db.Faq
+const sequelizeDb = require('../../models/sequelize')
+const Faq = sequelizeDb.Faq
 
 exports.create = (req, res) => {
-  Faq.create(req.body).then(data => {
-    res.status(200).send(data)
-  }).catch(err => {
-    if (err.errors) {
-      res.status(422).send({
-        message: err.errors
-      })
-    } else {
-      res.status(500).send({
-        message: 'Algún error ha surgido al insertar el dato.'
-      })
-    }
-  })
+  console.log(req.body.locales)
+  // Faq.create(req.body).then(data => {
+  //   res.status(200).send(data)
+  // }).catch(err => {
+  //   if (err.errors) {
+  //     res.status(422).send({
+  //       message: err.errors
+  //     })
+  //   } else {
+  //     res.status(500).send({
+  //       message: 'Algún error ha surgido al insertar el dato.'
+  //     })
+  //   }
+  // })
 }
 
 exports.findAll = (req, res) => {

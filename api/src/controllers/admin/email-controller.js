@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Email = db.Email
+const sequelizeDb = require('../../models/sequelize')
+const Email = sequelizeDb.Email
 
 exports.create = (req, res) => {
   Email.create(req.body).then(data => {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const CustomerTracking = db.CustomerTracking
+const sequelizeDb = require('../../models/sequelize')
+const CustomerTracking = sequelizeDb.CustomerTracking
 
 exports.create = (req, res) => {
   CustomerTracking.create(req.body).then(data => {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Language = db.Language
+const sequelizeDb = require('../../models/sequelize')
+const Language = sequelizeDb.Language
 
 exports.create = (req, res) => {
   Language.create(req.body).then(data => {

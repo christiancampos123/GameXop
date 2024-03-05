@@ -1,5 +1,5 @@
-const db = require('../../models')
-const ReturnDetail = db.ReturnDetail
+const sequelizeDb = require('../../models/sequelize')
+const ReturnDetail = sequelizeDb.ReturnDetail
 
 exports.create = (req, res) => {
   ReturnDetail.create(req.body).then(data => {

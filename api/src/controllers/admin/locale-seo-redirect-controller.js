@@ -1,5 +1,5 @@
-const db = require('../../models')
-const LocaleSeoRedirect = db.LocaleSeoRedirect
+const sequelizeDb = require('../../models/sequelize')
+const LocaleSeoRedirect = sequelizeDb.LocaleSeoRedirect
 
 exports.create = (req, res) => {
   LocaleSeoRedirect.create(req.body).then(data => {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const PageTracking = db.PageTracking
+const sequelizeDb = require('../../models/sequelize')
+const PageTracking = sequelizeDb.PageTracking
 
 exports.create = (req, res) => {
   PageTracking.create(req.body).then(data => {

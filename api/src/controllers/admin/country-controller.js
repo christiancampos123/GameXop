@@ -1,5 +1,6 @@
-const db = require('../../models')
-const Country = db.Country
+const sequelizeDb = require('../../models/sequelize')
+
+const Country = sequelizeDb.Country
 
 exports.create = (req, res) => {
   Country.create(req.body).then(data => {

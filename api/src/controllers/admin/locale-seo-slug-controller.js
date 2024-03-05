@@ -1,5 +1,5 @@
-const db = require('../../models')
-const LocaleSeoSlug = db.LocaleSeoSlug
+const sequelizeDb = require('../../models/sequelize')
+const LocaleSeoSlug = sequelizeDb.LocaleSeoSlug
 
 exports.create = (req, res) => {
   LocaleSeoSlug.create(req.body).then(data => {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const PaymentMethod = db.PaymentMethod
+const sequelizeDb = require('../../models/sequelize')
+const PaymentMethod = sequelizeDb.PaymentMethod
 
 exports.create = (req, res) => {
   PaymentMethod.create(req.body).then(data => {

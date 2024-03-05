@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Tax = db.Tax
+const sequelizeDb = require('../../models/sequelize')
+const Tax = sequelizeDb.Tax
 
 exports.create = (req, res) => {
   Tax.create(req.body).then(data => {

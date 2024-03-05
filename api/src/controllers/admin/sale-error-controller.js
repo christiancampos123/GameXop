@@ -1,5 +1,5 @@
-const db = require('../../models')
-const SaleError = db.SaleError
+const sequelizeDb = require('../../models/sequelize')
+const SaleError = sequelizeDb.SaleError
 
 exports.create = (req, res) => {
   SaleError.create(req.body).then(data => {

@@ -18,6 +18,7 @@ class TableRecords extends HTMLElement {
   }
 
   async loadData (page) {
+    console.log(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}?size=10&page=${page}`)
     page = page || 1
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}?size=10&page=${page}`)
     const data = await response.json()

@@ -1,5 +1,6 @@
-const db = require('../../models')
-const Contact = db.Contact
+const sequelizeDb = require('../../models/sequelize')
+
+const Contact = sequelizeDb.Contact
 
 exports.create = (req, res) => {
   Contact.create(req.body).then(data => {

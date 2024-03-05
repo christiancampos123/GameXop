@@ -1,5 +1,5 @@
-const db = require('../../models')
-const ProductCategoryRelation = db.ProductCategoryRelation
+const sequelizeDb = require('../../models/sequelize')
+const ProductCategoryRelation = sequelizeDb.ProductCategoryRelation
 
 exports.create = (req, res) => {
   ProductCategoryRelation.create(req.body).then(data => {

@@ -1,5 +1,5 @@
-const db = require('../../models')
-const Menu = db.Menu
+const sequelizeDb = require('../../models/sequelize')
+const Menu = sequelizeDb.Menu
 
 exports.create = (req, res) => {
   Menu.create(req.body).then(data => {
