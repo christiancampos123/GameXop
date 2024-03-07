@@ -14,76 +14,6 @@ class Gallery extends HTMLElement {
       { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
       { id: '8', imageUrl: '../src/images/logo.png' },
       { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' },
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
       { id: '10', imageUrl: '../src/images/logo.png' }
 
     ]
@@ -104,14 +34,65 @@ class Gallery extends HTMLElement {
   generateGalleryItems () {
     const galleryContainer = this.shadow.querySelector('.avatar-container')
 
+    // Crear elementos HTML para el primer elemento estático
+    const label = document.createElement('label')
+    label.setAttribute('for', 'imagen')
+    const button = document.createElement('button')
+    button.classList.add('buttonInput')
+    button.textContent = 'Subir imagen'
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.classList.add('inputImagen')
+    input.setAttribute('name', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.addEventListener('change', (event) => {
+      console.log(event.target.files[0])
+      this.uploadImage(event.target.files[0])
+    })
+
+    // Agregar elementos estáticos al contenedor
+    galleryContainer.appendChild(button)
+    galleryContainer.appendChild(input)
+
+    button.addEventListener('click', () => {
+      input.click()
+    })
+
+    // Iterar sobre los datos dinámicos y crear elementos para cada imagen
     this.galleryData.forEach(item => {
       const avatarDiv = document.createElement('div')
       avatarDiv.classList.add('avatar')
+
+      // Crear la etiqueta de imagen y establecer su src y alt
       const img = document.createElement('img')
       img.src = item.imageUrl
       img.alt = `Image ${item.id}`
+
+      // Añadir evento de clic para cambiar la selección
+      avatarDiv.addEventListener('click', () => {
+        // Remover la clase 'selected' de todas las imágenes
+        galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
+          avatar.classList.remove('selected')
+        })
+        // Añadir la clase 'selected' a la imagen clickeada
+        avatarDiv.classList.add('selected')
+      })
+
+      // Agregar la imagen al div del avatar
       avatarDiv.appendChild(img)
+
+      // Agregar el div del avatar al contenedor de galería
       galleryContainer.appendChild(avatarDiv)
+    })
+  }
+
+  async uploadImage (file) {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
+      method: 'POST',
+      body: formData
     })
   }
 
@@ -121,6 +102,16 @@ class Gallery extends HTMLElement {
         * {
           margin: 0;
           padding: 0;
+        }
+
+        .avatar.selected img {
+            position: relative; /* Asegura que el z-index funcione */
+
+        }
+
+        .avatar.selected {
+            border:solid red 2px; /* Cambia el color del borde y el ancho según lo desees */
+            box-sizing:border-box;
         }
 
         .modal-gallery-back {
@@ -337,6 +328,7 @@ class Gallery extends HTMLElement {
         <div class="tab-content active" data-tab="gallery">
           <div class="tab-content-images">
           <div class="avatar-container">
+         
 
           <!-- Añade más avatares según sea necesario -->
         </div>
@@ -439,6 +431,7 @@ class Gallery extends HTMLElement {
         this.shadow.querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`).classList.add('active')
       }
     })
+
     const modal = this.shadow.querySelector('.modal-gallery-back')
 
     const closeButton = this.shadow.querySelector('.close-button')
