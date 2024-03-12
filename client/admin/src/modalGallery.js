@@ -59,40 +59,91 @@ class Gallery extends HTMLElement {
     })
 
     // Iterar sobre los datos dinámicos y crear elementos para cada imagen
+    // Iterar sobre los datos dinámicos y crear elementos para cada imagen
     this.galleryData.forEach(item => {
-      const avatarDiv = document.createElement('div')
-      avatarDiv.classList.add('avatar')
+      const thumb = document.createElement('div')
+      thumb.classList.add('avatar')
 
       // Crear la etiqueta de imagen y establecer su src y alt
       const img = document.createElement('img')
       img.src = item.imageUrl
       img.alt = `Image ${item.id}`
 
+      // Crear la "x" para eliminar la imagen
+      const closeButton = document.createElement('div')
+      closeButton.classList.add('close-button')
+      closeButton.textContent = 'x'
+
+      // Agregar la "x" al div del avatar
+      thumb.appendChild(closeButton)
+
+      // Agregar la imagen al div del avatar
+      thumb.appendChild(img)
+
+      // Agregar el div del avatar al contenedor de galería
+      galleryContainer.appendChild(thumb)
+
       // Añadir evento de clic para cambiar la selección
-      avatarDiv.addEventListener('click', () => {
+      thumb.addEventListener('click', () => {
         // Remover la clase 'selected' de todas las imágenes
         galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
           avatar.classList.remove('selected')
         })
         // Añadir la clase 'selected' a la imagen clickeada
-        avatarDiv.classList.add('selected')
+        thumb.classList.add('selected')
       })
-
-      // Agregar la imagen al div del avatar
-      avatarDiv.appendChild(img)
-
-      // Agregar el div del avatar al contenedor de galería
-      galleryContainer.appendChild(avatarDiv)
     })
   }
 
   async uploadImage (file) {
+    const galleryContainer = this.shadow.querySelector('.avatar-container')
+    console.log('hello world')
     const formData = new FormData()
     formData.append('file', file)
+    // console.log(`${process.env.API_URL}/api/admin/images/${file.filename}`)
 
     const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
       method: 'POST',
       body: formData
+    })
+    // console.log(`${import.meta.env.VITE_API_URL}/api/admin/images/${file.filename}`)
+
+    const filenames = await result.json()
+    console.log(filenames)
+    filenames.forEach(file => {
+      // const img = document.createElement('img')
+      // img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${file.filename}`
+
+      const thumb = document.createElement('div')
+      thumb.classList.add('avatar')
+
+      // Crear la etiqueta de imagen y establecer su src y alt
+      const img = document.createElement('img')
+      img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${file}`
+      img.alt = 'x'
+
+      // Crear la "x" para eliminar la imagen
+      const closeButton = document.createElement('div')
+      closeButton.classList.add('close-button')
+      closeButton.textContent = 'x'
+
+      // Agregar la "x" al div del avatar
+      thumb.appendChild(closeButton)
+      // Añadir evento de clic para cambiar la selección
+      thumb.addEventListener('click', () => {
+        // Remover la clase 'selected' de todas las imágenes
+        galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
+          avatar.classList.remove('selected')
+        })
+        // Añadir la clase 'selected' a la imagen clickeada
+        thumb.classList.add('selected')
+      })
+
+      // Agregar la imagen al div del avatar
+      thumb.appendChild(img)
+
+      // Agregar el div del avatar al contenedor de galería
+      galleryContainer.appendChild(thumb)
     })
   }
 
@@ -145,7 +196,7 @@ class Gallery extends HTMLElement {
           margin-bottom:2rem;
         }
 
-        .close-button {
+        .close-button-general {
           position: absolute;
           top: 10px;
           right: 10px;
@@ -212,6 +263,7 @@ class Gallery extends HTMLElement {
         }
 
         .avatar {
+          position:relative;
           width: 100px;
           height: 100px;
           background-color: #3498db;
@@ -237,6 +289,26 @@ class Gallery extends HTMLElement {
           flex-wrap: wrap;
           max-height: 100%; /* Ocupa el máximo de la altura disponible */
           width: 100%; /* Ocupa todo el ancho disponible */
+        }
+
+        .close-button {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          display: none;
+          cursor: pointer;
+          background-color: rgba(255, 0, 0, 0.8);
+          padding: 2px;
+          width:1rem;
+          height:1rem;
+          justify-content:center;
+          align-items:center;
+          border-radius: 100%;
+          z-index:100;
+        }
+
+        .avatar:hover .close-button {
+            display: flex;
         }
 
         .gallery{
@@ -286,14 +358,14 @@ class Gallery extends HTMLElement {
           display: none;
         }
 
-        .close-button svg{
+        .close-button-general svg{
           fill:red;
           width:2rem;
           height:2rem;
           transition: transform 0.09s ease-in-out;
         }
 
-        .close-button svg:hover{
+        .close-button-general svg:hover{
           transform: scale(105%);
         }
 
@@ -309,7 +381,7 @@ class Gallery extends HTMLElement {
       
       <div class="modal-gallery-back">
         <div class="modal-gallery">
-          <span class="close-button">
+          <span class="close-button-general">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close-box</title><path d="M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z" /></svg>
           </span>
           <div class = "modal-gallery-title">
@@ -434,7 +506,7 @@ class Gallery extends HTMLElement {
 
     const modal = this.shadow.querySelector('.modal-gallery-back')
 
-    const closeButton = this.shadow.querySelector('.close-button')
+    const closeButton = this.shadow.querySelector('.close-button-general')
     closeButton.addEventListener('click', () => modal.classList.remove('active'))
 
     modal.addEventListener('click', function (event) {
@@ -444,6 +516,16 @@ class Gallery extends HTMLElement {
 
     main.addEventListener('click', function (event) {
       event.stopPropagation()
+    })
+
+    const galleryArea = this.shadow.querySelector('.tab-content-images')
+    galleryArea.addEventListener('click', (event) => {
+      const closeButton = event.target.closest('.close-button')
+      if (closeButton) {
+        alert('cierro')
+        event.stopPropagation() // Evitar que el clic se propague al elemento thumb
+        // Agregar aquí la lógica para eliminar la imagen asociada al botón clickeado
+      }
     })
   }
 }
