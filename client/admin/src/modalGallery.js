@@ -5,25 +5,58 @@ class Gallery extends HTMLElement {
     this.activeTab = 1
 
     this.galleryData = [
-      { id: '1', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '2', imageUrl: '../src/images/gmail.png' },
-      { id: '3', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '4', imageUrl: '../src/images/logo.png' },
-      { id: '5', imageUrl: '../src/images/gmail.png' },
-      { id: '6', imageUrl: '../src/images/logo.png' },
-      { id: '7', imageUrl: '../src/images/chatgpt-icon.webp' },
-      { id: '8', imageUrl: '../src/images/logo.png' },
-      { id: '9', imageUrl: '../src/images/gmail.png' },
-      { id: '10', imageUrl: '../src/images/logo.png' }
 
     ]
   }
 
+  async getThumbnails () {
+    const galleryContainer = this.shadow.querySelector('.avatar-container')
+    // galleryContainer.innerHTML = ''
+    await this.generateGalleryItems()
+    // todo
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`)
+    const thumbnails = await response.json()
+    console.log(thumbnails)
+
+    thumbnails.rows.forEach(thumbnail => {
+      const thumb = document.createElement('div')
+      thumb.classList.add('avatar')
+
+      // Crear la etiqueta de imagen y establecer su src y alt
+      const img = document.createElement('img')
+      img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${thumbnail.filename}`
+      img.alt = 'x'
+
+      // Crear la "x" para eliminar la imagen
+      const closeButton = document.createElement('div')
+      closeButton.classList.add('close-button')
+      closeButton.textContent = 'x'
+
+      // Agregar la "x" al div del avatar
+      thumb.appendChild(closeButton)
+      // Añadir evento de clic para cambiar la selección
+      thumb.addEventListener('click', () => {
+        // Remover la clase 'selected' de todas las imágenes
+        galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
+          avatar.classList.remove('selected')
+        })
+        // Añadir la clase 'selected' a la imagen clickeada
+        thumb.classList.add('selected')
+      })
+
+      // Agregar la imagen al div del avatar
+      thumb.appendChild(img)
+
+      // Agregar el div del avatar al contenedor de galería
+      galleryContainer.appendChild(thumb)
+    })
+  }
+
   connectedCallback () {
+    // this.getThumbnails()
     this.render()
 
     document.addEventListener('showGalleryModal', this.handleShowGalleryModal.bind(this))
-    this.generateGalleryItems()
   }
 
   handleShowGalleryModal (event) {
@@ -90,14 +123,17 @@ class Gallery extends HTMLElement {
           avatar.classList.remove('selected')
         })
         // Añadir la clase 'selected' a la imagen clickeada
-        thumb.classList.add('selected')
+        try {
+          thumb.classList.add('selected')
+        } catch (error) {
+
+        }
       })
     })
   }
 
   async uploadImage (file) {
     const galleryContainer = this.shadow.querySelector('.avatar-container')
-    console.log('hello world')
     const formData = new FormData()
     formData.append('file', file)
     // console.log(`${process.env.API_URL}/api/admin/images/${file.filename}`)
@@ -143,11 +179,37 @@ class Gallery extends HTMLElement {
       thumb.appendChild(img)
 
       // Agregar el div del avatar al contenedor de galería
-      galleryContainer.appendChild(thumb)
+      galleryContainer.prepend(thumb)
+
+      this.shadow.querySelector('.buttonInput').remove()
+
+      // Crear elementos HTML para el primer elemento estático
+      const label = document.createElement('label')
+      label.setAttribute('for', 'imagen')
+      const button = document.createElement('button')
+      button.classList.add('buttonInput')
+      button.textContent = 'Subir imagen'
+      const input = document.createElement('input')
+      input.setAttribute('type', 'file')
+      input.classList.add('inputImagen')
+      input.setAttribute('name', 'file')
+      input.setAttribute('accept', 'image/*')
+      input.addEventListener('change', (event) => {
+        console.log(event.target.files[0])
+        this.uploadImage(event.target.files[0])
+      })
+
+      // Agregar elementos estáticos al contenedor
+      galleryContainer.prepend(button)
+      galleryContainer.prepend(input)
+
+      button.addEventListener('click', () => {
+        input.click()
+      })
     })
   }
 
-  render () {
+  async render () {
     this.shadow.innerHTML = /* html */ `
       <style>
         * {
@@ -391,9 +453,10 @@ class Gallery extends HTMLElement {
             <div class="tab active" data-tab="gallery">
                 Galleria
             </div>
+            <!--
             <div class="tab" data-tab="images">
                 Subir
-            </div>
+            </div>-->
           </div>
 
 
@@ -439,6 +502,8 @@ class Gallery extends HTMLElement {
       </div>
       `
 
+    this.getThumbnails()
+
     const buttonChose = this.shadow.querySelector('.chose-button')
     buttonChose.addEventListener('click', (event) => {
       const choseNotificationEvent = new CustomEvent('custom-notification', {
@@ -456,7 +521,7 @@ class Gallery extends HTMLElement {
     const previewDiv = this.shadow.querySelector('.images-preview')
 
     buttonInput.addEventListener('click', (event) => {
-      input.click()
+      // input.click()
     })
 
     input.addEventListener('change', (event) => {
@@ -522,9 +587,13 @@ class Gallery extends HTMLElement {
     galleryArea.addEventListener('click', (event) => {
       const closeButton = event.target.closest('.close-button')
       if (closeButton) {
-        alert('cierro')
+        const caja = closeButton.closest('.avatar')
+        const image = closeButton.closest('.avatar').querySelector('img').src
+        alert(caja + '\n' + image)
         event.stopPropagation() // Evitar que el clic se propague al elemento thumb
         // Agregar aquí la lógica para eliminar la imagen asociada al botón clickeado
+        let variable = 3
+        console.log(variable)
       }
     })
   }

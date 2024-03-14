@@ -1,11 +1,17 @@
-const sequelizeDb = require('../../models/sequelize')
-const Image = sequelizeDb.Image
+const moment = require('moment')
+const mongooseDb = require('../../models/mongoose')
+const Image = mongooseDb.Image
 
 exports.create = async (req, res) => {
   // console.log(req.files)
   try {
     // console.log(req.files)
     const result = await req.imageService.uploadImage(req.files)
+
+    for (const filename of result) {
+      await Image.create({ filename })
+    }
+
     res.status(200).send(result)
   } catch (error) {
     res.status(500).send({
@@ -21,8 +27,44 @@ exports.create = async (req, res) => {
   // })
 }
 
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
+  try {
+    const page = req.query.page || 1
+    const limit = parseInt(req.query.size) || 26
+    const offset = (page - 1) * limit
+    const whereStatement = {}
+    whereStatement.deletedAt = { $exists: false }
 
+    const result = await Image.find(whereStatement)
+      .skip(offset)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec()
+
+    const count = await Image.countDocuments(whereStatement)
+
+    const response = {
+      rows: result.map(doc => ({
+        ...doc,
+        id: doc._id,
+        _id: undefined,
+        createdAt: moment(doc.createdAt).format('YYYY-MM-DD HH:mm'),
+        updatedAt: moment(doc.updatedAt).format('YYYY-MM-DD HH:mm')
+      })),
+      meta: {
+        total: count,
+        pages: Math.ceil(count / limit),
+        currentPage: page
+      }
+    }
+
+    res.status(200).send(response)
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Algún error ha surgido al recuperar los datos.'
+    })
+  }
 }
 
 exports.findOne = (req, res) => {
