@@ -9,6 +9,15 @@ class Gallery extends HTMLElement {
     ]
   }
 
+  buttonDis = () => {
+    // alert('me llaman')
+    let buttonElegir = this.shadow.querySelector('.chose-button')
+    buttonElegir.classList.add('dissabled')
+    if (this.shadow.querySelector('.selected')) {
+      buttonElegir.classList.remove('dissabled')
+    }
+  }
+
   async getThumbnails () {
     const galleryContainer = this.shadow.querySelector('.avatar-container')
     // galleryContainer.innerHTML = ''
@@ -34,14 +43,27 @@ class Gallery extends HTMLElement {
 
       // Agregar la "x" al div del avatar
       thumb.appendChild(closeButton)
+      let selec = true
       // Añadir evento de clic para cambiar la selección
       thumb.addEventListener('click', () => {
+        const isSelected = thumb.classList.contains('selected')
+
+        // Si thumb ya está seleccionado, quitar la clase 'selected'
+        if (isSelected) {
+          thumb.classList.remove('selected')
+          selec = false
+        }
         // Remover la clase 'selected' de todas las imágenes
         galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
           avatar.classList.remove('selected')
         })
         // Añadir la clase 'selected' a la imagen clickeada
-        thumb.classList.add('selected')
+        if (selec === true) {
+          thumb.classList.add('selected')
+        }
+        selec = true
+
+        this.buttonDis()
       })
 
       // Agregar la imagen al div del avatar
@@ -50,6 +72,7 @@ class Gallery extends HTMLElement {
       // Agregar el div del avatar al contenedor de galería
       galleryContainer.appendChild(thumb)
     })
+    this.buttonDis()
   }
 
   connectedCallback () {
@@ -130,10 +153,14 @@ class Gallery extends HTMLElement {
         }
       })
     })
+    this.buttonDis()
   }
 
   async uploadImage (file) {
     const galleryContainer = this.shadow.querySelector('.avatar-container')
+    galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
+      avatar.classList.remove('selected')
+    })
     const formData = new FormData()
     formData.append('file', file)
     // console.log(`${process.env.API_URL}/api/admin/images/${file.filename}`)
@@ -152,6 +179,7 @@ class Gallery extends HTMLElement {
 
       const thumb = document.createElement('div')
       thumb.classList.add('avatar')
+      thumb.classList.add('selected')
 
       // Crear la etiqueta de imagen y establecer su src y alt
       const img = document.createElement('img')
@@ -165,14 +193,26 @@ class Gallery extends HTMLElement {
 
       // Agregar la "x" al div del avatar
       thumb.appendChild(closeButton)
+      let selec = true
       // Añadir evento de clic para cambiar la selección
       thumb.addEventListener('click', () => {
+        const isSelected = thumb.classList.contains('selected')
+
+        // Si thumb ya está seleccionado, quitar la clase 'selected'
+        if (isSelected) {
+          thumb.classList.remove('selected')
+          selec = false
+        }
         // Remover la clase 'selected' de todas las imágenes
         galleryContainer.querySelectorAll('.avatar').forEach(avatar => {
           avatar.classList.remove('selected')
         })
         // Añadir la clase 'selected' a la imagen clickeada
-        thumb.classList.add('selected')
+        if (selec === true) {
+          thumb.classList.add('selected')
+        }
+        selec = true
+        this.buttonDis()
       })
 
       // Agregar la imagen al div del avatar
@@ -207,6 +247,7 @@ class Gallery extends HTMLElement {
         input.click()
       })
     })
+    this.buttonDis()
   }
 
   async render () {
@@ -289,6 +330,20 @@ class Gallery extends HTMLElement {
         .modal-gallery-title{
           margin-left:1rem;
           font-size:1.5rem;
+        }
+
+        .buttonInput {
+          width: 100px;
+    height: 100px;
+    background-color: #3498db;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.2em;
+    overflow: hidden;
         }
 
         .tab-content {
@@ -437,6 +492,13 @@ class Gallery extends HTMLElement {
           width: auto; /* Para mantener la proporción original y ajustar automáticamente el ancho */
           height: auto; /* Para mantener la proporción original y ajustar automáticamente la altura */
           border: 1px solid #ccc; /* Borde opcional para resaltar la imagen */
+        }
+
+        .dissabled{
+          pointer-events: none;
+          /* También puedes cambiar el estilo visual para indicar que está deshabilitado */
+          opacity: 0.5; /* por ejemplo, reduce la opacidad */
+          cursor: not-allowed; /* opcional, cambia el cursor */
         }
 
       </style>
@@ -592,8 +654,6 @@ class Gallery extends HTMLElement {
         alert(caja + '\n' + image)
         event.stopPropagation() // Evitar que el clic se propague al elemento thumb
         // Agregar aquí la lógica para eliminar la imagen asociada al botón clickeado
-        let variable = 3
-        console.log(variable)
       }
     })
   }
