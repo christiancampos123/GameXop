@@ -25,7 +25,8 @@ class KonamiCode extends HTMLElement {
   triggerKonami () {
     const secretEvent = new CustomEvent('custom-notification', {
       detail: {
-        message: 'Desarrollado por Christian'
+        message: 'Desarrollado por Christian',
+        color: 'green'
       }
     })
 

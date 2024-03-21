@@ -1,3 +1,6 @@
+import { store } from '../redux/store.js'
+import { setImageGallery } from '../redux/images-slice.js'
+
 class UploadImage extends HTMLElement {
   constructor () {
     super()
@@ -6,6 +9,8 @@ class UploadImage extends HTMLElement {
 
   connectedCallback () {
     this.render()
+    this.name = this.getAttribute('name')
+    console.log(this.name)
   }
 
   render () {
@@ -41,9 +46,11 @@ class UploadImage extends HTMLElement {
       <div class="form-row">
       <div class="form-element">
         <div class="form-element-label">
+        <!--
           <label for="main-image">
             Galeria de Imagenes
           </label>
+          -->
         </div>
         <div class="form-element-input">
           <div class="square">

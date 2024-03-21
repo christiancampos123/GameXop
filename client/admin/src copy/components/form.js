@@ -359,7 +359,7 @@ ul{
 
       <!-- image Gallery -->
       <div class="tab-content" data-tab="images">
-      <upload-image-component> </upload-image-component>
+      <upload-image-component name="feature-image"> </upload-image-component>
       </div>
     </div>
   </form>
