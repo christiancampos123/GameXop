@@ -35,6 +35,7 @@ class Gallery extends HTMLElement {
       const img = document.createElement('img')
       img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${thumbnail.filename}`
       img.alt = 'x'
+      img.dataset.nombre = thumbnail.filename
 
       // Crear la "x" para eliminar la imagen
       const closeButton = document.createElement('div')
@@ -185,6 +186,7 @@ class Gallery extends HTMLElement {
       const img = document.createElement('img')
       img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${file}`
       img.alt = 'x'
+      img.dataset.nombre = file
 
       // Crear la "x" para eliminar la imagen
       const closeButton = document.createElement('div')
@@ -334,16 +336,16 @@ class Gallery extends HTMLElement {
 
         .buttonInput {
           width: 100px;
-    height: 100px;
-    background-color: #3498db;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 1.2em;
-    overflow: hidden;
+          height: 100px;
+          background-color: #3498db;
+          margin: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          font-weight: bold;
+          font-size: 1.2em;
+          overflow: hidden;
         }
 
         .tab-content {
@@ -646,14 +648,20 @@ class Gallery extends HTMLElement {
     })
 
     const galleryArea = this.shadow.querySelector('.tab-content-images')
-    galleryArea.addEventListener('click', (event) => {
+    galleryArea.addEventListener('click', async (event) => {
       const closeButton = event.target.closest('.close-button')
       if (closeButton) {
         const caja = closeButton.closest('.avatar')
         const image = closeButton.closest('.avatar').querySelector('img').src
-        alert(caja + '\n' + image)
+        const filename = closeButton.closest('.avatar').querySelector('img').dataset.nombre
+        const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images/${filename}`, {
+          method: 'DELETE'
+        })
         event.stopPropagation() // Evitar que el clic se propague al elemento thumb
         // Agregar aquí la lógica para eliminar la imagen asociada al botón clickeado
+        if (result.ok) {
+          caja.remove()
+        }
       }
     })
   }
