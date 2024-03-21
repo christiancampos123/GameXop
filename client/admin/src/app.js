@@ -11,4 +11,3 @@ import './components/modalGallery.js'
 import './components/uploadImage.js'
 import './components/knm.js'
 // import './components/modalErrors.js'
-si david no se las sabe me come la polla

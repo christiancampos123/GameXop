@@ -10,6 +10,9 @@ export const imagesSlice = createSlice({
   },
   reducers: {
     setImageGallery: (state, action) => {
+      // console.log(action.payload)
+      state.imageGallery = action.payload
+      console.log(state.imageGallery)
     },
     showImage: (state, action) => {
     },

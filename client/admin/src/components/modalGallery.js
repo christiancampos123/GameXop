@@ -647,6 +647,16 @@ class Gallery extends HTMLElement {
       event.stopPropagation()
     })
 
+    const buttonElegir = this.shadow.querySelector('.chose-button')
+    buttonElegir.addEventListener('click', (event) => {
+      try {
+        const imageSelected = this.shadow.querySelector('.selected img')
+        console.log(imageSelected.dataset.nombre)
+      } catch (error) {
+
+      }
+    })
+
     const galleryArea = this.shadow.querySelector('.tab-content-images')
     galleryArea.addEventListener('click', async (event) => {
       const closeButton = event.target.closest('.close-button')

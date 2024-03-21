@@ -63,6 +63,10 @@ class UploadImage extends HTMLElement {
 
     const upButton = this.shadow.querySelector('.square')
     upButton?.addEventListener('click', () => {
+      const image = {
+        name: this.getAttribute('name')
+      }
+      store.dispatch(setImageGallery(image))
       document.dispatchEvent(new CustomEvent('showGalleryModal', {
       }))
     })
