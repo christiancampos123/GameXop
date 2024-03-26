@@ -78,7 +78,7 @@ exports.findOne = (req, res) => {
       'x-sent': true
     }
   }
-  console.log(options)
+  // console.log(options)
   res.sendFile(fileName, options)
 }
 
@@ -106,7 +106,7 @@ exports.update = (req, res) => {
 
 exports.delete = async (req, res) => {
   const filename = req.params.filename
-  console.log(filename)
+  // console.log(filename)
   try {
     await req.imageService.deleteImages(filename)
     await Image.deleteOne({ filename })

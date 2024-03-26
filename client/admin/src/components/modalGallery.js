@@ -1,3 +1,5 @@
+import store from '../redux/store'
+import { showImage, removeImage } from '../redux/images-slice.js'
 class Gallery extends HTMLElement {
   constructor () {
     super()
@@ -22,10 +24,9 @@ class Gallery extends HTMLElement {
     const galleryContainer = this.shadow.querySelector('.avatar-container')
     // galleryContainer.innerHTML = ''
     await this.generateGalleryItems()
-    // todo
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`)
     const thumbnails = await response.json()
-    console.log(thumbnails)
+    // console.log(thumbnails)
 
     thumbnails.rows.forEach(thumbnail => {
       const thumb = document.createElement('div')
@@ -34,7 +35,7 @@ class Gallery extends HTMLElement {
       // Crear la etiqueta de imagen y establecer su src y alt
       const img = document.createElement('img')
       img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${thumbnail.filename}`
-      img.alt = 'x'
+      img.alt = 'z'
       img.dataset.nombre = thumbnail.filename
 
       // Crear la "x" para eliminar la imagen
@@ -103,7 +104,7 @@ class Gallery extends HTMLElement {
     input.setAttribute('name', 'file')
     input.setAttribute('accept', 'image/*')
     input.addEventListener('change', (event) => {
-      console.log(event.target.files[0])
+      // console.log(event.target.files[0])
       this.uploadImage(event.target.files[0])
     })
 
@@ -173,7 +174,7 @@ class Gallery extends HTMLElement {
     // console.log(`${import.meta.env.VITE_API_URL}/api/admin/images/${file.filename}`)
 
     const filenames = await result.json()
-    console.log(filenames)
+    // console.log(filenames)
     filenames.forEach(file => {
       // const img = document.createElement('img')
       // img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${file.filename}`
@@ -237,7 +238,7 @@ class Gallery extends HTMLElement {
       input.setAttribute('name', 'file')
       input.setAttribute('accept', 'image/*')
       input.addEventListener('change', (event) => {
-        console.log(event.target.files[0])
+        // console.log(event.target.files[0])
         this.uploadImage(event.target.files[0])
       })
 
@@ -407,7 +408,7 @@ class Gallery extends HTMLElement {
           display: flex;
           flex-wrap: wrap;
           max-height: 100%; /* Ocupa el máximo de la altura disponible */
-          width: 100%; /* Ocupa todo el ancho disponible */
+          width: 100%;
         }
 
         .close-button {
@@ -540,11 +541,11 @@ class Gallery extends HTMLElement {
               <label class="title">
                 Titulo
               </label>
-              <input type="text">
+              <input type="text" name="title">
               <label class="alternative">
-                Nombre
+                Alt
               </label>
-              <input type="text">
+              <input type="text" name="alt">
             </form>
             <button class="chose-button">
               Elegir
@@ -639,7 +640,7 @@ class Gallery extends HTMLElement {
     closeButton.addEventListener('click', () => modal.classList.remove('active'))
 
     modal.addEventListener('click', function (event) {
-      console.log('Se hizo clic en el contenedor exterior')
+      // console.log('Se hizo clic en el contenedor exterior')
       modal.classList.remove('active')
     })
 
@@ -649,12 +650,15 @@ class Gallery extends HTMLElement {
 
     const buttonElegir = this.shadow.querySelector('.chose-button')
     buttonElegir.addEventListener('click', (event) => {
-      try {
-        const imageSelected = this.shadow.querySelector('.selected img')
-        console.log(imageSelected.dataset.nombre)
-      } catch (error) {
-
-      }
+      // TODO CHOSE BUTTON
+      let image = store.getState().images.imageGallery
+      const alt = this.shadow.querySelector('input[name="alt"]').value
+      const title = this.shadow.querySelector('input[name="title"]').value
+      // console.log(title)
+      const filename = this.shadow.querySelector('.selected img').dataset.nombre
+      image = { ...image, alt, title, filename }
+      // console.log(image)
+      store.dispatch(showImage(image))
     })
 
     const galleryArea = this.shadow.querySelector('.tab-content-images')

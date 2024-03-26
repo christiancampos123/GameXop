@@ -5,7 +5,7 @@ const sharp = require('sharp')
 module.exports = class ImageService {
   uploadImage = async images => {
     // console.log(images.file.length)
-    console.log('new image')
+    // console.log('new image')
     // let fileName = ''
     const result = []
     for (const image of images.file) {

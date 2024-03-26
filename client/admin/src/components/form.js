@@ -359,7 +359,8 @@ ul{
 
       <!-- image Gallery -->
       <div class="tab-content" data-tab="images">
-      <upload-image-component name="feature-image"> </upload-image-component>
+      <upload-image-component name="feature-image" type="single"> </upload-image-component>
+      <upload-image-component name="feature-imag" type="multiple"> </upload-image-component>
       </div>
     </div>
   </form>

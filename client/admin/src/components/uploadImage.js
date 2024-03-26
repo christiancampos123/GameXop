@@ -5,12 +5,67 @@ class UploadImage extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.images = []
   }
 
   connectedCallback () {
-    this.render()
     this.name = this.getAttribute('name')
-    console.log(this.name)
+    this.type = this.getAttribute('type')
+    this.unsubscribe = store.subscribe(() => {
+      const currentState = store.getState()
+      // console.log(currentState)
+      try {
+        if (this.type === 'single') {
+          this.getThumbnail(currentState)
+        }
+        if (this.type === 'multiple') {
+          this.getThumbnails(currentState)
+        }
+      } catch (error) {
+      }
+      // console.log('hola' + currentState.images.showedImages)
+    })
+    this.render()
+    // console.log(this.name)
+  }
+
+  getThumbnail (imagesState) {
+    console.log(imagesState)
+    // Accede a la propiedad showedImages del estado de imágenes
+    const images = imagesState.images.showedImages
+    const formElementInput = this.shadow.querySelector('.form-element-input')
+    formElementInput.querySelectorAll('img').forEach(img => img.remove())
+
+    images.forEach((image, index, images) => {
+      if (index === images.length - 1) {
+        // Este bloque de código solo se ejecutará para el último elemento del array
+        if (image.name === this.name) {
+          const img = document.createElement('img')
+          img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${image.filename}`
+          img.alt = 'x'
+          img.dataset.nombre = image.filename
+          this.shadow.querySelector('.form-element-input').appendChild(img)
+        }
+      }
+    })
+  }
+
+  getThumbnails (imagesState) {
+    console.log(imagesState)
+    // Accede a la propiedad showedImages del estado de imágenes
+    const images = imagesState.images.showedImages
+    const formElementInput = this.shadow.querySelector('.form-element-input')
+    formElementInput.querySelectorAll('img').forEach(img => img.remove())
+    images.forEach(image => {
+      // formElementInput.querySelectorAll('img').forEach(img => img.remove())
+      if (image.name === this.name) {
+        const img = document.createElement('img')
+        img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${image.filename}`
+        img.alt = 'x'
+        img.dataset.nombre = image.filename
+        this.shadow.querySelector('.form-element-input').appendChild(img)
+      }
+    })
   }
 
   render () {
@@ -60,7 +115,6 @@ class UploadImage extends HTMLElement {
       </div>
     </div>
       `
-
     const upButton = this.shadow.querySelector('.square')
     upButton?.addEventListener('click', () => {
       const image = {
