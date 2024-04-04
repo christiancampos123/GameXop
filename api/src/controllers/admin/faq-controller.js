@@ -3,7 +3,7 @@ const mongooseDb = require('../../models/mongoose')
 const Faq = mongooseDb.Faq
 
 exports.create = async (req, res) => {
-  console.log('holiwi' + req.body.images)
+  // console.log('holiwi' + req.body.images)
   const result = await req.imageService.resizeImages(req.body.images)
   try {
     const data = await Faq.create(req.body)
@@ -16,6 +16,8 @@ exports.create = async (req, res) => {
 }
 
 exports.findAll = async (req, res) => {
+  const resul = await req.emailService.consoleDo()
+  // const result = await req.
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
