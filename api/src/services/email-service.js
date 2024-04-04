@@ -1,5 +1,5 @@
 module.exports = class EmailService {
-  async consoleDo (frase) {
-    console.log(frase)
+  async sendEmail () {
+    console.log('esto es un console del Servicio')
   }
 }
