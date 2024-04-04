@@ -45,7 +45,8 @@ module.exports = class ImageService {
   }
 
   resizeImages = async (images) => {
-
+    console.log('ter llamo')
+    console.log(images)
   }
 
   deleteImages = async filename => {

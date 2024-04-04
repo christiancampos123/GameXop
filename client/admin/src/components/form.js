@@ -1,3 +1,6 @@
+import { store } from '../redux/store.js'
+import { removeImages } from '../redux/images-slice.js'
+
 class Form extends HTMLElement {
   constructor () {
     super()
@@ -359,8 +362,42 @@ ul{
 
       <!-- image Gallery -->
       <div class="tab-content" data-tab="images">
-      <upload-image-component name="feature-image" type="single"> </upload-image-component>
-      <upload-image-component name="feature-imag" type="multiple"> </upload-image-component>
+      <upload-image-component name="feature-image" image-configuration='{
+        "xs": {
+          "widthPx": "60",
+          "heightPx": "60"
+        },
+        "sm": {
+          "widthPx": "60",
+          "heightPx": "60"
+        },
+        "md": {
+          "widthPx": "60",
+          "heightPx": "60"
+        },
+        "lg": {
+          "widthPx": "60",
+          "heightPx": "60"
+        }
+      }' type="single"> </upload-image-component>
+      <upload-image-component name="feature-imag" image-configuration='{
+        "xs": {
+          "widthPx": "60",
+          "heightPx": "60"
+        },
+        "sm": {
+          "widthPx": "60",
+          "heightPx": "60"
+        },
+        "md": {
+          "widthPx": "60",
+          "heightPx": "60"
+        },
+        "lg": {
+          "widthPx": "60",
+          "heightPx": "60"
+        }
+      }' type="multiple"> </upload-image-component>
       </div>
     </div>
   </form>
@@ -383,6 +420,7 @@ ul{
         const formData = new FormData(form)
 
         const formDataJson = {}
+        formDataJson.images = store.getState().images.selectedImages
 
         for (const [key, value] of formData.entries()) {
           if (key.includes('locales')) {
@@ -461,6 +499,8 @@ ul{
       }
 
       if (event.target.closest('.create-button')) {
+        // borrar formulario
+        this.shadow.querySelector('form').reset()
         event.preventDefault()
         const broomNotificationEvent = new CustomEvent('custom-notification', {
           detail: {
@@ -468,7 +508,8 @@ ul{
             color: 'red'
           }
         })
-
+        // TODO limpiar imagenes
+        store.dispatch(removeImages())
         document.dispatchEvent(broomNotificationEvent)
       }
 
@@ -499,7 +540,7 @@ ul{
       } else {
         try {
           // Verificar si el nombre de la clave coincide con el atributo 'name' del input
-          console.log(`${currentKey}`)
+          // console.log(`${currentKey}`)
           const input = this.shadow.querySelector(`input[name="${currentKey}"]`)
           if (input) {
             input.value = value
@@ -508,7 +549,7 @@ ul{
 
         }
         try {
-          console.log(`${currentKey}`)
+          // console.log(`${currentKey}`)
           const textarea = this.shadow.querySelector(`textarea[name="${currentKey}"]`)
           if (textarea) {
             textarea.value = value

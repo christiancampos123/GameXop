@@ -1,5 +1,5 @@
 import store from '../redux/store'
-import { showImage, removeImage } from '../redux/images-slice.js'
+import { showImage, removeImage, addImage } from '../redux/images-slice.js'
 class Gallery extends HTMLElement {
   constructor () {
     super()
@@ -116,8 +116,6 @@ class Gallery extends HTMLElement {
       input.click()
     })
 
-    // Iterar sobre los datos dinámicos y crear elementos para cada imagen
-    // Iterar sobre los datos dinámicos y crear elementos para cada imagen
     this.galleryData.forEach(item => {
       const thumb = document.createElement('div')
       thumb.classList.add('avatar')
@@ -186,7 +184,7 @@ class Gallery extends HTMLElement {
       // Crear la etiqueta de imagen y establecer su src y alt
       const img = document.createElement('img')
       img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${file}`
-      img.alt = 'x'
+      img.alt = 'z'
       img.dataset.nombre = file
 
       // Crear la "x" para eliminar la imagen
@@ -654,11 +652,10 @@ class Gallery extends HTMLElement {
       let image = store.getState().images.imageGallery
       const alt = this.shadow.querySelector('input[name="alt"]').value
       const title = this.shadow.querySelector('input[name="title"]').value
-      // console.log(title)
       const filename = this.shadow.querySelector('.selected img').dataset.nombre
       image = { ...image, alt, title, filename }
-      // console.log(image)
       store.dispatch(showImage(image))
+      // store.dispatch(addImage(image))
     })
 
     const galleryArea = this.shadow.querySelector('.tab-content-images')

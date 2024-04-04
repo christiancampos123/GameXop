@@ -3,6 +3,8 @@ const mongooseDb = require('../../models/mongoose')
 const Faq = mongooseDb.Faq
 
 exports.create = async (req, res) => {
+  console.log('holiwi' + req.body.images)
+  const result = await req.imageService.resizeImages(req.body.images)
   try {
     const data = await Faq.create(req.body)
     res.status(200).send(data)
