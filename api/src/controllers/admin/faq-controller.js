@@ -16,7 +16,7 @@ exports.create = async (req, res) => {
 }
 
 exports.findAll = async (req, res) => {
-  const resul = await req.emailService.consoleDo()
+  await req.emailService.consoleDo('esto es un console del Servicio')
   // const result = await req.
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
