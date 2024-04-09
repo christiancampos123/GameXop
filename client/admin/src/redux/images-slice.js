@@ -21,6 +21,18 @@ export const imagesSlice = createSlice({
       }
     },
     showImages: (state, action) => {
+      state.showedImages = []
+      if (action.payload.xs) {
+        console.log(action.payload.xs)
+        state.showedImages = Object.entries(action.payload.xs).map(([key, value]) => ({
+          name: key,
+          filename: value.originalFilename,
+          title: value.title,
+          alt: value.alt
+        }))
+      }
+
+      // console.log('holiwi', action.payload)
     },
     addImage: (state, action) => {
       if (!state.selectedImages.some(image =>

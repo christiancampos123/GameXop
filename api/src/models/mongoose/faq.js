@@ -7,6 +7,10 @@ module.exports = (mongoose) => {
         type: Map,
         of: mongoose.Schema.Types.Mixed
       },
+      images: {
+        type: Map,
+        of: mongoose.Schema.Types.Mixed
+      },
       deletedAt: Date
     },
     { timestamps: true }

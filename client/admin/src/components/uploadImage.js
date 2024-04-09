@@ -14,10 +14,12 @@ class UploadImage extends HTMLElement {
     this.type = this.getAttribute('type')
     this.unsubscribe = store.subscribe(() => {
       const currentState = store.getState()
+      // console.log('holili', currentState)
       if (currentState.images.showedImages.length > 0 && !isEqual(this.images, currentState.images.showedImages)) {
         this.images = currentState.images.showedImages
         this.getThumbnail(this.images)
       } else if (currentState.images.showedImages.length <= 0) {
+        this.images = []
         this.removeThumbnails()
       }
     })

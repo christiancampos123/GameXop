@@ -1,5 +1,5 @@
 import { store } from '../redux/store.js'
-import { removeImages } from '../redux/images-slice.js'
+import { removeImages, showImages } from '../redux/images-slice.js'
 
 class Form extends HTMLElement {
   constructor () {
@@ -362,22 +362,22 @@ ul{
 
       <!-- image Gallery -->
       <div class="tab-content" data-tab="images">
-      <upload-image-component name="feature-image" image-configuration='{
+      <upload-image-component name="featureImage" image-configuration='{
         "xs": {
           "widthPx": "60",
           "heightPx": "60"
         },
         "sm": {
-          "widthPx": "60",
-          "heightPx": "60"
+          "widthPx": "120",
+          "heightPx": "120"
         },
         "md": {
-          "widthPx": "60",
-          "heightPx": "60"
+          "widthPx": "240",
+          "heightPx": "240"
         },
         "lg": {
-          "widthPx": "60",
-          "heightPx": "60"
+          "widthPx": "480",
+          "heightPx": "480"
         }
       }' type="single"> </upload-image-component>
       <upload-image-component name="feature-imag" image-configuration='{
@@ -386,16 +386,16 @@ ul{
           "heightPx": "60"
         },
         "sm": {
-          "widthPx": "60",
-          "heightPx": "60"
+          "widthPx": "120",
+          "heightPx": "120"
         },
         "md": {
-          "widthPx": "60",
-          "heightPx": "60"
+          "widthPx": "240",
+          "heightPx": "240"
         },
         "lg": {
-          "widthPx": "60",
-          "heightPx": "60"
+          "widthPx": "480",
+          "heightPx": "480"
         }
       }' type="multiple"> </upload-image-component>
       </div>
@@ -495,6 +495,7 @@ ul{
         }
 
         document.dispatchEvent(new CustomEvent('refresh-table-records'))
+        store.dispatch(removeImages())
         this.render()
       }
 
@@ -533,32 +534,38 @@ ul{
   }
 
   showElement (element, parentKey = '') {
+    // console.log(element)
     Object.entries(element).forEach(([key, value]) => {
       const currentKey = parentKey ? `${parentKey}.${key}` : key
-      if (typeof value === 'object' && value !== null) {
+      if (typeof value === 'object' && value !== null && currentKey.includes('locales')) {
         this.showElement(value, currentKey)
+      }
+      if (typeof value === 'object' && value !== null && currentKey.includes('images')) {
+        store.dispatch(showImages(value))
       } else {
-        try {
-          // Verificar si el nombre de la clave coincide con el atributo 'name' del input
-          // console.log(`${currentKey}`)
-          const input = this.shadow.querySelector(`input[name="${currentKey}"]`)
-          if (input) {
-            input.value = value
-          }
-        } catch {
-
-        }
-        try {
-          // console.log(`${currentKey}`)
-          const textarea = this.shadow.querySelector(`textarea[name="${currentKey}"]`)
-          if (textarea) {
-            textarea.value = value
-          }
-        } catch {
-
-        }
+        this.paintRecord(value, currentKey)
       }
     })
+  }
+
+  paintRecord (value, currentKey) {
+    try {
+      // console.log(currentKey)
+      const input = this.shadow.querySelector(`input[name="${currentKey}"]`)
+      if (input) {
+        input.value = value
+      }
+    } catch {
+
+    }
+    try {
+      const textarea = this.shadow.querySelector(`textarea[name="${currentKey}"]`)
+      if (textarea) {
+        textarea.value = value
+      }
+    } catch {
+
+    }
   }
 
   deleteRecord (id) {

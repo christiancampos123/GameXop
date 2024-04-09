@@ -12,7 +12,8 @@ exports.findAll = async (req, res) => {
       .exec()
 
     const response = result.map(doc => ({
-      locales: doc.locales[req.userLanguage]
+      locales: doc.locales[req.userLanguage],
+      images: doc.images
     }))
 
     console.log(response)

@@ -1,5 +1,5 @@
 const authCookieMiddleware = (req, res, next) => {
-  console.log('esto es un console del middleware')
+  // console.log('esto es un console del middleware')
   next()
 }
 

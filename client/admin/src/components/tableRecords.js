@@ -147,7 +147,7 @@ class TableRecords extends HTMLElement {
             font-weight: 700;
           }
 
-          .table-data ul li span::after {
+          .table-data ul li span:first-child::after {
             content: ":";
             margin-right: 0.5rem;
           }
@@ -305,13 +305,20 @@ class TableRecords extends HTMLElement {
       const divData = document.createElement('div')
       divData.classList.add('table-data')
       const ul = document.createElement('ul')
-      const liName = document.createElement('li')
-      liName.innerHTML = `<span>Nombre</span>${row.name}`
-      const liOrder = document.createElement('li')
-      liOrder.innerHTML = `<span>Orden</span>${row.order}`
-      ul.appendChild(liName)
-      ul.appendChild(liOrder)
       divData.appendChild(ul)
+
+      Object.entries(row).forEach(([key, value]) => {
+        const li = document.createElement('li')
+        ul.appendChild(li)
+
+        const spanKey = document.createElement('span')
+        spanKey.textContent = key
+        li.appendChild(spanKey)
+
+        const spanValue = document.createElement('span')
+        spanValue.textContent = value
+        li.appendChild(spanValue)
+      })
 
       // Agrega los divs al article
       article.appendChild(divButtons)
@@ -338,12 +345,11 @@ class TableRecords extends HTMLElement {
     const tableSection = this.shadow.querySelector('.table-component')
     tableSection?.addEventListener('click', async (event) => {
       if (event.target.closest('.edit-button')) {
+        // todo
         const id = event.target.closest('.edit-button').dataset.id
         const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
         const data = await response.json()
         this.rows = data.rows
-        // console.log(data)
-        // alert(data.name)
         document.dispatchEvent(new CustomEvent('showElement', {
           detail: {
             element: data

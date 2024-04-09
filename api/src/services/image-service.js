@@ -45,8 +45,58 @@ module.exports = class ImageService {
   }
 
   resizeImages = async (images) => {
-    console.log('ter llamo')
-    console.log(images)
+    const resizedImages = {}
+
+    for (const image of images) {
+      // console.log(image)
+      try {
+        const originalFilename = image.filename
+        const imageConfiguration = JSON.parse(image.imageConfiguration)
+        const name = originalFilename.slice(0, -5)
+
+        // Leer la imagen original
+        const originalImagePath = path.join(__dirname, `../storage/images/gallery/original/${originalFilename}`)
+        const originalImageBuffer = await fs.readFile(originalImagePath)
+
+        for (const size of Object.keys(imageConfiguration)) {
+          const { widthPx, heightPx } = imageConfiguration[size]
+          const filePath = path.join(__dirname, `../storage/images/resized/${name}-${widthPx}x${heightPx}.webp`)
+          const nameUpdate = image.name
+
+          if (!resizedImages[size]) {
+            resizedImages[size] = {}
+          }
+
+          resizedImages[size][image.name] = {}
+
+          resizedImages[size][nameUpdate] = {
+            originalFilename: `${originalFilename}`,
+            filename: `${name}-${widthPx}x${heightPx}.webp`,
+            title: image.title,
+            alt: image.alt,
+            widthPx: `${widthPx}`,
+            heightPx: `${heightPx}`
+          }
+
+          try {
+            // Verificar si el archivo ya existe
+            await fs.access(filePath, fs.constants.F_OK)
+            console.log('El archivo ya existe, no se redimensionará nuevamente.')
+          } catch (error) {
+            // El archivo no existe, redimensionar y guardar
+            await sharp(originalImageBuffer)
+              .resize(parseInt(widthPx, 10), parseInt(heightPx, 10))
+              .webp({ quality: 80 })
+              .toFile(filePath)
+            console.log('Imagen redimensionada y guardada.')
+          }
+        }
+      } catch (error) {
+        console.error(`Error al redimensionar la imagen '${image.filename}':`, error)
+      }
+    }
+
+    return resizedImages
   }
 
   deleteImages = async filename => {
