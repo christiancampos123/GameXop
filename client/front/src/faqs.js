@@ -11,15 +11,15 @@ class Faqs extends HTMLElement {
   async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
     this.rows = data
     this.faqs = []
     this.rows.forEach(row => {
-      console.log(row.images)
+      // console.log(row.images)
       this.faqs.push({
         title: row.locales.question,
         description: row.locales.answer,
-        image: row.images.xs
+        image: row.images
       })
     })
   }
@@ -70,28 +70,37 @@ class Faqs extends HTMLElement {
       const faqImage = document.createElement('picture')
 
       // Crear el elemento <source>
-      const faqSource = document.createElement('source')
-      const fileName = faq.image.featureImage.filename
+      const faqSourcelg = document.createElement('source')
+      const faqSourcemd = document.createElement('source')
+      const faqSourcesm = document.createElement('source')
       // Establecer el atributo srcset y media para <source>
       // console.log('srcset', `${import.meta.env.VITE_API_URL}/api/src/storage/images/resized/${fileName}`)
       // const source = await fetch(`${import.meta.env.VITE_API_URL}/api/src/storage/images/resized/${fileName}`)
-      const source = `${import.meta.env.VITE_API_URL}/api/src/storage/images/resized/${faq.image.featureImage.filename}`
-      console.log(source)
+      // const source = `${import.meta.env.VITE_API_URL}/api/src/storage/images/resized/${faq.image.featureImage.originalFilename}`
 
-      faqSource.setAttribute('srcset', source)
-      faqSource.setAttribute('media', '(min-width: 600px)')
+      faqSourcelg.setAttribute('srcset', `${import.meta.env.VITE_API_URL}/api/admin/images/image/${faq.image.lg.featureImage.filename}`)
+      faqSourcesm.setAttribute('srcset', `${import.meta.env.VITE_API_URL}/api/admin/images/image/${faq.image.sm.featureImage.filename}`)
+      faqSourcemd.setAttribute('srcset', `${import.meta.env.VITE_API_URL}/api/admin/images/image/${faq.image.md.featureImage.filename}`)
+
+      faqSourcelg.setAttribute('media', '(min-width: 1024px)')
+      faqSourcemd.setAttribute('media', '(min-width: 768px)')
+      faqSourcesm.setAttribute('media', '(min-width: 546px)')
 
       // Crear el elemento <img>
       const faqImg = document.createElement('img')
 
       // Establecer el atributo src para <img>
-      faqImg.setAttribute('src', source)
+      faqImg.setAttribute('src', `${import.meta.env.VITE_API_URL}/api/admin/images/image/${faq.image.xs.featureImage.filename}`)
 
       // Establecer el atributo alt para <img>
-      faqImg.setAttribute('alt', 'MDN')
+      // console.log('xddd', faq.image.xs.featureImage.alt)
+      faqImg.setAttribute('alt', faq.image.xs.featureImage.alt || 'image')
 
       // Adjuntar el elemento <source> al elemento <picture>
-      faqImage.appendChild(faqSource)
+      faqImage.appendChild(faqSourcelg)
+      faqImage.appendChild(faqSourcemd)
+      faqImage.appendChild(faqSourcesm)
+      faqImage.appendChild(faqImg)
 
       // Adjuntar el elemento <img> al elemento <picture>
       faqImage.appendChild(faqImg)
