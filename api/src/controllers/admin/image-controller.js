@@ -68,7 +68,6 @@ exports.findAll = async (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-  console.log('entro en image')
   const fileName = req.params.filename
 
   const options = {
