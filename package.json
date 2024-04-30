@@ -4,16 +4,9 @@
     "http-proxy-middleware": "^2.0.6"
   },
   "scripts": {
-    "dev": "npm-run-all --parallel dev:front-admin dev:auth-admin dev:front-customer dev:auth-customer dev:front-company dev:auth-company dev:front-commercial-agent dev:auth-commercial-agent dev:auth proxy",
-    "dev:front-admin": "cd client/admin/front-admin && npm run dev", 
-    "dev:auth-admin": "cd client/admin/auth-admin && npm run dev",
-    "dev:front-customer": "cd client/customer/front-customer && npm run dev", 
-    "dev:auth-customer": "cd client/customer/auth-customer && npm run dev",
-    "dev:front-company": "cd client/company/front-company && npm run dev", 
-    "dev:auth-company": "cd client/company/auth-company && npm run dev",
-    "dev:front-commercial-agent": "cd client/commercial-agent/front-commercial-agent && npm run dev", 
-    "dev:auth-commercial-agent": "cd client/commercial-agent/auth-commercial-agent && npm run dev",
-    "dev:auth": "cd client/auth && npm run dev",
+    "dev": "npm-run-all --parallel dev:admin dev:front proxy",
+    "dev:front": "cd client/front && npm run dev", 
+    "dev:admin": "cd client/admin && npm run dev",
     "proxy": "node ./proxy.js"
   },
   "devDependencies": {
