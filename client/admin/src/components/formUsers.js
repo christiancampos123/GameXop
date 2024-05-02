@@ -355,24 +355,7 @@ ul{
           "heightPx": "480"
         }
       }' type="single"> </upload-image-component>
-      <upload-image-component name="feature-imag" image-configuration='{
-        "xs": {
-          "widthPx": "60",
-          "heightPx": "60"
-        },
-        "sm": {
-          "widthPx": "120",
-          "heightPx": "120"
-        },
-        "md": {
-          "widthPx": "240",
-          "heightPx": "240"
-        },
-        "lg": {
-          "widthPx": "480",
-          "heightPx": "480"
-        }
-      }' type="multiple"> </upload-image-component>
+
       </div>
     </div>
   </form>
