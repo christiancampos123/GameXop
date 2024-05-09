@@ -15,8 +15,6 @@ exports.create = async (req, res) => {
 }
 
 exports.findAll = async (req, res) => {
-  await req.emailService.sendEmail()
-  // const result = await req.
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 5
   const offset = (page - 1) * limit
