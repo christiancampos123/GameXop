@@ -3,7 +3,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 const options = {
-  target: 'http://127.0.0.1:8080', 
+  target: 'http://127.0.0.1:8080/', 
   cookieDomainRewrite: 'dev-chrishop.com', 
   changeOrigin: true,
   logLevel: 'debug',
@@ -18,10 +18,14 @@ const options = {
 
 app.use('/api', createProxyMiddleware(options));
 
-options.target = 'http://localhost:5170';
+
+options.target = 'http://localhost:5170/';
+app.use('/admin/login', createProxyMiddleware(options));
+
+options.target = 'http://localhost:5171/';
 app.use('/admin', createProxyMiddleware(options));
 
-options.target = 'http://localhost:5171';
+options.target = 'http://localhost:5172/';
 app.use('/', createProxyMiddleware(options));
 
 app.listen(80, '127.0.0.1');

@@ -1,11 +1,14 @@
 const moment = require('moment')
 const mongooseDb = require('../../models/mongoose')
+const EmailService = require('../../services/email-service')
 const User = mongooseDb.User
 
 exports.create = async (req, res) => {
   try {
     req.body.images = await req.imageService.resizeImages(req.body.images)
     const data = await User.create(req.body)
+    const emailService = new EmailService('gmail')
+    emailService.sendEmail(data, 'user', 'activationUrl', data)
     res.status(200).send(data)
   } catch (err) {
     res.status(500).send({

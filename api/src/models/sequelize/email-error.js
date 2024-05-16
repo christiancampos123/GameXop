@@ -1,47 +1,41 @@
-const { DataTypes } = require('sequelize')
-
-module.exports = function (sequelize) {
+module.exports = function (sequelize, DataTypes) {
   const EmailError = sequelize.define('EmailError', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
-    customerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-        notNull: true
-      }
+    userType: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    emailId: {
+    userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-        notNull: true
-      }
+      allowNull: false
+    },
+    emailTemplate: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     error: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        notNull: true
-      }
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
+        return this.getDataValue('createdAt')
+          ? this.getDataValue('createdAt').toISOString().split('T')[0]
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
+        return this.getDataValue('updatedAt')
+          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
+          : null
       }
     }
   }, {
@@ -57,27 +51,15 @@ module.exports = function (sequelize) {
         fields: [
           { name: 'id' }
         ]
-      },
-      {
-        name: 'email_errors_customerId_fk',
-        using: 'BTREE',
-        fields: [
-          { name: 'customerId' }
-        ]
-      },
-      {
-        name: 'email_errors_emailId_fk',
-        using: 'BTREE',
-        fields: [
-          { name: 'emailId' }
-        ]
       }
     ]
   })
 
   EmailError.associate = function (models) {
-    EmailError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
-    EmailError.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId' })
+    EmailError.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
+    // EmailError.belongsTo(models.CompanyStaff, { as: 'companyStaff', foreignKey: 'userId' })
+    // EmailError.belongsTo(models.CustomerStaff, { as: 'customerStaff', foreignKey: 'userId' })
+    // EmailError.belongsTo(models.CommercialAgent, { as: 'commercialAgent', foreignKey: 'userId' })
   }
 
   return EmailError

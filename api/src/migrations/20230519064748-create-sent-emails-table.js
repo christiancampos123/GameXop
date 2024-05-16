@@ -10,25 +10,27 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      customerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'customers',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'NO ACTION'
+      userType: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      emailId: {
+      userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'emails',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'NO ACTION'
+        allowNull: false
+      },
+      emailTemplate: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      sendAt: {
+        type: Sequelize.DATE
+      },
+      readedAt: {
+        type: Sequelize.DATE
+      },
+      uuid: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -41,14 +43,6 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE
       }
-    })
-
-    await queryInterface.addIndex('sent_emails', ['customerId'], {
-      name: 'sent_emails_customerId_fk'
-    })
-
-    await queryInterface.addIndex('sent_emails', ['emailId'], {
-      name: 'sent_emails_emailId_fk'
     })
   },
 

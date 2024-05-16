@@ -2,16 +2,30 @@ module.exports = function (sequelize, DataTypes) {
   const SentEmail = sequelize.define('SentEmail', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
-    customerId: {
+    userType: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    emailId: {
-      type: DataTypes.INTEGER,
+    emailTemplate: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    sendAt: {
+      type: DataTypes.DATE
+    },
+    readedAt: {
+      type: DataTypes.DATE
+    },
+    uuid: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     createdAt: {
@@ -30,8 +44,7 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  },
-  {
+  }, {
     sequelize,
     tableName: 'sent_emails',
     timestamps: true,
@@ -44,27 +57,15 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
-      },
-      {
-        name: 'sent_emails_customerId_fk',
-        using: 'BTREE',
-        fields: [
-          { name: 'customerId' }
-        ]
-      },
-      {
-        name: 'sent_emails_emailId_fk',
-        using: 'BTREE',
-        fields: [
-          { name: 'emailId' }
-        ]
       }
     ]
   })
 
   SentEmail.associate = function (models) {
-    SentEmail.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
-    SentEmail.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId' })
+    SentEmail.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
+    // SentEmail.belongsTo(models.CompanyStaff, { as: 'companyStaff', foreignKey: 'userId' })
+    // SentEmail.belongsTo(models.CustomerStaff, { as: 'customerStaff', foreignKey: 'userId' })
+    // SentEmail.belongsTo(models.CommercialAgent, { as: 'commercialAgent', foreignKey: 'userId' })
   }
 
   return SentEmail

@@ -4,9 +4,10 @@
     "http-proxy-middleware": "^2.0.6"
   },
   "scripts": {
-    "dev": "npm-run-all --parallel dev:admin dev:front proxy",
-    "dev:front": "cd client/front && npm run dev", 
-    "dev:admin": "cd client/admin && npm run dev",
+    "dev": "npm-run-all --parallel dev:front-admin dev:auth-admin dev:front proxy",
+    "dev:front-admin": "cd client/admin/front-admin && npm run dev", 
+    "dev:auth-admin": "cd client/admin/auth-admin && npm run dev",
+    "dev:front": "cd client/front && npm run dev",
     "proxy": "node ./proxy.js"
   },
   "devDependencies": {
