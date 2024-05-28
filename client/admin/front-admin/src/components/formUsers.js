@@ -288,41 +288,11 @@ ul{
             </div>
           </div>
       </div>
-
-
-  
-  
-          <div class="tab-contents">
-            <div class="tab-content active" data-tab="es">
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="title">
-                      Apellidos
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <input type="text" name="surname" value="">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="description">
-                      Telefono
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <input type="text" name="telephone">
-                  </div>
-                </div>
-              </div>
               <div class="form-row">
               <div class="form-element">
                 <div class="form-element-label">
                   <label for="mail">
-                    email
+                    Email
                   </label>
                 </div>
                 <div class="form-element-input">
@@ -407,6 +377,7 @@ ul{
         }
 
         const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
+        console.log(endpoint)
         const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
 

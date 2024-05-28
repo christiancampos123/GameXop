@@ -4,9 +4,25 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const app = express()
+const IORedis = require('ioredis')
+const RedisStore = require('connect-redis').default
 const userAgentMiddleware = require('./src/middlewares/user-agent')
 const exposeServiceMiddleware = require('./src/middlewares/expose-services')
 const authCookieMiddleware = require('./src/middlewares/auth-cookie')
+
+const redisClient = new IORedis(process.env.REDIS_URL)
+const subscriberClient = new IORedis(process.env.REDIS_URL)
+
+const eventsPath = './src/events/'
+
+fs.readdirSync(eventsPath).forEach(function (file) {
+  require(eventsPath + file).handleEvent(redisClient, subscriberClient)
+})
+
+app.use((req, res, next) => {
+  req.redisClient = redisClient
+  next()
+})
 
 const corsOptions = {
   origin: [process.env.API_URL]

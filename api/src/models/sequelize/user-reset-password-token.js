@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const User = sequelize.define('User',
+  const UserResetPasswordToken = sequelize.define('UserResetPasswordToken',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,12 +7,20 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      name: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      token: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      email: {
-        type: DataTypes.STRING,
+      expirationDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      used: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
       },
       createdAt: {
@@ -33,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'users',
+      tableName: 'user_reset_password_tokens',
       timestamps: true,
       paranoid: true,
       indexes: [
@@ -49,15 +57,9 @@ module.exports = function (sequelize, DataTypes) {
     }
   )
 
-  User.associate = function (models) {
-    User.hasOne(models.UserCredential, { as: 'userCredential', foreignKey: 'userId' })
-    User.hasMany(models.UserActivationToken, { as: 'userActivationTokens', foreignKey: 'userId' })
-    User.hasOne(models.UserActivationToken, { as: 'userActivationToken', foreignKey: 'userId', scope: { used: false } })
-    User.hasMany(models.UserResetPasswordToken, { as: 'userResetPasswordTokens', foreignKey: 'userId' })
-    User.hasOne(models.UserResetPasswordToken, { as: 'userResetPasswordToken', foreignKey: 'userId', scope: { used: false } })
-    User.hasMany(models.SentEmail, { as: 'sentEmails', foreignKey: 'userId', scope: { userType: 'userStaff' } })
-    User.hasMany(models.EmailError, { as: 'emailErrors', foreignKey: 'userId', scope: { userType: 'userStaff' } })
+  UserResetPasswordToken.associate = function (models) {
+    UserResetPasswordToken.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
   }
 
-  return User
+  return UserResetPasswordToken
 }
