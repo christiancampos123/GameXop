@@ -8,6 +8,12 @@ const entities = {
     tokenModel: sequelizeDb.UserActivationToken,
     resetPasswordTokenModel: sequelizeDb.UserResetPasswordToken,
     credentialModel: sequelizeDb.UserCredential
+  },
+  customer: {
+    model: sequelizeDb.Customer,
+    tokenModel: sequelizeDb.CustomerActivationToken,
+    resetPasswordTokenModel: sequelizeDb.CustomerResetPasswordToken,
+    credentialModel: sequelizeDb.CustomerCredential
   }
 }
 
@@ -69,7 +75,6 @@ module.exports = class AuthorizationService {
     })
 
     const url = `${process.env.API_URL}/cuenta/reset?token=${token}`
-    console.log(url)
     return url
   }
 
@@ -99,6 +104,7 @@ module.exports = class AuthorizationService {
   createCredentials = async (token, password) => {
     const { id, type } = jwt.verify(token, process.env.JWT_SECRET)
     const entity = entities[type]
+
     const userEntity = await entity.model.findOne({ where: { id } })
 
     const credentials = {
@@ -110,6 +116,21 @@ module.exports = class AuthorizationService {
 
     await entity.credentialModel.create(credentials)
   }
+
+  // createCredentialsCustomer = async (token, password) => {
+  //   const { id, type } = jwt.verify(token, process.env.JWT_SECRET)
+  //   const entity = entities[type]
+  //   const userEntity = await entity.model.findOne({ where: { id } })
+
+  //   const credentials = {
+  //     [`${type}Id`]: userEntity.id,
+  //     email: userEntity.email,
+  //     password: bcrypt.hashSync(password, 8),
+  //     lastPasswordChange: new Date()
+  //   }
+
+  //   await entity.credentialModel.create(credentials)
+  // }
 
   resetCredentials = async (token, password) => {
     const { id, type } = jwt.verify(token, process.env.JWT_SECRET)

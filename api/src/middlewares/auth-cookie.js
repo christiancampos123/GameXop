@@ -1,6 +1,15 @@
-const authCookieMiddleware = (req, res, next) => {
-  // console.log('esto es un console del middleware')
-  next()
+const verifyUserCookie = (req, res, next) => {
+  if (req.session.user) {
+    next()
+  } else {
+    res.status(401).send({
+      redirection: '/admin/login'
+    })
+  }
 }
 
-module.exports = authCookieMiddleware
+const authCookie = {
+  verifyUserCookie
+}
+
+module.exports = authCookie

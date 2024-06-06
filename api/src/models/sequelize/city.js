@@ -76,9 +76,7 @@ module.exports = function (sequelize, DataTypes) {
 
   City.associate = function (models) {
     City.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
-
     City.hasMany(models.Company, { as: 'companies', foreignKey: 'cityId' })
-    City.hasMany(models.Customer, { as: 'customers', foreignKey: 'cityId' })
     City.hasMany(models.Fingerprint, { as: 'fingerprints', foreignKey: 'cityId' })
   }
 

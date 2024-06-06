@@ -1,4 +1,5 @@
 exports.activate = async (req, res) => {
+  console.log(req.body.token, req.body.password)
   try {
     // const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
 
@@ -10,15 +11,16 @@ exports.activate = async (req, res) => {
     //   return res.status(400).send({ message: 'La contraseña no cumple con los requisitos mínimos.' })
     // }
 
-    const used = await req.authorizationService.useToken(req.body.token)
-    if (!used) {
-      return res.status(404).send({ message: 'Token no encontrado' })
-    }
+    // const used = await req.authorizationService.useToken(req.body.token)
+    // if (!used) {
+    //   return res.status(404).send({ message: 'Token no encontrado' })
+    // }
 
     await req.authorizationService.createCredentials(req.body.token, req.body.password)
 
     res.status(200).send({ message: 'Cuenta activada correctamente' })
   } catch (err) {
+    console.log(err)
     res.status(500).send({ message: 'Algún error ha surgido al activar la cuenta. Pongasé en contacto con nosotros.' })
   }
 }
